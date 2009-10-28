@@ -1,5 +1,5 @@
 #summary Dump your ideas in here
-
+<wiki:toc max_depth="3" />
 =Built-in Functions=
 {{{
 sim ( team1, team2, int ); // Return value = team ; prints to stdout score
