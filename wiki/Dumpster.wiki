@@ -46,7 +46,9 @@ ball sim(sim(Astros, Dodgers, 3), sim(Orioles, Twins, 3), 3);
 
 = Stat Function =
 The stat function is a simple calculating function that runs predefined or user-defined stat functions on the team specified. It returns all the default information, that is, that stat on the players to whom it applies. 
-Example program:
+
+==Example program:==
+
 {{{
 ball stat(avg, Cardinals);
     This program returns nothing but prints the following:
@@ -68,7 +70,9 @@ For Pitchers: ERA (earned run average = ER/IP*9), WHIP (walks+hits per inning pi
 For Batters: PA (plate appearances = AB+BB), AVG (batting average = H/AB), OBP (on-base percentage = H+BB/PA - Note that this is not the actual definition of OBP, which also includes hit-by-pitch and sacrifice flies, both of which usually add up to less than 1% of the OBP), TB (total bases = (H-(2B+3B+HR)+(2*2B)+(3*3B)+(4*HR)), and SLG (slugging percentage = TB/AB).
 There are also calculated stats, such as probability of hits versus pitchers, that are not calculated except during the sim function, and that cannot be revealed to the user, since they are dynamic.
 
-Rather than specifying a specific team, the stat function can also accept a sim function (which returns a team) as the team to find stats for. Example:
+Rather than specifying a specific team, the stat function can also accept a sim function (which returns a team) as the team to find stats for.
+
+==Example:==
 
 {{{
 ball stat(avg, sim(Cardinals, Pirates, 1));
