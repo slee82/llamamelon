@@ -1,1 +1,109 @@
 #summary Dump your ideas in here
+
+=Built-in Functions=
+{{{
+sim ( team1, team2, int ); // Return value = team ; prints to stdout score
+sim ( sim( team1, team 2, int ), team3, int2 ); // Recursive version
+
+stat ( statname, team );    // Returns void ; prints to stdout all of the stats for that team.
+
+define ( newname, formula ); // Returns void ; prints confirmation or error; installs.
+
+compare ( statname, team1, team2 ); // Return value = nothing ; prints to stdout the averages for those teams.
+
+list-teams;    // Lists all teams, * in front of user-defined teams. (No ignoring)
+list-stats; // Lists all stats, * in front of user-defined stats.
+
+del-team; // Can only delete a user-defined team.
+del-stat; // Can only delete a user-defined stat. [Checks dependencies]
+}}}
+
+Sim Function
+The Sim Function is the heart of BALL, as it runs actual simulations of games. The simulations are based on the statistics of the team, but are also semi-randomized, insuring that lifelike, realistic results are produced. Completely randomized factors include who pitches for a team (out of the starting rotation). Averages are weighted, but the sim function does not just do a comparison of numbers. Rather, it runs through simulated innings to determine scoring.
+
+Example program:
+
+ball sim(Astros, Dodgers, 5);
+    This program runs five simulations and returns a winner object (Astros) and prints to stdout five scores:
+        Astros 3 Dodgers 1
+        Astros 1 Dodgers 2
+        Astros 6 Dodgers 3
+        Astros 2 Dodgers 0
+        Astros 0 Dodgers 1
+
+ball sim(sim(Astros, Dodgers, 3), sim(Orioles, Twins, 3), 3);
+    This program runs three simulations of the winner objects returned from the three simulations of the two matchups. It returns the overall winner (Astros) and prints the entire tournament:
+        Astros 1 Dodgers 4
+        Astros 1 Dodgers 0
+        Astros 5 Dodgers 3
+        Orioles 1 Twins 3
+        Orioles 1 Twins 5
+        Orioles 0 Twins 1
+        Astros 1 Twins 3
+        Astros 2 Twins 0
+        Astros 8 Twins 6
+
+Stat Function
+The stat function is a simple calculating function that runs predefined or user-defined stat functions on the team specified. It returns all the default information, that is, that stat on the players to whom it applies. 
+Example program:
+
+ball stat(avg, Cardinals);
+    This program returns nothing but prints the following:
+        Yadier Molina   .293
+        Albert Pujols   .327
+        Skip Schumaker  .303
+        Brendan Ryan    .292
+        Mark DeRosa     .228
+        Matt Holliday   .353
+        Colby Rasmus    .251
+        Ryan Ludwick    .265
+
+What's important to note about the above function is that the data returned is calculated on the fly - only certain stats are kept in the database permanently. These 'primitive' stats are:
+For Pitchers: IP (innings pitched), K (strikeouts), H (hits allowed), BB (walks allowed), and ER (earned runs).
+For Batters: AB (at-bats), R (runs), H (hits) 2B (doubles), 3B (triples), HR (home runs), and BB (walks).
+There are also built-in calculated stats that are not primitive. They are as follows:
+For Pitchers: ERA (earned run average = ER/IP*9), WHIP (walks+hits per inning pitched = (BB+H)/IP), and BF (batters faced = (IP*3)+BB+H - Note that this includes neither errors nor double plays, which generally cancel each other out).
+For Batters: PA (plate appearances = AB+BB), AVG (batting average = H/AB), OBP (on-base percentage = H+BB/PA - Note that this is not the actual definition of OBP, which also includes hit-by-pitch and sacrifice flies, both of which usually add up to less than 1% of the OBP), TB (total bases = (H-(2B+3B+HR)+(2*2B)+(3*3B)+(4*HR)), and SLG (slugging percentage = TB/AB).
+There are also calculated stats, such as probability of hits versus pitchers, that are not calculated except during the sim function, and that cannot be revealed to the user, since they are dynamic.
+
+Rather than specifying a specific team, the stat function can also accept a sim function (which returns a team) as the team to find stats for. Example:
+
+ball stat(avg, sim(Cardinals, Pirates, 1));
+    This program returns nothing and prints the following:
+Cardinals 6 Pirates 1
+Yadier Molina   .293
+Albert Pujols   .327
+Skip Schumaker  .303
+Brendan Ryan    .292
+Mark DeRosa     .228
+Matt Holliday   .353
+Colby Rasmus    .251
+Ryan Ludwick    .265
+
+Define Function 
+The define function allows users to define their own stat functions to be used with the stat or compare functions. It returns nothing other than a simple message either with an error or a confirmation. If it confirms, it means installation was successful, and the stat is installed into the BALL directory.
+Example program:
+
+ball define(Kper9, K/IP*9);
+    This program returns nothing, installs a file called Kper9.stat into the user stats folder, and prints the following:
+        Statistic Kper9 installed successfully!
+
+On the other hand, an example program with an error: [Obviously every function can have errors, but since the define function is the most likely to have errors, such an error is displayed here:]
+
+ball define(CrazyStat, R/AB+UDS);
+    This program will not work, as there is no such stat as UDS. It prints such:
+        Error: Statistic 'UDS' is not defined.
+
+Compare Function
+The compare function allows users to quickly gather data on a specific stat. The function accepts the stat to be compared, as well as either teams or sim functions. [Since it can accept a team, it can accept a function that returns another team.] It prints to stdout all of the information associated with the comparison and returns nothing.
+Example programs:
+
+ball compare(era, Angels, Phillies);
+    This program returns nothing and prints the following:
+        
+
+ball compare(era, Angels, sim(Phillies,Nationals,1));
+    This program returns nothing and prints the following:
+
+
+http://sbs-baseball.com/theory.txt
