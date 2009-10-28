@@ -1,4 +1,6 @@
 #summary Work distribution
+<wiki:toc max_depth="1" />
+#sidebar TableOfContents
 * [Articles HOWTO articles]
     * [ArticlesXSS Web security]
     * [ArticlesDom DOM manipulation]
