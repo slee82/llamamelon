@@ -1,0 +1,18 @@
+#summary One-sentence summary of this page.
+
+= Summary =
+
+Language tutorial (written by entire team, 10-20 pages).
+-Chapter 1 of Kernighan and Ritchie is a good model of a language tutorial.
+-Describe a few representative programs that illustrate the nature and scope of your language.
+-A "hello, world" program is de rigueur.
+
+Language reference manual (written by entire team, 20-30 pages).
+-Appendix A of Kernighan and Ritchie is a good model.
+-Give a complete description of the lexical and syntactic structure of your language.
+-Include a full grammar for your language.
+
+
+= Work Distribution =
+
+TBA
