@@ -1,6 +1,6 @@
+#summary Dump your ideas in here
 =Nathan is a crying cunt=
 
-#summary Dump your ideas in here
 <wiki:toc max_depth="3" />
 =Built-in Functions=
 {{{
