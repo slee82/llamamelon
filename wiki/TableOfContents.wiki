@@ -2,3 +2,5 @@
     * [BALLWhitepaper Ball WhitePaper]
     * [LanguageTutorial Language Tutorial]
     * [LanguageReferenceManual Language Reference Manual]
+
+*[Dumpster Dumpster - Dump all your ideas in here]
