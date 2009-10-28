@@ -1,3 +1,4 @@
 * [Summary Summary and Work Distribution]
-    * [LanguageReferenceManual Language Reference Manual]
+    * [BALLWhitepaper Ball WhitePaper]
     * [LanguageTutorial Language Tutorial]
+    * [LanguageReferenceManual Language Reference Manual]
