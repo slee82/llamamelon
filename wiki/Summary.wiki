@@ -1,4 +1,6 @@
 <wiki:toc max_depth="1" />
+
+= Summary =
 Language tutorial (written by entire team, 10-20 pages).
   * Chapter 1 of Kernighan and Ritchie is a good model of a language tutorial.
   * Describe a few representative programs that illustrate the nature and scope of your language.
