@@ -1,5 +1,4 @@
 #summary Dump your ideas in here
-=Nathan is a crying cunt=
 
 <wiki:toc max_depth="3" />
 =Built-in Functions=
