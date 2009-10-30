@@ -33,7 +33,7 @@ Some decisions I made: (which of course could easily be changed. These are just 
  * _._ character (Period) used to end commands, like a semi-colon in Java.
  * _func1_ is an example of a token used to name the new sim function.
  * _'s_ is the same as a dot in java or a '->' in C. Thus, team1's era calls team1.era from Java or team1->era from C.
- * _games_ keyword is another one used for friendly language. It just means that the number that precedes it is the number of games to simulate. _game_ would be the same, or it would be implied. [That is, sim 1 game = sim 1 games = sim. Or sim 2 games = sim 2 game.]
+ * _games_ keyword is another one used for friendly language. It just means that the number that precedes it is the number of games to simulate. _game_ would be the same, or it would be implied. (That is, sim 1 game = sim 1 games = sim. Or sim 2 games = sim 2 game.)
  * _between_ keyword lets the compiler know that the first of two teams is coming up next.
  * _the_ keyword is ignored by the compiler as whitespace. Just friendly.
  * _and_ keyword lets the compiler know that the second of two teams is coming up next.
