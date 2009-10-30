@@ -4,3 +4,4 @@
     * [LanguageReferenceManual Language Reference Manual]
 
 *[Dumpster Dumpster - Dump all your ideas in here]
+    * [ExamplePrograms]
