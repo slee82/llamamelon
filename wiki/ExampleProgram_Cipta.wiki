@@ -1,4 +1,5 @@
 #summary Cipta's example program
+#labels Phase-Design
 
 = Introduction =
 
