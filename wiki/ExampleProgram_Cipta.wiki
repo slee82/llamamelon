@@ -37,11 +37,11 @@ define player rand1 as any from Yankees.
  * after getting a player, we can apply stats to it:
  */
 
-print pitcher1's obp. /* outputting stats will automatically add a newline */
-print "Random player's name is: ". /* newline implicitly added to string */
-print rand1's name. 
-print "Random player's slg is: ". /* newline implicitly added to string */
-print rand1's slg.
+print pitcher1's obp. /* outputting player's stats will add a newline */
+print "Random player's name is: ". /*' newline implicitly added to string */
+print rand1's name.    /*' everything printed to stdout by 'print' adds newline */
+print "Random player's slg is: ". /*'*/
+print rand1's slg. /*'*/
 
 print "" /* print a newline */
 print "Yankees batting practice:".
