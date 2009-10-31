@@ -18,9 +18,11 @@ define stat ops as obp + slg.
  * Because we're going to let users define their own sim functions, I think 
  * it's a good idea to be able to reference players from a team.
  */
+
 define player pitcher1 as "Sabathia" from Yankees. /* inside a string */
 
 /* or, if a user wants to get a random player, */
+
 define player rand1 as any from Yankees.
 
 /* 
@@ -34,13 +36,14 @@ define player rand1 as any from Yankees.
  *
  * after getting a player, we can apply stats to it:
  */
+
 print pitcher1's obp. /* outputting stats will automatically add a newline */
 print "Random player's name is: ". /* newline implicitly added to string */
 print rand1's name. 
 print "Random player's slg is: ". /* newline implicitly added to string */
 print rand1's slg.
 
-print "" /* force a newline */
+print "" /* print a newline */
 print "Yankees batting practice:".
 
 /*
@@ -53,14 +56,18 @@ print "Yankees batting practice:".
  * 6. "player batter " - same as no.4 above
  * 7. "as:" - multiple-line commands coming up
  */
+
 define fcn batting_practice between player pitcher and player batter as:
+
     /* users can define a number "set" using "between" */
     define range rand_range as between -0.1 and 0.1.
+
     /* means: pick a random number between -0.1 and 0.1 */
     define number rand_num as any from rand_range.
 
     /* or, both statements above can be grouped as */
     define number rand_num2 as any from between -0.5 and 0.5.
+
     /* it's a bit more long-winded compared to regular English, but I think 
        it's easier to implement. */
 
@@ -69,6 +76,9 @@ define fcn batting_practice between player pitcher and player batter as:
                                 (pitcher's innings_pitched * 3))
                              + rand_num. /* some fake formula */
 
+    /*
+     * if <conditional> then: <statements>. else: <statements>
+     */
     if success is over 1.0 then:
         return batter.
     else return pitcher. /* can also be else if blah blah blah */
@@ -76,6 +86,7 @@ define fcn batting_practice between player pitcher and player batter as:
 end batting_practice. /* same effect as an end curly brace in C */
 
 print batting_practice between pitcher1 and rand1.
+
 /* same as above, this can be shortened to: */
 print batting_practice between "Sabathia" from Yankees and any from Yankees.
 
