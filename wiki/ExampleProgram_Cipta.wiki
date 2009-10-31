@@ -57,7 +57,7 @@ print "Yankees batting practice:".
  * 7. "as:" - multiple-line commands coming up
  */
 
-define fcn batting_practice between player pitcher and player batter as:
+define function batting_practice between player pitcher and player batter as:
 
     /* users can define a number "set" using "between" */
     define range rand_range as between -0.1 and 0.1.
