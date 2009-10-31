@@ -3,6 +3,6 @@
 
 =Don't comment yet! I'm working on this.=
 
-=The program=
+=The program:=
 
-=Further explanations=
+=Further explanations:=
