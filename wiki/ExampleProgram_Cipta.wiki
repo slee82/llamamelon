@@ -40,7 +40,7 @@ print "Random player's slg is: ". /* newline implicitly added to string */
 print rand1's slg.
 
 print "" /* force a newline */
-print "Yankees batting practice:"
+print "Yankees batting practice:".
 
 /*
  * lots of things going on here:
