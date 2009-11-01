@@ -85,9 +85,11 @@ simfunction basicSimulation is:
   end
 
   if (team1Score > team2Score) then:
+    print "Team " + team1's name + " wins against team " + team2's name + "!!";
     return team1;
   else
-    return ream2;
+    print "Team " + team2's name + " wins against team " + team1's name + "!!";
+    return team2;
   end
 
 end
@@ -123,7 +125,41 @@ end
   following nested simulations (so we don’t have to pass it multiple times).*/
 activate basicSimulation;
 
-sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
+team winner = sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
+print "Team " + winner's name + " has won the championship!!\n";
+
+print "Team " + winner's name + " has the players:";
+foreach winner as winnerPlayer do:
+  print winnerPlayer's name;
+end
 }}}
+
+
+=Program output=
+
+The output will be something like:
+
+{{{
+Team Dodgers wins against team Astros!!
+Team Orioles wins against team Twins!!
+Team Dodgers wins agains team Orioles!!
+Team Dodgers has won the championship!!
+
+Team Dodgers has the players:
+Ronald Belisario	
+Chad Billingsley	
+Jonathan Broxton
+Scott Elbert
+Jon Garland
+Charlie Haeger
+Clayton Kershaw
+Hong-Chih Kuo
+Hiroki Kuroda
+Brent Leach
+James McDonald
+Guillermo Mota
+etc...
+}}}
+
 
 =Further explanations:=
