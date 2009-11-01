@@ -6,34 +6,28 @@
 =The program:=
 
 {{{
-/* Got the calculations from : http://sbs-baseball.com/theory.txt */
+/* Got the calculations from : http://sbs-baseball.com/theory.txt
+  Check out http://en.wikipedia.org/wiki/Baseball_statistics*/
 
-/***********************/
+/*****************************************************/
 /***STATS DEFINITION***/
 
-/*Batter plate appearances*/
-stat bPA = AB + BB;
-
 /*Batter probabilities*/
-stat bWalk = BB / bPA;
-stat bSingle = (Hits - (2B + 3B + HR))/ bPA;
-stat bDouble = 2B / bPA;
-stat bTriple = 3B / bPA;
-stat bHR = HR / bPA;
-stat bOut = 1 - (bWalk + bSingle + bDouble + bTriple + bHR);
-
-/*Pitcher Batters Faced*/
-stat pBF = (IP * 3) + Hits + BB;
+stat bWalk = BB / PA;
+stat bSingle = (Hits - (2B + 3B + HR))/ PA;
+stat bDouble = 2B / PA;
+stat bTriple = 3B / PA;
+stat bHR = HR / PA;
 
 /*Pitcher probabilities*/
-stat pWalk = BB / pBF;
+stat pWalk = BB / BF;
 stat pSingle = (Hits / BF) - pHR - pTriple - pDouble;
 stat pDouble = Hits x .174 / BF;
 stat pTriple = Hits x .024 / BF;
 stat pHR = HR / BF;
 
 /***END STATS DEFINITION***/
-/**************************/
+/*****************************************************/
 
 /*Global variables that hold combined probabilities given a pitcher and a batter*/
 number probWalk = 0;
@@ -53,8 +47,18 @@ simfunction basicSimulation is:
   number team1Score = 0;
   number team2Score = 0;
 
-  for each i from 1 to 5 step 1 do:
-    
+  /*Note: team1 and team2 are global variables that represent the teams that the
+  sim function is currently working with. The sim function sets them automatically.*/
+
+  /*team1 is batting its best batters, while team2 pitches with best pitchers*/
+  for i from 1 to 5 step 1 do:
+
+    player batter = any from team1 where (type is "batter" and AVG is top 5);
+    player pitcher = any from team2 where (type is "pitcher" and ERA is lowest 5);
+    /*I am introducing new conditional shortcuts 'top' and 'lowest' because doing 'AVG > 3.0' might
+    not work for a team with bad players (would return no players). I think these keywords come
+    in handy for selecting best players, which is something you do a lot when simulating baseball.*/
+
   end;
 
 end;
@@ -63,7 +67,7 @@ end;
 /*Declaring a general-purpose function that calculates
 combined probabilities given a pitcher and a batter.
 It takes the max of both: average is not a good estimate.*/
-function combinedProb (player batter, player pitcher) is:
+function combineProb (player batter, player pitcher) is:
 
   /*Having Min and Max functions can be useful in situations like these*/
   probWalk = max(pitcher’s pWalk, batter’s bWalk);
