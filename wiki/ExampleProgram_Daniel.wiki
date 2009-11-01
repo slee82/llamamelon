@@ -8,15 +8,26 @@
 {{{
 /* Got the calculations from : http://sbs-baseball.com/theory.txt */
 
-/* Plate appearances */
+/*Batter plate appearances*/
 stat batterPA = AB + BB;
 
-/*probabilities*/
+/*Batter probabilities*/
 stat batterProbWalk = BB / batterPA;
 stat batterProbSingle = (Hits - (2B + 3B + HR))/ batterPA;
 stat batterProbDouble = 2B / batterPA;
 stat batterProbTriple = 3B / batterPA;
 stat batterProbHR = HR / batterPA;
+
+/*Pitcher Batters Faced*/
+stat pitcherBF = (IP * 3) + Hits + BB;
+
+/*Pitcher probabilities*/
+stat pitcherProbWalk = BB / pitcherBF;
+stat pitcherProbSingle = (Hits / BF) - pitcherProbHR - pitcherProbTriple - pitcherProbDouble;
+stat pitcherProbDouble = Hits x .174 / BF
+stat pitcherProbTriple = Hits x .024 / BF
+stat pitcherProbHR = HR / BF
+
 
 simfunction basicSimulation is:
   
