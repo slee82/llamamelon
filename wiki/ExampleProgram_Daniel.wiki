@@ -1,9 +1,10 @@
 #summary Daniel’s Example program.
 #labels Phase-Design
+<wiki:toc>
 
-=I’m working on this.=
+=I’m not done with this yet=
 
-=The program:=
+=The program=
 
 {{{
 /* Got the calculations from : http://sbs-baseball.com/theory.txt
@@ -162,4 +163,10 @@ etc...
 }}}
 
 
-=Further explanations:=
+=Further explanations=
+
+  * At first, I define new stats for the probability of walks, singles, doubles, triples, home-runs for pitchers and batters.
+  * Then, I set global variables for the overall probability of a walk, single, etc... _given_ a specific batter and pitcher.
+  * I define my simulation function:
+    * team1 bats and team2 pitches 5 times, and vice versa.
+    * the team's score is determined by the overall probability of walks, singles, etc... depending on the randomly selected top 5 players.
