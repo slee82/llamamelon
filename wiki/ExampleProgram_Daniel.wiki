@@ -58,11 +58,17 @@ end;
 /*Declaring a general-purpose function that calculates
 combined probabilities given a pitcher and a batter*/
 function combinedProb (player batter, player pitcher) is:
-  probWalk = 0;
-  probSingle = 0;
-  probDouble = 0;
-  probTriple = 0;
-  probHR = 0;
+
+  if batter's bwalk > pitcher's pwalk then:
+    probWalk = batter's bwalk;
+  else
+    probWalk = pitchers's pwalk;
+  end; /*This 'end;' is optional because my else is one line*/
+
+    probSingle = 0;
+    probDouble = 0;
+    probTriple = 0;
+    probHR = 0;
 end;
 
 /*This makes simFunc the active simulation function, for use in the
