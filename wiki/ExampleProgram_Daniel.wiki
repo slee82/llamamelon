@@ -17,6 +17,7 @@ stat batterProbSingle = (Hits - (2B + 3B + HR))/ batterPA;
 stat batterProbDouble = 2B / batterPA;
 stat batterProbTriple = 3B / batterPA;
 stat batterProbHR = HR / batterPA;
+stat batterProbOut = 1 - (batterProbWalk + batterProbSingle + batterProbDouble + batterProbTriple + batterProbHR);
 
 /*Pitcher Batters Faced*/
 stat pitcherBF = (IP * 3) + Hits + BB;
