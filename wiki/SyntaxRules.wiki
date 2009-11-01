@@ -1,7 +1,8 @@
 #summary Syntax rules which we have agreed upon.
 #labels Phase-Design
 <wiki:toc max_depth="3" />
-_These are just suggestions, I'm not claiming we agreed upon them_
+
+_Right now these are just suggestions, I'm not claiming we agreed upon them_
 
 =Primitives and Structures=
 
