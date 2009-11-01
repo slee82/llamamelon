@@ -6,8 +6,20 @@
 =The program:=
 
 {{{
+/* Got the calculations from : http://sbs-baseball.com/theory.txt */
+
+/* Plate appearances */
+stat batterPA = AB + BB;
+
+/*probabilities*/
+stat batterProbWalk = BB / batterPA;
+stat batterProbSingle = (Hits - (2B + 3B + HR))/ batterPA;
+stat batterProbDouble = 2B / batterPA;
+stat batterProbTriple = 3B / batterPA;
+stat batterProbHR = HR / batterPA;
+
 simfunction basicSimulation is:
-  ha
+  
 end;
 
 /*This makes simFunc the active simulation function, for use in
