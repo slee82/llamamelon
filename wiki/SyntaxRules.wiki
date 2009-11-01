@@ -14,31 +14,46 @@
 
 ==Scores==
 
+----
 
-= Function Declaration =
+=Declarations=
 
-== Regular Functions ==
+==Variables==
 
-== Simulation Functions ==
+==Regular Functions==
 
+==Simulation Functions==
 
-= Variable Declaration =
+----
 
+=Conditional Statements=
 
-= Conditional Statements =
+==If-then-else==
 
-== If-then-else ==
+----
 
+=Loops=
 
-= Loops =
+==For each/For all==
 
-== For each/For all ==
+==While==
 
-== While ==
-
+----
 
 =Data Manipulation=
 
+=="from"==
+
 =="any"==
 
-=="from"==
+=="where"==
+
+----
+
+=The Simulation Function=
+
+==Choosing a simulation function==
+
+==Nesting==
+
+==Simulating multiple games==
