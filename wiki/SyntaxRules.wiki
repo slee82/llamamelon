@@ -1,4 +1,44 @@
 #summary Syntax rules which we have agreed upon.
+#labels Phase-Design
 <wiki:toc max_depth="3" />
 
-= Syntax =
+=Primitives and Structures=
+
+==Teams==
+
+==Players==
+
+==Numbers==
+
+==Strings==
+
+==Scores==
+
+
+= Function Declaration =
+
+== Regular Functions ==
+
+== Simulation Functions ==
+
+
+= Variable Declaration =
+
+
+= Conditional Statements =
+
+== If-then-else ==
+
+
+= Loops =
+
+== For each/For all ==
+
+== While ==
+
+
+=Data Manipulation=
+
+=="any"==
+
+=="from"==
