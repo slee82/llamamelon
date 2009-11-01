@@ -2,6 +2,7 @@
     * [BALLWhitepaper Ball WhitePaper]
     * [LanguageTutorial Language Tutorial]
     * [LanguageReferenceManual Language Reference Manual]
+        * [LanguageGrammar Full Grammar]
 
 *[Dumpster Dumpster - Dump all your ideas in here]
     * [ExamplePrograms Example Program - Nathan]
