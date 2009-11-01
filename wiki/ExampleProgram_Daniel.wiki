@@ -61,11 +61,11 @@ It takes the max of both: average is not a good estimate.*/
 function combinedProb (player batter, player pitcher) is:
 
   /*Having Min and Max functions can be useful in situations like these*/
-  probWalk = Max(pitcher's pWalk, batter's bWalk);
-  probSingle = Max(pitcher's pSingle, batter's bSingle);
-  probDouble = Max(pitcher's pDouble, batter's bDouble);
-  probTriple = Max(pitcher's pTriple, batter's bTriple);
-  probHR = Max(pitcher's pHR, batter's bHR);
+  probWalk = max(pitcher's pWalk, batter's bWalk);
+  probSingle = max(pitcher's pSingle, batter's bSingle);
+  probDouble = max(pitcher's pDouble, batter's bDouble);
+  probTriple = max(pitcher's pTriple, batter's bTriple);
+  probHR = max(pitcher's pHR, batter's bHR);
 
 end;
 
