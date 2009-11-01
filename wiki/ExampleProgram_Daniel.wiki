@@ -6,7 +6,8 @@
 =The program:=
 
 {{{
-
+activate simFunc;
+sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
 }}}
 
 =Further explanations:=
