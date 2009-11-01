@@ -1,7 +1,7 @@
 #summary Daniel's Example program.
 #labels Phase-Design
 
-=Don't comment yet! I'm working on this.=
+=I'm working on this.=
 
 =The program:=
 
