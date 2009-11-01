@@ -22,6 +22,8 @@ _Right now these are just suggestions, I'm not claiming we agreed upon them_
 
 ==Variables==
 
+==Stats==
+
 ==Regular Functions==
 
 ==Simulation Functions==
