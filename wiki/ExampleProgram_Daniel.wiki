@@ -42,7 +42,7 @@ simfunction basicSimulation is:
 end;
 
 /*This makes simFunc the active simulation function, for use in the
-    following nested simulations (so we don't have to pass it multiple times).*/
+ following nested simulations (so we don't have to pass it multiple times).*/
 activate basicSimulation;
 
 sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
