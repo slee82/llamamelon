@@ -50,7 +50,7 @@ team, singles and walks are worth 1/4 of a point, doubles are 1/2 a point
 and triples are 3/4 of a point.*/
 simfunction basicSimulation is:
 
-
+  
 
 end;
 
