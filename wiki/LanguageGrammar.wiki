@@ -1,0 +1,20 @@
+#summary The full grammar for our language
+
+= Introduction =
+
+Here is where we form and update the language grammar.
+
+= Details =
+
+{{{
+/* this is just a sample, will most likely change completely */
+
+program : statement-list
+
+statement-list : statement
+               | statement-list statement
+
+statement : stat-definition
+          : function-definition
+          : expression
+}}}
