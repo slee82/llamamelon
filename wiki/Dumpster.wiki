@@ -1,3 +1,6 @@
 #summary Dump your ideas in here
 
 <wiki:toc max_depth="3" />
+
+
+http://en.wikipedia.org/wiki/Baseball_statistics
