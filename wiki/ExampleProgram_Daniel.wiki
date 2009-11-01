@@ -1,7 +1,7 @@
-#summary Daniel's Example program.
+#summary Daniel’s Example program.
 #labels Phase-Design
 
-=I'm working on this.=
+=I’m working on this.=
 
 =The program:=
 
@@ -45,7 +45,7 @@ number probHR = 0;
 
 /*Basic Simulation function: simplifies the problem by pretending that
 this is a game between the batter and the pitcher. To further simplify
-the problem: let's assume that a home run is worth 1 point to the batting 
+the problem: let’s assume that a home run is worth 1 point to the batting 
 team, singles and walks are worth 1/4 of a point, doubles are 1/2 a point
 and triples are 3/4 of a point.*/
 simfunction basicSimulation is:
@@ -56,23 +56,21 @@ end;
 
 
 /*Declaring a general-purpose function that calculates
-combined probabilities given a pitcher and a batter*/
+combined probabilities given a pitcher and a batter.
+It takes the max of both: average is not a good estimate.*/
 function combinedProb (player batter, player pitcher) is:
 
-  if batter's bwalk > pitcher's pwalk then:
-    probWalk = batter's bwalk;
-  else
-    probWalk = pitchers's pwalk;
-  end; /*This 'end;' is optional because my else is one line*/
+  /*Having Min and Max functions can be useful in situations like these*/
+  probWalk = Max(pitcher's pWalk, batter's bWalk);
+  probSingle = Max(pitcher's pSingle, batter's bSingle);
+  probDouble = Max(pitcher's pDouble, batter's bDouble);
+  probTriple = Max(pitcher's pTriple, batter's bTriple);
+  probHR = Max(pitcher's pHR, batter's bHR);
 
-    probSingle = 0;
-    probDouble = 0;
-    probTriple = 0;
-    probHR = 0;
 end;
 
 /*This makes simFunc the active simulation function, for use in the
-  following nested simulations (so we don't have to pass it multiple times).*/
+  following nested simulations (so we don’t have to pass it multiple times).*/
 activate basicSimulation;
 
 sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
