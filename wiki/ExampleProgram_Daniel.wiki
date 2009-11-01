@@ -30,15 +30,20 @@ stat pTriple = Hits x .024 / BF
 stat pHR = HR / BF
 
 
+/*Basic Simulation function: simplifies the problem by pretending that
+   this is a game between the batter and the pitcher. To further simplify
+   the problem: let's assume that a home run is worth 1 point to the batting 
+   team, singles and walks are worth 1/4 of a point, doubles are 1/2 a point
+   and triples are 3/4 of a point.*/
 simfunction basicSimulation is:
 
-    
+
 
 end;
 
 /*This makes simFunc the active simulation function, for use in the
-following nested simulations (so we don't have to pass it multiple times).*/
-activate simFunc;
+    following nested simulations (so we don't have to pass it multiple times).*/
+activate basicSimulation;
 
 sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
 }}}
