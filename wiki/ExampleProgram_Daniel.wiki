@@ -8,6 +8,7 @@
 {{{
 /* Got the calculations from : http://sbs-baseball.com/theory.txt */
 
+/***********************/
 /***STATS DEFINITION***/
 
 /*Batter plate appearances*/
@@ -27,17 +28,19 @@ stat pBF = (IP * 3) + Hits + BB;
 /*Pitcher probabilities*/
 stat pWalk = BB / pBF;
 stat pSingle = (Hits / BF) - pHR - pTriple - pDouble;
-stat pDouble = Hits x .174 / BF
-stat pTriple = Hits x .024 / BF
-stat pHR = HR / BF
+stat pDouble = Hits x .174 / BF;
+stat pTriple = Hits x .024 / BF;
+stat pHR = HR / BF;
 
 /***END STATS DEFINITION***/
+/**************************/
 
-/*Global variables that hold overall probabilities depending on a pitcher and batter*/
+/*Global variables that hold combined probabilities given a pitcher and a batter*/
 number probWalk = 0;
 number probSingle = 0;
 number probDouble = 0;
 number probTriple = 0;
+number probHR = 0;
 
 
 /*Basic Simulation function: simplifies the problem by pretending that
@@ -49,6 +52,17 @@ simfunction basicSimulation is:
 
 
 
+end;
+
+
+/*Declaring a general-purpose function that calculates
+combined probabilities given a pitcher and a batter*/
+function combinedProb (player batter, player pitcher) is:
+  probWalk = 0;
+  probSingle = 0;
+  probDouble = 0;
+  probTriple = 0;
+  probHR = 0;
 end;
 
 /*This makes simFunc the active simulation function, for use in the
