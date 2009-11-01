@@ -9,33 +9,35 @@
 /* Got the calculations from : http://sbs-baseball.com/theory.txt */
 
 /*Batter plate appearances*/
-stat batterPA = AB + BB;
+stat bPA = AB + BB;
 
 /*Batter probabilities*/
-stat batterProbWalk = BB / batterPA;
-stat batterProbSingle = (Hits - (2B + 3B + HR))/ batterPA;
-stat batterProbDouble = 2B / batterPA;
-stat batterProbTriple = 3B / batterPA;
-stat batterProbHR = HR / batterPA;
-stat batterProbOut = 1 - (batterProbWalk + batterProbSingle + batterProbDouble + batterProbTriple + batterProbHR);
+stat bWalk = BB / bPA;
+stat bSingle = (Hits - (2B + 3B + HR))/ bPA;
+stat bDouble = 2B / bPA;
+stat bTriple = 3B / bPA;
+stat bHR = HR / bPA;
+stat bOut = 1 - (bWalk + bSingle + bDouble + bTriple + bHR);
 
 /*Pitcher Batters Faced*/
-stat pitcherBF = (IP * 3) + Hits + BB;
+stat pBF = (IP * 3) + Hits + BB;
 
 /*Pitcher probabilities*/
-stat pitcherProbWalk = BB / pitcherBF;
-stat pitcherProbSingle = (Hits / BF) - pitcherProbHR - pitcherProbTriple - pitcherProbDouble;
-stat pitcherProbDouble = Hits x .174 / BF
-stat pitcherProbTriple = Hits x .024 / BF
-stat pitcherProbHR = HR / BF
+stat pWalk = BB / pBF;
+stat pSingle = (Hits / BF) - pHR - pTriple - pDouble;
+stat pDouble = Hits x .174 / BF
+stat pTriple = Hits x .024 / BF
+stat pHR = HR / BF
 
 
 simfunction basicSimulation is:
-  
+
+    
+
 end;
 
-/*This makes simFunc the active simulation function, for use in
-all nested simulations (so we don't have to pass it multiple times).*/
+/*This makes simFunc the active simulation function, for use in the
+following nested simulations (so we don't have to pass it multiple times).*/
 activate simFunc;
 
 sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
