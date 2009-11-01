@@ -6,6 +6,10 @@
 =The program:=
 
 {{{
+simfunction basicSimulation is:
+  ha
+end;
+
 /*This makes simFunc the active simulation function, for use in
 all nested simulations (so we don't have to pass it multiple times).*/
 activate simFunc;
