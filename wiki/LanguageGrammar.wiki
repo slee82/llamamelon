@@ -94,11 +94,11 @@ expression : logical-or-expression
            ;
 
 logical-or-expression : logical-and-expression
-                      | logical-or-expression "||" logical-and-expression
+                      | logical-or-expression "or" logical-and-expression
                       ;
 
 logical-and-expression : logical-not-expression
-                       | logical-and-expression "&&" logical-not-expression
+                       | logical-and-expression "and" logical-not-expression
                        ;
 
 logical-not-expression : comparison-expression
