@@ -12,17 +12,19 @@ statement-list : statement
                | statement-list statement
 
 statement : stat-definition
-          : function-definition
-          : expression
+          | function-definition
+          | expression
 }}}
 
 =if-statement=
 
-=for-loop=
+=loop-statements=
 
-=foreach-loop=
+==for-loop==
 
-=while-loop
+==foreach-loop==
+
+==while-loop==
 
 =variable-declaration=
 
@@ -44,10 +46,12 @@ statement : stat-definition
 
 =variable assignment=
 
+=function-call=
+
 =sim-function-call=
 
-='where'=
+=where=
 
-='any'=
+=any=
 
-='from'=
+=from=
