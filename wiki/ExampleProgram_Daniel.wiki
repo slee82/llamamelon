@@ -205,20 +205,20 @@ end
 }}}
   
   * *Clauses*
-    * for loops: not used to iterate through a list, but rather to loop a certain number of times using an incremented variable:
+    * *for loops*: not used to iterate through a list, but rather to loop a certain number of times using an incremented variable:
 {{{
 for i from 1 to 5 step 1 do:
   someNumber = i;
 end
 }}}
-    * foreach loops: This is used to iterate through a list, check this out: http://php.net/manual/en/control-structures.foreach.php
+    * *foreach loops*: This is used to iterate through a list, check this out: http://php.net/manual/en/control-structures.foreach.php
 {{{
 print "The Dodgers roster is:"
 foreach Dodgers as aDodgerPlayer do:
  print aDodgerPlayer;
 end
 }}}
-    * if statements: {{{if (condition) then: <action> elseif (condition) then <action> else <action> end}}}
+    * *if statements*: {{{if (condition) then: <action> elseif (condition) then <action> else <action> end}}}
     I think it is wise to put () around conditionals such as 
 {{{
 if (myNumber > yourNumber and yourNumber isnt 0) then:
@@ -228,3 +228,24 @@ if (myNumber > yourNumber and yourNumber isnt 0) then:
 player batter = any from team1 where (type is "batter" and (AVG > 0.3 or PA > 200));
 }}}
     because condition clauses can have a lots of 'and's and 'or's and nested conditions.
+
+  * Primitives and data types
+    * *numbers*: {{{number someNumber = 10;}}}
+    * *strings*: {{{string sString = "Hello, World!";}}}
+    * *teams*: {{{team Dodgers = load(Dodgers.cvs);}}}
+    * *players*: {{{player Juan = "Juan Castro" from Dodgers;}}}
+    * *lists/sets*: Although I have't done any list manipulation in my program, I use lists a lot with the 'any' and 'from' keywords. I might want to create my own lists for different purposes.
+{{{
+list twoTeams = [Dodgers, Astros];
+
+list allTeams = twoTeams + [Pirates, Orioles];
+/*The list allTeams now contains [Dodgers, Astros, Pirates, Orioles].*/
+
+allTeams = allTeams - [Orioles];
+/*The list allTeams now contains [Dodgers, Astros, Pirates].*/
+
+foreach candidateTeams as opposingTeam do:
+  team winner = sim(opposingTeam, Twins, 3);
+  print winner’s name + " wins!";
+end 
+}}}
