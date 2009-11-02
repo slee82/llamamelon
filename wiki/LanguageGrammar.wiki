@@ -14,7 +14,7 @@ statement-list : statement
 
 statement : function-definition
           | sim-function-definition
-          | body-statements
+          | body-statement
           ;
 
 /*Body Statements are all statements except function declarations*/
