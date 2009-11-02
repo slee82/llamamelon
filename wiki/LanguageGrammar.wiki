@@ -1,11 +1,8 @@
 #summary The full grammar for our language
 
-= Introduction =
+<wiki:toc>
 
-Here is where we form and update the language grammar.
-
-= Details =
-
+=program=
 {{{
 /* this is just a sample, will most likely change completely */
 
@@ -18,3 +15,39 @@ statement : stat-definition
           : function-definition
           : expression
 }}}
+
+=if-statement=
+
+=for-loop=
+
+=foreach-loop=
+
+=while-loop
+
+=variable-declaration=
+
+==number-declaration==
+
+==string-declaration==
+
+==team-declaration==
+
+==player-declaration==
+
+==list-declaration==
+
+=stat-declaration=
+
+=function-declaration=
+
+=simfunction-declaration=
+
+=variable assignment=
+
+=sim-function-call=
+
+='where'=
+
+='any'=
+
+='from'=
