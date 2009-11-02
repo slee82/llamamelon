@@ -42,7 +42,8 @@ if-statement : "if" "(" expression ")" "then:" body-statement-list else-statemen
              ;
 
 else-statement : "end"
-               | "else:" statement-list "end"
+               | "elseif" "(" expression ")" "then:" body-statement-list else-statement
+               | "else:" body-statement-list "end"
                ;
 }}}
 
