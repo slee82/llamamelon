@@ -22,7 +22,7 @@ statement : if-statement
 
 =if-statement=
 
-=loop-statements=
+=loop-statement=
 
 ==for-loop==
 
