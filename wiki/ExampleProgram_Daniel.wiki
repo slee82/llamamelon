@@ -227,7 +227,7 @@ player batter = any from team1 where (type is "batter" and (AVG > 0.3 or PA > 20
 }}}
     because condition clauses can have a lots of 'and's and 'or's and nested conditions.
 
-  * Primitives and data types
+  * *Primitives and data types*
     * *numbers*: {{{number someNumber = 10;}}}
     * *strings*: {{{string sString = "Hello, World!";}}}
     * *teams*: {{{team Dodgers = load(Dodgers.cvs);}}}
