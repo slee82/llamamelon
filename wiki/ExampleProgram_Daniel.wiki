@@ -183,6 +183,8 @@ etc...
   * Getting rid of 'define': A token that serves no purpose.
   * Using ';' to terminate commands: I don't mind using '@', '#' or whatever, but I think '.' would cause huge parsing conflicts.
   * Defining simulation functions: The compiler will complain unless the function takes no arguments and returns a team. No need to put () after the name here.
+  * Comma-saparated parameter declaration and passing: {{{combineProb(batter, pitcher);}}}
+  * Java operators such as '+=' or '++' for numbers and '+' for string concatenation are very easy to implement: just pass the code directly to the Java compiler... so why not implement them?
 
   * *Keywords/Shortcuts (in order of appearance)*
     * 'any': following Cipta's example, this selects a random item from a set.
@@ -193,6 +195,14 @@ etc...
     * 'top `<number>`' and 'lowest `<number>`' are _very_ handy shortcuts for use with the 'where' keyword that returns a sub-list with the best or worst items depending on a stat or property. For example:
   {{{where (type is "batter" and AVG is top 5);}}}
     returns a list of 5 players that are top 5 in AVG.
+    * 'all': although I haven't demonstrated this keyword here, it would work similarly to 'any' but would return a list instead of a random item. Useful in scenarios such as:
+{{{
+list bestBatters = all from Dodgers where (type is "batter" and AVG > 0.3);
+
+foreach bestBatters as someAwesomePlayer do:
+  print "The player " + someAwesomePlayer + "has a batting average over 3.0!";
+end
+}}}
   
   * *Clauses*
     * for loops:
