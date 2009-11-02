@@ -24,6 +24,7 @@ body-statement : if-statement
                 | jump-statement
                 | declaration
                 | expression-statement
+                | activate-statement
                 ;
 
 body-statement-list : body-statement
@@ -35,6 +36,11 @@ body-statement-list : body-statement
 ==function-definition==
 
 ==sim-function-definition==
+
+==activate sim-function==
+{{{
+activate-statement : "activate" identifier ";"
+}}}
 
 ==if-statement==
 {{{
@@ -63,7 +69,7 @@ expression-statement : ";"
 
 }}}
 
-====logical====
+===logical===
 {{{
 /* no C-style assignments in the middle of expressions (for now, unless everyone 
    wants it) */
@@ -101,7 +107,7 @@ comparison-expression : addition-expression
                       ;
 }}}
 
-====arithmetic====
+===arithmetic===
 {{{
 addition-expression : multiplication-expression
                     | addition-expression "+" multiplication-expression
@@ -113,7 +119,7 @@ multiplication-expression : unary-expression
 
 }}}
 
-====unary====
+===unary===
 {{{
 
 /* from C reference: "Expressions with unary operators group right to left" */
