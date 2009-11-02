@@ -38,9 +38,11 @@ body-statement-list : body-statement
 ==if-statement==
 {{{
 if-statement : "if" "(" expression ")" "then:" body-statement-list else-statement
+             ;
 
 else-statement : "end"
                | "else:" statement-list "end"
+               ;
 }}}
 
 ==iteration-statement==
