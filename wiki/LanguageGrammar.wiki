@@ -160,3 +160,16 @@ primary-expression : identifier
                    | "(" expression ")" // completes the cycle
 
 }}}
+
+===not placed yet===
+{{{
+/* things we need to figure out where to put in the expression evaluation order */
+
+from-expression : where-expression
+                | from-matcher "from" from-expression // right-associative
+                ;
+
+where-expression : expression
+                 | where-expression "where" "(" expression ")"
+                 ;
+}}}
