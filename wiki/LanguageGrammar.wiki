@@ -1,5 +1,6 @@
 #summary The full grammar for our language
-_Refer to Appendix A13 of K&R. I'm trying to follow their example while removing the stuff we are not implementing._
+_Refer to Appendix A13 of K&R. I'm trying to follow their example while removing the stuff we are not implementing.
+Check out http://java.sun.com/docs/books/jls/second_edition/html/grammars.doc.html for an explanation of the 'opt' subscript._
 
 <wiki:toc>
 
