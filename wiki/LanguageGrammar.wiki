@@ -27,7 +27,7 @@ body-statement : if-statement
                 ;
 
 body-statement-list : body-statement
-                    |body-statement-list body-statement
+                    | body-statement-list body-statement
                     ;
 
 }}}
