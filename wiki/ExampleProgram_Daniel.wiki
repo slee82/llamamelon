@@ -205,6 +205,17 @@ end
 }}}
   
   * *Clauses*
-    * for loops:
-    * foreach loops:
+    * for loops: not used to iterate through a list, but rather to loop a certain number of times using an incremented variable:
+{{{
+for i from 1 to 5 step 1 do:
+  someNumber = i;
+end
+}}}
+    * foreach loops: This is used to iterate through a list, check this out: http://php.net/manual/en/control-structures.foreach.php
+{{{
+print "The Dodgers roster is:"
+foreach Dodgers as aDodgerPlayer do:
+ print aDodgerPlayer;
+end
+}}}
     * if statements: 
