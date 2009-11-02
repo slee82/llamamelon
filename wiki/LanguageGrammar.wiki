@@ -39,7 +39,10 @@ body-statement-list : body-statement
 {{{
 function definition : "function" identifier "(" parameter-list ")" "is:" body-statement "end"
                     ;
+}}}
 
+===parameter-list===
+{{{
 parameter-list : parameter
                | parameter-list "," parameter
                ;
