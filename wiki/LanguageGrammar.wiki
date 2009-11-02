@@ -17,6 +17,7 @@ statement : function-definition
           | body-statements
           ;
 
+/*Body Statements are all statements except function declarations*/
 body-statements : if-statement
                 | iteration-statement
                 | jump-statement
