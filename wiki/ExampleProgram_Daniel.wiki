@@ -54,8 +54,8 @@ simfunction basicSimulation is:
 
   for i from 1 to 5 step 1 do:
     /*Select random players from the best 5 of each team*/
-    player batter = any from team1 where (type is "batter" and AVG is top 5);
-    player pitcher = any from team2 where (type is "pitcher" and ERA is lowest 5);
+    player batter = any team1 where (type is "batter" and AVG is top 5);
+    player pitcher = any team2 where (type is "pitcher" and ERA is lowest 5);
     /*I am introducing new conditional shortcuts ’top’ and ’lowest’ because doing ’AVG > 3.0’ might
     not work for a team with bad players (would return no players). I think these keywords come
     in handy for selecting best players, which is something you do a lot when simulating baseball.
@@ -73,8 +73,8 @@ simfunction basicSimulation is:
   /*NOW, team2 is batting and team1 is pitching! (5 times)*/
 
   for i from 1 to 5 step 1 do:
-    player batter = any from team2 where (type is "batter" and AVG is top 5);
-    player pitcher = any from team1 where (type is "pitcher" and ERA is lowest 5);
+    player batter = any team2 where (type is "batter" and AVG is top 5);
+    player pitcher = any team1 where (type is "pitcher" and ERA is lowest 5);
     
     combineProb(batter, pitcher);
 
@@ -128,7 +128,7 @@ team winner = sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
 print "Team " + winner’s name + " has won the championship!!\n";
 
 print "Team " + winner’s name + " has the players:";
-foreach winner as winnerPlayer do:
+foreach winnerPlayer in winner do:
   print winnerPlayer’s name;
 end
 }}}
@@ -186,22 +186,17 @@ etc...
 
   * *Keywords/Shortcuts (in order of appearance)*
     * *'any'*: following Cipta's example, this selects a random item from a set.
-    * *'from'*: This keyword might be superfluous, but it makes the english sound better: it indicates the set from which to select an item.
-    * *'where'*: acts as a filter for the 'from' keyword: returns a smaller set that satisfies the conditionals.
+    * *'from'*: It indicates the set from which to select a specific item by name.
+{{{
+player Juan = "Juan Castro" from Dodgers;
+}}}
+    * *'where'*: acts as a filter for lists: returns a smaller set that satisfies the conditionals.
     * *'is'* conditional: Although I like using < and > for comparison, I think 'is' sounds better than '=='. The opposite could be 'isnot' or 'isnt'.
     * *'and'* instead of && and 'or' instead of ||.
     * *'top `<number>`'* and *'lowest `<number>`'* are _very_ handy shortcuts for use with the 'where' keyword that returns a sub-list with the best or worst items depending on a stat or property. For example:
   {{{where (type is "batter" and AVG is top 5);}}}
     returns a list of 5 players that are top 5 in AVG.
-    * *'all'*: although I haven't demonstrated this keyword here, it would work similarly to 'any' but would return a list instead of a random item. Useful in scenarios such as:
-{{{
-list bestBatters = all from Dodgers where (type is "batter" and AVG > 0.3);
-
-foreach bestBatters as someAwesomePlayer do:
-  print "The player " + someAwesomePlayer + "has a batting average over 3.0!";
-end
-}}}
-  
+ 
   * *Clauses*
     * *for loops*: not used to iterate through a list, but rather to loop a certain number of times using an incremented variable:
 {{{
@@ -209,10 +204,10 @@ for i from 1 to 5 step 1 do:
   someNumber = i;
 end
 }}}
-    * *foreach loops*: This is used to iterate through a list, check this out: http://php.net/manual/en/control-structures.foreach.php
+    * *foreach loops*: This is used to iterate through a list.
 {{{
 print "The Dodgers roster is:"
-foreach Dodgers as aDodgerPlayer do:
+foreach aDodgerPlayer in Dodgers do:
  print aDodgerPlayer;
 end
 }}}
@@ -223,7 +218,7 @@ if (myNumber > yourNumber and yourNumber isnt 0) then:
     return myNumber
 }}}
 {{{
-player batter = any from team1 where (type is "batter" and (AVG > 0.3 or PA > 200));
+player batter = any team1 where (type is "batter" and (AVG > 0.3 or PA > 200));
 }}}
     because condition clauses can have a lots of 'and's and 'or's and nested conditions.
 
@@ -242,7 +237,7 @@ list allTeams = twoTeams + [Pirates, Orioles];
 allTeams = allTeams - [Orioles];
 /*The list allTeams now contains [Dodgers, Astros, Pirates].*/
 
-foreach allTeams as opposingTeam do:
+foreach opposingTeam in allTeams do:
   team winner = sim(opposingTeam, Twins, 3);
   print winner’s name + " wins!";
 end 
