@@ -42,7 +42,8 @@ WinningPct = (gWPct - (gWPct * bWPct)) / (gWPct + bWPct - 2 * gWPct * bWPct);
 // this should just return a winning percentage for the better team gWPct
 
 
-    if ( randNumber <= WinningPct ) then:     // randNumber returns a number between 0 and 1 and checks who wins
+    if ( randNumber <= WinningPct ) then:     
+     /*  randNumber returns a number between 0 and 1 not sure if we should make this a built function? */
        print team1's name + " win vs " + team2's name;
        return team1;
     else
