@@ -61,6 +61,10 @@ expression-statement : ";"
                      | expression ";"
                      ;
 
+}}}
+
+====logical====
+{{{
 /* no C-style assignments in the middle of expressions (for now, unless everyone 
    wants it) */
 
@@ -95,14 +99,22 @@ comparison-expression : addition-expression
                       | comparison-expression ">="   addition-expression
                       | comparison-expression "<="   addition-expression
                       ;
+}}}
 
+====arithmetic====
+{{{
 addition-expression : multiplication-expression
                     | addition-expression "+" multiplication-expression
                     | addition-expression "-" multiplication-expression
 
 multiplication-expression : unary-expression
-                          | multiplication-expression "+" unary-expression
-                          | multiplication-expression "-" unary-expression
+                          | multiplication-expression "*" unary-expression
+                          | multiplication-expression "/" unary-expression
+
+}}}
+
+====unary====
+{{{
 
 /* from C reference: "Expressions with unary operators group right to left" */
 unary-expression : postfix-expression
