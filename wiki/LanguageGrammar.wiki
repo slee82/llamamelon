@@ -1,7 +1,6 @@
 #summary The full grammar for our language
 #labels Phase-Design
 _Refer to Appendix A13 of K&R. Also check http://java.sun.com/docs/books/jls/second_edition/html/syntax.doc.html _
-_Look at http://java.sun.com/docs/books/jls/second_edition/html/grammars.doc.html for an explanation of the ',,opt,,' shortcut.
 
 <wiki:toc>
 
