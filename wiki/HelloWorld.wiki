@@ -12,13 +12,14 @@ I've tried following as much of the previous examples as possible.  And of cours
 {{{
 /*  Stats Definitions  */
 
-/ * none all should be built in, I assmue the team's cvs file has a winning percentage */
 
 // loading all the stats for each team
 
 team Yankees  = load(Yankees.cvs);  //not really sure if this is needed
 team Phillies = load(Phillies.cvs);
 
+Yankee's WPct = .636;   //not sure if this would be defined as a stat, or as an attribute
+Phillie's WPct = .574;
 
 
 /* Simulation Function, using the formula based strictly on team's winning percentages  */
