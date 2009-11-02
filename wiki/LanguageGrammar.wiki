@@ -4,6 +4,8 @@ _Refer to Appendix A13 of K&R. Also check http://java.sun.com/docs/books/jls/sec
 
 <wiki:toc>
 
+The grammar has the undefined terminal symbol: _identifier_.
+
 =program=
 {{{
 program : statement-list
