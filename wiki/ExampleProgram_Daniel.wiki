@@ -2,8 +2,6 @@
 #labels Phase-Design
 <wiki:toc>
 
-=I’m not done with this yet=
-
 =The program=
 
 {{{
