@@ -1,13 +1,16 @@
 #summary The full grammar for our language
+_Refer to Appendix A13 of K&R._
 
 <wiki:toc>
 
 =program=
 {{{
 program : statement-list
+        ;
 
 statement-list : statement
                | statement-list statement
+               ;
 
 statement : if-statement
           | loop-statement
@@ -18,6 +21,7 @@ statement : if-statement
           | variable-assignment
           | function-call
           | sim-sunction-call
+          ;
 }}}
 
 =if-statement=
@@ -49,5 +53,7 @@ statement : if-statement
 =any=
 
 =from=
+
+=boolean-expression=
 
 =return=
