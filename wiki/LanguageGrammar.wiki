@@ -12,8 +12,7 @@ statement-list : statement
                | statement-list statement
                ;
 
-statement : expression-statement
-          | function-definition
+statement : function-definition
           | sim-function-definition
           | body-statements
           ;
@@ -22,6 +21,7 @@ body-statements : if-statement
                 | iteration-statement
                 | jump-statement
                 | declaration
+                | expression-statement
                 ;
 
 body-statement-list : body-statement
