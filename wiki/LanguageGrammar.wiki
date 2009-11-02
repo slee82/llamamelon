@@ -4,8 +4,6 @@
 
 =program=
 {{{
-/* this is just a sample, will most likely change completely */
-
 program : statement-list
 
 statement-list : statement
