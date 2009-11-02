@@ -34,6 +34,9 @@ body-statement-list : body-statement
 }}}
 
 ==function-definition==
+{{{
+function definition : "function" identifier "(" parameter-list ")" "is:" body-statement "end"
+}}}
 
 ==sim-function-definition==
 
