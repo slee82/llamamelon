@@ -187,15 +187,15 @@ etc...
   * Java operators such as '+=' or '++' for numbers and '+' for string concatenation are very easy to implement: just pass the code directly to the Java compiler... so why not implement them?
 
   * *Keywords/Shortcuts (in order of appearance)*
-    * 'any': following Cipta's example, this selects a random item from a set.
-    * 'from': This keyword might be superfluous, but it makes the english sound better: it indicates the set from which to select an item.
-    * 'where': acts as a filter for the 'from' keyword: returns a smaller set that satisfies the conditionals.
-    * 'is' conditional: Although I like using < and > for comparison, I think 'is' sounds better than '=='.
-    * 'and' instead of && and 'or' instead of ||.
-    * 'top `<number>`' and 'lowest `<number>`' are _very_ handy shortcuts for use with the 'where' keyword that returns a sub-list with the best or worst items depending on a stat or property. For example:
+    * *'any'*: following Cipta's example, this selects a random item from a set.
+    * *'from'*: This keyword might be superfluous, but it makes the english sound better: it indicates the set from which to select an item.
+    * *'where'*: acts as a filter for the 'from' keyword: returns a smaller set that satisfies the conditionals.
+    * *'is'* conditional: Although I like using < and > for comparison, I think 'is' sounds better than '=='.
+    * *'and'* instead of && and 'or' instead of ||.
+    * *'top `<number>`'* and *'lowest `<number>`'* are _very_ handy shortcuts for use with the 'where' keyword that returns a sub-list with the best or worst items depending on a stat or property. For example:
   {{{where (type is "batter" and AVG is top 5);}}}
     returns a list of 5 players that are top 5 in AVG.
-    * 'all': although I haven't demonstrated this keyword here, it would work similarly to 'any' but would return a list instead of a random item. Useful in scenarios such as:
+    * *'all'*: although I haven't demonstrated this keyword here, it would work similarly to 'any' but would return a list instead of a random item. Useful in scenarios such as:
 {{{
 list bestBatters = all from Dodgers where (type is "batter" and AVG > 0.3);
 
