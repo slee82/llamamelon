@@ -169,6 +169,9 @@ from-expression : where-expression
                 | from-matcher "from" from-expression // right-associative
                 ;
 
+from-matcher : "any" | where-expression
+             ;
+
 where-expression : expression
                  | where-expression "where" "(" expression ")"
                  ;
