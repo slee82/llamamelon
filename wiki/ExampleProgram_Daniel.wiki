@@ -244,7 +244,7 @@ list allTeams = twoTeams + [Pirates, Orioles];
 allTeams = allTeams - [Orioles];
 /*The list allTeams now contains [Dodgers, Astros, Pirates].*/
 
-foreach candidateTeams as opposingTeam do:
+foreach allTeams as opposingTeam do:
   team winner = sim(opposingTeam, Twins, 3);
   print winner’s name + " wins!";
 end 
