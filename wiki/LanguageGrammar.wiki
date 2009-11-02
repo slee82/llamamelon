@@ -1,4 +1,5 @@
 #summary The full grammar for our language
+#labels Phase-Design
 _Refer to Appendix A13 of K&R. Also check http://java.sun.com/docs/books/jls/second_edition/html/syntax.doc.html _
 
 <wiki:toc>
@@ -52,3 +53,75 @@ else-statement : "end"
 ==declaration==
 
 ==expression-statement==
+{{{
+/* use multiple nonterminals to represent precedence, just like in the C grammar */
+
+expression-statement : ";"
+                     | expression ";"
+                     ;
+
+/* no C-style assignments in the middle of expressions (for now, unless everyone 
+   wants it) */
+
+expression : logical-or-expression
+           ;
+
+logical-or-expression : logical-and-expression
+                      | logical-or-expression "||" logical-and-expression
+                      ;
+
+logical-and-expression : logical-not-expression
+                       | logical-and-expression "&&" logical-not-expression
+                       ;
+
+logical-not-expression : comparison-expression
+                       | "not" logical-not-expression
+                       ;
+
+/* 
+ * following Python where '==' is at the same preccedence as '>', '<', etc.
+ * different from C where equality comes first. For example,
+ *
+ * "1 == 3 > 2" would return true in C, because the expression is evaluated as
+ * "1 == (3 > 2)" instead of "(1 == 3) > 2", which is how Python interprets it.
+ */
+
+comparison-expression : addition-expression
+                      | comparison-expression "is"   addition-expression
+                      | comparison-expression "isnt" addition-expression
+                      | comparison-expression ">"    addition-expression
+                      | comparison-expression "<"    addition-expression
+                      | comparison-expression ">="   addition-expression
+                      | comparison-expression "<="   addition-expression
+                      ;
+
+addition-expression : multiplication-expression
+                    | addition-expression "+" multiplication-expression
+                    | addition-expression "-" multiplication-expression
+
+multiplication-expression : unary-expression
+                          | multiplication-expression "+" unary-expression
+                          | multiplication-expression "-" unary-expression
+
+/* from C reference: "Expressions with unary operators group right to left" */
+unary-expression : postfix-expression
+                 | "++" unary-expression
+                 | "--" unary-expression
+
+/* from C reference: "The operators in postfix expressions group left to right" */
+postfix-expression : primary-expression
+                   | postfix-expression "(" ")" // function call
+                   | postfix-expression "(" argument-list ")" // function call
+                   | postfix-expression "'s" identifier // attribute/stats call
+                   | postfix-expression "++"
+                   | postfix-expression "--"
+
+argument-list : expression
+              | argument-list "," expression
+
+primary-expression : identifier
+                   | number
+                   | string
+                   | "(" expression ")" // completes the cycle
+
+}}}
