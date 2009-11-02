@@ -11,9 +11,15 @@ program : statement-list
 statement-list : statement
                | statement-list statement
 
-statement : stat-definition
-          | function-definition
-          | expression
+statement : if-statement
+          | loop-statement
+          | variable-declaration
+          | stat-declaration
+          | function-declaration
+          | simfunction-declaration
+          | variable assignment
+          | function-call
+          | sim-sunction-call
 }}}
 
 =if-statement=
@@ -27,16 +33,6 @@ statement : stat-definition
 ==while-loop==
 
 =variable-declaration=
-
-==number-declaration==
-
-==string-declaration==
-
-==team-declaration==
-
-==player-declaration==
-
-==list-declaration==
 
 =stat-declaration=
 
