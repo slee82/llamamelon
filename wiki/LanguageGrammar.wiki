@@ -41,6 +41,9 @@ function definition : "function" identifier "(" parameter-list ")" "is:" body-st
 parameter-list : parameter
                | parameter-list "," parameter
                ;
+
+parameter : type identifier
+          ;
 }}}
 
 ==sim-function-definition==
