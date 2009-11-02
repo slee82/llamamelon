@@ -15,7 +15,7 @@ statement : if-statement
           | stat-declaration
           | function-declaration
           | simfunction-declaration
-          | variable assignment
+          | variable-assignment
           | function-call
           | sim-sunction-call
 }}}
@@ -38,7 +38,7 @@ statement : if-statement
 
 =simfunction-declaration=
 
-=variable assignment=
+=variable-assignment=
 
 =function-call=
 
