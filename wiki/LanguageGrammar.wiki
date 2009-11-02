@@ -1,5 +1,5 @@
 #summary The full grammar for our language
-_Refer to Appendix A13 of K&R. Also check http://java.sun.com/docs/books/jls/second_edition/html/syntax.doc.html_
+_Refer to Appendix A13 of K&R. Also check http://java.sun.com/docs/books/jls/second_edition/html/syntax.doc.html _
 
 <wiki:toc>
 
