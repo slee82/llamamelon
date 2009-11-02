@@ -13,13 +13,19 @@ statement-list : statement
                ;
 
 statement : expression-statement
-          | if-statement
-          | iteration-statement
-          | jump-statement
           | function-definition
           | sim-function-definition
-          | declaration
+          | nonfunction-declarations
           ;
+
+nonfunction-declarations : if-statement
+          | iteration-statement
+          | jump-statement
+          | declaration
+
+nonfunction-declarations-list: nonfunction-declarations
+                             |nonfunction-declarations-list nonfunction-declarations
+
 }}}
 
 =if statement=
