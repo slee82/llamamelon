@@ -190,7 +190,7 @@ etc...
     * *'any'*: following Cipta's example, this selects a random item from a set.
     * *'from'*: This keyword might be superfluous, but it makes the english sound better: it indicates the set from which to select an item.
     * *'where'*: acts as a filter for the 'from' keyword: returns a smaller set that satisfies the conditionals.
-    * *'is'* conditional: Although I like using < and > for comparison, I think 'is' sounds better than '=='.
+    * *'is'* conditional: Although I like using < and > for comparison, I think 'is' sounds better than '=='. The opposite could be 'isnot' or 'isnt'.
     * *'and'* instead of && and 'or' instead of ||.
     * *'top `<number>`'* and *'lowest `<number>`'* are _very_ handy shortcuts for use with the 'where' keyword that returns a sub-list with the best or worst items depending on a stat or property. For example:
   {{{where (type is "batter" and AVG is top 5);}}}
@@ -218,4 +218,13 @@ foreach Dodgers as aDodgerPlayer do:
  print aDodgerPlayer;
 end
 }}}
-    * if statements: 
+    * if statements: {{{if (condition) then: <action> elseif (condition) then <action> else <action> end}}}
+    I think it is wise to put () around conditionals such as 
+{{{
+if (myNumber > yourNumber and yourNumber isnt 0) then:
+    return myNumber
+}}}
+{{{
+player batter = any from team1 where (type is "batter" and (AVG > 0.3 or PA > 200));
+}}}
+    because condition clauses can have a lots of 'and's and 'or's and nested conditions.
