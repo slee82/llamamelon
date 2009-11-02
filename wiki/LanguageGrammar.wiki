@@ -31,7 +31,9 @@ body-statement-list : body-statement
 
 }}}
 
-==expression-statement==
+==function-definition==
+
+==sim-function-definition==
 
 ==if-statement==
 {{{
@@ -45,8 +47,6 @@ else-statement : "end"
 
 ==jump-statement==
 
-==function-definition==
-
-==sim-function-definition==
-
 ==declaration==
+
+==expression-statement==
