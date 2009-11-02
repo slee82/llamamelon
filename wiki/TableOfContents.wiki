@@ -5,8 +5,10 @@
 
     * [LanguageGrammar Full Grammar]
     * [SyntaxRules Full Syntax]
+    * [CSVStruct CSV Files - Structure]
 
 *[Dumpster Dumpster - Dump all your ideas in here]
     * [ExamplePrograms Example Program - Nathan]
     * [ExampleProgram_Cipta Example Program - Cipta]
     * [ExampleProgram_Daniel Example Program - Daniel]
+    * [HelloWorld Example Program - Hello, World!]
