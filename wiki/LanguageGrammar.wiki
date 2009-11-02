@@ -15,7 +15,9 @@ statement-list : statement
 statement : expression-statement
           | if-statement
           | iteration-statement
-          | 
-          | 
+          | jump-statement
+          | function-definition
+          | sim-function-definition
+          | declaration
           ;
 }}}
