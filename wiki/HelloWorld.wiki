@@ -1,5 +1,4 @@
-#summary One-sentence summary of this page.
-# my attempt at a HelloWorld program, simulating a single game
+my attempt at a HelloWorld program, simulating a single game
 
 = Introduction =
 
