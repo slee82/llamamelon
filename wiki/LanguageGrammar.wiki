@@ -22,12 +22,12 @@ statement : function-definition
 
 /*Body Statements are all statements except function declarations*/
 body-statement : if-statement
-                | iteration-statement
-                | jump-statement
-                | declaration
-                | expression-statement
-                | activate-statement
-                ;
+               | iteration-statement
+               | jump-statement
+               | declaration
+               | expression-statement
+               | activate-statement
+               ;
 
 body-statement-list : body-statement
                     | body-statement-list body-statement
@@ -158,10 +158,12 @@ comparison-expression : addition-expression
 addition-expression : multiplication-expression
                     | addition-expression "+" multiplication-expression
                     | addition-expression "-" multiplication-expression
+                    ;
 
 multiplication-expression : unary-expression
                           | multiplication-expression "*" unary-expression
                           | multiplication-expression "/" unary-expression
+                          ;
 
 }}}
 
@@ -172,6 +174,7 @@ multiplication-expression : unary-expression
 unary-expression : postfix-expression
                  | "++" unary-expression
                  | "--" unary-expression
+                 ;
 
 /* from C reference: "The operators in postfix expressions group left to right" */
 postfix-expression : primary-expression
@@ -180,14 +183,17 @@ postfix-expression : primary-expression
                    | postfix-expression "'s" identifier // attribute/stats call
                    | postfix-expression "++"
                    | postfix-expression "--"
+                   ;
 
 argument-list : expression
               | argument-list "," expression
+              ;
 
 primary-expression : identifier
                    | number
                    | string
                    | "(" expression ")" // completes the cycle
+                   ;
 
 }}}
 
