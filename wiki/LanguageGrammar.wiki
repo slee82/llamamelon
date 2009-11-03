@@ -92,7 +92,31 @@ jump-statement : "break" ";"
 
 ==declaration==
 {{{
-/*The declaration node in A13 of K&R is hard to follow. I feel like ours can be simpler.*/
+/*The declaration node in A13 of K&R is hard to follow. I feel like ours can be simpler, like the Java one.*/
+declaration : type variable-declarators
+            ;
+
+variable-declarators : variable-declarator
+	             | variable-declarators "," variable-declarator
+                     ;
+
+variable-declarator : indentifier "=" variable-initializer
+                    ;
+
+variable-initializer : list-initializer
+	             | expression
+                     ;
+}}}
+
+===list-initializer===
+{{{
+list-initializer : "[" variable-list "]"
+                 | "[" "]"
+                 ;
+
+variable-list : variable-initializer
+              | variable-list "," variable-initializer
+              ;
 }}}
 
 ===type===
