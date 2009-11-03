@@ -54,7 +54,7 @@ parameter : type identifier
 ==sim-function-definition==
 {{{
 sim-function-definition : "simfunction" identifier "(" "team" identifier "," "team" identifier ")" "is:" body-statement "end"
-                    ;
+                        ;
 }}}
 
 ==activate-statement==
