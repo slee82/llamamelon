@@ -12,4 +12,5 @@
     * [ExampleProgram_Cipta Example Program - Cipta]
     * [ExampleProgram_Daniel Example Program - Daniel]
     * [HelloWorld Example Program - Hello, World!]
+    * [HelloWorld_simple Example Program - Simple HW!]
    
