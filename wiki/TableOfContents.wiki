@@ -11,4 +11,4 @@
     * [ExamplePrograms Example Program - Nathan]
     * [ExampleProgram_Cipta Example Program - Cipta]
     * [ExampleProgram_Daniel Example Program - Daniel]
-    * [HelloWorld Example Program - Hello, World!]
+    * [ExampleProgram_Sam Example Program - Sam]
