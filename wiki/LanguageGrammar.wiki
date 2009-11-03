@@ -4,7 +4,7 @@ _Refer to Appendix A13 of K&R. Also check http://java.sun.com/docs/books/jls/sec
 
 <wiki:toc>
 
-The grammar has the undefined terminal symbol: _identifier_.
+The grammar has the undefined terminal symbols: _identifier, string, number_.
 
 =program=
 {{{
@@ -74,6 +74,13 @@ else-statement : "end"
 }}}
 
 ==iteration-statement==
+{{{
+iteration-statement : "while" "(" expression ")" "do:" body-statement-list "end"
+                    | "do:" body-statement-list "while" "(" expression ")" ";"
+                    | "for" identifier "from" number "to" number "step" number "do:" body-statement-list "end"
+                    | "foreach" identifier "in" identifier "do:" body-statement-list "end"
+                    ;
+}}}
 
 ==jump-statement==
 
