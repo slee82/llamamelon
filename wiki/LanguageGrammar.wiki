@@ -75,6 +75,16 @@ else-statement : "end"
 
 ==declaration==
 
+===type===
+{{{
+type : number
+     | string
+     | list
+     | team
+     | player
+     ;
+}}}
+
 ==expression-statement==
 {{{
 /* use multiple nonterminals to represent precedence, just like in the C grammar */
