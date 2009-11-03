@@ -219,11 +219,19 @@ primary-expression : atom-expression
 
 function-call : identifier "(" ")"
               | identifier "(" argument-list ")"
+              | "sim" "(" sim-arguments ")"
               ;
 
 argument-list : expression
               | argument-list "," expression
               ;
+
+sim-arguments : sim-arg "," sim-arg "," number
+              ;
+
+sim-arg : expression
+        | "(" sim-arguments ")"
+        ;
 
 atom-expression : identifier
                 | number
