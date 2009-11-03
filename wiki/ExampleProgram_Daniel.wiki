@@ -86,7 +86,7 @@ simfunction basicSimulation is:
   if (team1Score > team2Score) then:
     print "Team " + team1’s name + " wins against team " + team2’s name + "!!";
     return team1;
-  else
+  else:
     print "Team " + team2’s name + " wins against team " + team1’s name + "!!";
     return team2;
   end
@@ -211,7 +211,7 @@ foreach aDodgerPlayer in Dodgers do:
  print aDodgerPlayer;
 end
 }}}
-    * *if statements*: {{{if (condition) then: <action> elseif (condition) then <action> else <action> end}}}
+    * *if statements*: {{{if (condition) then: <action> elseif: (condition) then <action> else: <action> end}}}
     I think it is wise to put () around conditionals such as 
 {{{
 if (myNumber > yourNumber and yourNumber isnt 0) then:
