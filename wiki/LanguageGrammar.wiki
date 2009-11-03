@@ -161,7 +161,7 @@ multiplication_expression : unary_expression
 /* from C reference: "Expressions with unary operators group right to left" */
 unary_expression : postfix_expression
                  | "++" unary_expression
-                 | "__" unary_expression
+                 | "--" unary_expression
                  | primary_expression "from" unary_expression
                  ;
 
