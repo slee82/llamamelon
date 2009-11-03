@@ -52,7 +52,7 @@ simfunction basicSimulation is:
 
   /*team1 is batting and team2 is pitching! (5 times)*/
 
-  for i from 1 to 5 step 1 do:
+  do 5 times:
     /*Select random players from the best 5 of each team*/
     player batter = any team1 where (type is "batter" and AVG is top 5);
     player pitcher = any team2 where (type is "pitcher" and ERA is lowest 5);
@@ -72,7 +72,7 @@ simfunction basicSimulation is:
 
   /*NOW, team2 is batting and team1 is pitching! (5 times)*/
 
-  for i from 1 to 5 step 1 do:
+  do 5 times:
     player batter = any team2 where (type is "batter" and AVG is top 5);
     player pitcher = any team1 where (type is "pitcher" and ERA is lowest 5);
     
