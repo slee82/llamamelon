@@ -37,7 +37,7 @@ body-statement-list : body-statement
 
 ==function-definition==
 {{{
-function definition : "function" identifier "(" parameter-list ")" "is:" body-statement "end"
+function-definition : "function" identifier "(" parameter-list ")" "is:" body-statement "end"
                     ;
 }}}
 
@@ -52,6 +52,10 @@ parameter : type identifier
 }}}
 
 ==sim-function-definition==
+{{{
+sim-function-definition : "simfunction" identifier "(" "team" identifier "," "team" identifier ")" "is:" body-statement "end"
+                    ;
+}}}
 
 ==activate sim-function==
 {{{
