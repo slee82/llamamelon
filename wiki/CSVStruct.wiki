@@ -11,6 +11,8 @@ Here's what I had envisioned (Nathan), but obviously this is open to change.
 Example CSV file:
 {{{
 Team Name: Houston Astros,Houston,Astros
+Team Stats
+74,88
 Batting
 Ivan Rodriguez,327,41,82,15,2,8,13
 Lance Berkman,460,73,126,31,1,25,97
@@ -37,11 +39,13 @@ Russ Ortiz,85.2,95,53,48,65
 
 ==Explanation==
  * So the first line of the file contains the team name, and every way to call the team. So then the team could be referred to as Houston Astros, Houston, or Astros. This is comma-delimited.
- * Batting starts the batting section and Pitching starts the pitching section.
+ * Team stats starts the team stats section and Batting starts the batting section and Pitching starts the pitching section.
  * Only these stats are included in the csv. Everything else would be calculated. 
+   * For Teams: Wins, Losses
    * For Pitchers: IP (innings pitched), K (strikeouts), H (hits allowed), BB (walks allowed), and ER (earned runs).
    * For Batters: AB (at-bats), R (runs), H (hits) 2B (doubles), 3B (triples), HR (home runs), and BB (walks).
  * The structure is as follows:
+   * Team Stats: Wins,Losses
    * Batting: Name,AB,R,H,2B,3B,HR,BB
    * Pitching: Name,IP,H,ER,BB,SO
 
