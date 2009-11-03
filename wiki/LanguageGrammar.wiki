@@ -91,6 +91,9 @@ jump-statement : "break" ";"
 }}}
 
 ==declaration==
+{{{
+/*The declaration node in A13 of K&R is hard to follow. I feel like ours can be simpler.*/
+}}}
 
 ===type===
 {{{
