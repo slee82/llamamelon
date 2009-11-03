@@ -83,6 +83,12 @@ iteration-statement : "while" "(" expression ")" "do:" body-statement-list "end"
 }}}
 
 ==jump-statement==
+{{{
+jump-statement : "break" ";"
+               | "return" expression ";"
+               | "return" ";"
+               ;
+}}}
 
 ==declaration==
 
