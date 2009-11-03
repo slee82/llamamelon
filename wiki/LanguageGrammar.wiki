@@ -57,7 +57,7 @@ sim-function-definition : "simfunction" identifier "(" "team" identifier "," "te
                     ;
 }}}
 
-==activate sim-function==
+==activate-statement==
 {{{
 activate-statement : "activate" identifier ";"
 }}}
