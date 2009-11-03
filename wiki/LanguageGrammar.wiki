@@ -27,6 +27,7 @@ body-statement : if-statement
                | declaration
                | expression-statement
                | activate-statement
+               | print-statement
                ;
 
 body-statement-list : body-statement
@@ -60,6 +61,13 @@ sim-function-definition : "simfunction" identifier "(" "team" identifier "," "te
 ==activate-statement==
 {{{
 activate-statement : "activate" identifier ";"
+                   ;
+}}}
+
+==print-statement==
+{{{
+print-statement : "print" expression ";"
+                ;
 }}}
 
 ==if-statement==
