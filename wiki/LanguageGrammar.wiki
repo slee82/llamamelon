@@ -202,22 +202,34 @@ unary-expression : postfix-expression
 
 /* from C reference: "The operators in postfix expressions group left to right" */
 postfix-expression : primary-expression
-                   | postfix-expression "(" ")" // function call
-                   | postfix-expression "(" argument-list ")" // function call
                    | postfix-expression "'s" identifier // attribute/stats call
                    | postfix-expression "++"
                    | postfix-expression "--"
                    ;
 
+/*
+ * since we're not going to pass around function pointers like C, calling
+ * functions is as simple as getting an identifier, and can be pushed down to
+ * "primary expressions"
+ */
+
+primary-expression : atom-expression
+                   | function-call
+                   ;
+
+function-call : identifier "(" ")"
+              | identifier "(" argument-list ")"
+              ;
+
 argument-list : expression
               | argument-list "," expression
               ;
 
-primary-expression : identifier
-                   | number
-                   | string
-                   | "(" expression ")" // completes the cycle
-                   ;
+atom-expression : identifier
+                | number
+                | string
+                | "(" expression ")" // completes the cycle
+                ;
 
 }}}
 
