@@ -6,165 +6,135 @@ _Refer to Appendix A13 of K&R. Also check http://java.sun.com/docs/books/jls/sec
 
 The grammar has the undefined terminal symbols: _identifier, string, number_.
 
-=program=
+
 {{{
-program : statement-list
+%{
+import java.lang.Math;
+import java.io.*;
+import java.util.StringTokenizer;
+%}
+
+%token identifier
+%token string
+%token number
+
+%%
+program : statement_list
         ;
 
-statement-list : statement
-               | statement-list statement
+statement_list : statement
+               | statement_list statement
                ;
 
-statement : function-definition
-          | sim-function-definition
-          | body-statement
+statement : function_definition
+          | sim_function_definition
+          | body_statement
           ;
 
 /*Body Statements are all statements except function declarations*/
-body-statement : if-statement
-               | iteration-statement
-               | jump-statement
+body_statement : if_statement
+               | iteration_statement
+               | jump_statement
                | declaration
-               | expression-statement
-               | activate-statement
-               | print-statement
+               | expression_statement
+               | activate_statement
+               | print_statement
                ;
 
-body-statement-list : body-statement
-                    | body-statement-list body-statement
+body_statement_list : body_statement
+                    | body_statement_list body_statement
                     ;
 
-}}}
-
-==function-definition==
-{{{
-function-definition : "function" identifier "(" parameter-list ")" "is:" body-statement "end"
+function_definition : "function" identifier "(" parameter_list ")" "is:" body_statement "end"
                     ;
-}}}
 
-===parameter-list===
-{{{
-parameter-list : parameter
-               | parameter-list "," parameter
+parameter_list : parameter
+               | parameter_list "," parameter
                ;
 
 parameter : type identifier
           ;
-}}}
 
-==sim-function-definition==
-{{{
-sim-function-definition : "simfunction" identifier "(" type identifier "," type identifier ")" "is:" body-statement "end"
+sim_function_definition : "simfunction" identifier "(" type identifier "," type identifier ")" "is:" body_statement "end"
                         ;
-}}}
 
-==activate-statement==
-{{{
-activate-statement : "activate" identifier ";"
+activate_statement : "activate" identifier ";"
                    ;
-}}}
 
-==print-statement==
-{{{
-print-statement : "print" expression ";"
+print_statement : "print" expression ";"
                 ;
-}}}
 
-==if-statement==
-{{{
-if-statement : "if" "(" expression ")" "then:" body-statement-list else-statement
+if_statement : "if" "(" expression ")" "then:" body_statement_list else_statement
              ;
 
-else-statement : "end"
-               | "elseif" "(" expression ")" "then:" body-statement-list else-statement
-               | "else:" body-statement-list "end"
+else_statement : "end"
+               | "elseif" "(" expression ")" "then:" body_statement_list else_statement
+               | "else:" body_statement_list "end"
                ;
-}}}
 
-==iteration-statement==
-{{{
-iteration-statement : "while" "(" expression ")" "do:" body-statement-list "end"
-                    | "do:" body-statement-list "while" "(" expression ")" ";"
-                    | "for" identifier "from" number "to" number "step" number "do:" body-statement-list "end"
-                    | "foreach" identifier "in" identifier "do:" body-statement-list "end"
+iteration_statement : "while" "(" expression ")" "do:" body_statement_list "end"
+                    | "do:" body_statement_list "while" "(" expression ")" ";"
+                    | "for" identifier "from" number "to" number "step" number "do:" body_statement_list "end"
+                    | "foreach" identifier "in" identifier "do:" body_statement_list "end"
                     ;
-}}}
 
-==jump-statement==
-{{{
-jump-statement : "break" ";"
+jump_statement : "break" ";"
                | "return" expression ";"
                | "return" ";"
                ;
-}}}
 
-==declaration==
-{{{
 /*The declaration node in A13 of K&R is hard to follow. I feel like ours can be simpler, like the Java one.*/
-declaration : type variable-declarators
+declaration : type variable_declarators
             ;
 
-variable-declarators : variable-declarator
-	             | variable-declarators "," variable-declarator
+variable_declarators : variable_declarator
+                     | variable_declarators "," variable_declarator
                      ;
 
-variable-declarator : indentifier "=" variable-initializer
+variable_declarator : identifier "=" variable_initializer
                     ;
 
-variable-initializer : list-initializer
-	             | expression
+variable_initializer : list_initializer
+                     | expression
                      ;
-}}}
 
-===list-initializer===
-{{{
-list-initializer : "[" variable-list "]"
+list_initializer : "[" variable_list "]"
                  | "[" "]"
                  ;
 
-variable-list : variable-initializer
-              | variable-list "," variable-initializer
+variable_list : variable_initializer
+              | variable_list "," variable_initializer
               ;
-}}}
 
-===type===
-{{{
 type : "number"
      | "string"
      | "list"
      | "team"
      | "player"
      ;
-}}}
 
-==expression-statement==
-{{{
 /* use multiple nonterminals to represent precedence, just like in the C grammar */
 
-expression-statement : ";"
+expression_statement : ";"
                      | expression ";"
                      ;
 
-}}}
-
-===logical===
-{{{
-/* no C-style assignments in the middle of expressions (for now, unless everyone 
+/* no C_style assignments in the middle of expressions (for now, unless everyone 
    wants it) */
 
-expression : logical-or-expression
+expression : logical_or_expression
            ;
 
-logical-or-expression : logical-and-expression
-                      | logical-or-expression "or" logical-and-expression
+logical_or_expression : logical_and_expression
+                      | logical_or_expression "or" logical_and_expression
                       ;
 
-logical-and-expression : logical-not-expression
-                       | logical-and-expression "and" logical-not-expression
+logical_and_expression : logical_not_expression
+                       | logical_and_expression "and" logical_not_expression
                        ;
 
-logical-not-expression : comparison-expression
-                       | "not" logical-not-expression
+logical_not_expression : comparison_expression
+                       | "not" logical_not_expression
                        ;
 
 /* 
@@ -175,46 +145,38 @@ logical-not-expression : comparison-expression
  * "1 == (3 > 2)" instead of "(1 == 3) > 2", which is how Python interprets it.
  */
 
-comparison-expression : addition-expression
-                      | comparison-expression "is"   addition-expression
-                      | comparison-expression "isnt" addition-expression
-                      | comparison-expression ">"    addition-expression
-                      | comparison-expression "<"    addition-expression
-                      | comparison-expression ">="   addition-expression
-                      | comparison-expression "<="   addition-expression
+comparison_expression : addition_expression
+                      | comparison_expression "is"   addition_expression
+                      | comparison_expression "isnt" addition_expression
+                      | comparison_expression ">"    addition_expression
+                      | comparison_expression "<"    addition_expression
+                      | comparison_expression ">="   addition_expression
+                      | comparison_expression "<="   addition_expression
                       ;
-}}}
 
-===arithmetic===
-{{{
-addition-expression : multiplication-expression
-                    | addition-expression "+" multiplication-expression
-                    | addition-expression "-" multiplication-expression
+addition_expression : multiplication_expression
+                    | addition_expression "+" multiplication_expression
+                    | addition_expression "-" multiplication_expression
                     ;
 
-multiplication-expression : unary-expression
-                          | multiplication-expression "*" unary-expression
-                          | multiplication-expression "/" unary-expression
+multiplication_expression : unary_expression
+                          | multiplication_expression "*" unary_expression
+                          | multiplication_expression "/" unary_expression
                           ;
 
-}}}
-
-===unary===
-{{{
-
 /* from C reference: "Expressions with unary operators group right to left" */
-unary-expression : postfix-expression
-                 | "++" unary-expression
-                 | "--" unary-expression
-                 | primary-expression "from" unary-expression
+unary_expression : postfix_expression
+                 | "++" unary_expression
+                 | "__" unary_expression
+                 | primary_expression "from" unary_expression
                  ;
 
 /* from C reference: "The operators in postfix expressions group left to right" */
-postfix-expression : primary-expression
-                   | postfix-expression "'s" identifier // attribute/stats call
-                   | postfix-expression "++"
-                   | postfix-expression "--"
-                   | postfix-expression "where" "(" expression ")"
+postfix_expression : primary_expression
+                   | postfix_expression "'s" identifier // attribute/stats call
+                   | postfix_expression "++"
+                   | postfix_expression "--"
+                   | postfix_expression "where" "(" expression ")"
                    ;
 
 /*
@@ -223,46 +185,33 @@ postfix-expression : primary-expression
  * "primary expressions"
  */
 
-primary-expression : atom-expression
-                   | function-call
+primary_expression : atom_expression
+                   | function_call
                    ;
 
-function-call : identifier "(" ")"
-              | identifier "(" argument-list ")"
-              | "sim" "(" sim-arguments ")"
+function_call : identifier "(" ")"
+              | identifier "(" argument_list ")"
+              | "sim" "(" sim_arguments ")"
               ;
 
-argument-list : expression
-              | argument-list "," expression
+argument_list : expression
+              | argument_list "," expression
               ;
 
-sim-arguments : sim-arg "," sim-arg "," number
+sim_arguments : sim_arg "," sim_arg "," number
               ;
 
-sim-arg : expression
-        | "(" sim-arguments ")"
+sim_arg : expression
+        | "(" sim_arguments ")"
         ;
 
-atom-expression : identifier
+atom_expression : identifier
                 | number
                 | string
                 | "(" expression ")" // completes the cycle
                 ;
+%%
 
-}}}
 
-===not placed yet===
-{{{
-/* things we need to figure out where to put in the expression evaluation order */
 
-from-expression : where-expression
-                | from-matcher "from" from-expression // right-associative
-                ;
-
-from-matcher : "any" | where-expression
-             ;
-
-where-expression : expression
-                 | where-expression "where" "(" expression ")"
-                 ;
 }}}
