@@ -8,12 +8,6 @@ The grammar has the undefined terminal symbols: _identifier, string, number_.
 
 
 {{{
-%{
-import java.lang.Math;
-import java.io.*;
-import java.util.StringTokenizer;
-%}
-
 %token identifier
 %token string
 %token number
