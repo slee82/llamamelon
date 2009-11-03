@@ -124,7 +124,7 @@ end
   following nested simulations (so we don’t have to pass it multiple times).*/
 activate basicSimulation;
 
-team winner = sim((Astros, Dodgers, 3), (Orioles, Twins, 3), 3);
+team winner = sim( sim(Astros, Dodgers, 3), sim(Orioles, Twins, 3), 3);
 print "Team " + winner’s name + " has won the championship!!\n";
 
 print "Team " + winner’s name + " has the players:";
