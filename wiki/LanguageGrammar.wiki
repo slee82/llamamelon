@@ -39,7 +39,7 @@ body_statement_list : body_statement
                     | body_statement_list body_statement
                     ;
 
-function_definition : "function" identifier "(" parameter_list ")" "is:" body_statement "end"
+function_definition : "function" identifier "(" parameter_list ")" "returns" type ":" body_statement "end"
                     ;
 
 parameter_list : parameter
@@ -49,7 +49,7 @@ parameter_list : parameter
 parameter : type identifier
           ;
 
-sim_function_definition : "simfunction" identifier "(" type identifier "," type identifier ")" "is:" body_statement "end"
+sim_function_definition : "simfunction" identifier "is:" body_statement "end"
                         ;
 
 activate_statement : "activate" identifier ";"
