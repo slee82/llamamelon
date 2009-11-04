@@ -67,7 +67,7 @@ if_statement : "if" "(" expression ")" "then:" body_statement_list else_statemen
              ;
 
 else_statement : "end"
-               | "else:" body_statement_list "end"
+               | "else:" body_statement_list else_statement
                ;
 
 iteration_statement : "do:" expression "times:" body_statement_list "end"
