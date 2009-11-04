@@ -76,9 +76,10 @@ else_statement : "else:" body_statement_list
                ;
 
 /**ITERATION_STATEMENT**/
-iteration_statement : "do:" expression "times:" body_statement_list "end"
-                    | "foreach" identifier "in" identifier ":" body_statement_list "end"
-                    ;
+iteration_statement : "do:" body_statement_list "end"
+                    | "do:" expression "times:" body_statement_list "end"
+                    | "foreach" identifier "in" identifier ":" body_statement_list "end"
+                    ;
 
 /**JUMP_STATEMENT**/
 jump_statement : "stopdo" ";"
