@@ -9,6 +9,7 @@ This is the yacc-compatible grammar for our language:
 The grammar has the undefined terminal symbols: _identifier, string, number_.
 
 {{{
+
 %token identifier
 %token string
 %token number
@@ -77,8 +78,10 @@ jump_statement : "break" ";"
                | "return" ";"
                ;
                
-assignment_statement : identifier "=" expression ";"
+assignment_statement : identifier assignment_operator expression ";"
                      ;
+
+assignment_operator : "=" | "+=" | "-=" | "*=" | "/=" | "%=" ;
 
 /*The declaration node in A13 of K&R is hard to follow. I feel like ours can be simpler, like the Java one.*/
 declaration : type variable_declarators ";"
@@ -144,7 +147,7 @@ logical_not_expression : comparison_expression
 
 comparison_expression : addition_expression
                       | comparison_expression "is"   addition_expression
-                      | comparison_expression "isnt" addition_expression
+                      | comparison_expression "isnot" addition_expression
                       | comparison_expression ">"    addition_expression
                       | comparison_expression "<"    addition_expression
                       | comparison_expression ">="   addition_expression
@@ -159,6 +162,7 @@ addition_expression : multiplication_expression
 multiplication_expression : unary_expression
                           | multiplication_expression "*" unary_expression
                           | multiplication_expression "/" unary_expression
+                          | multiplication_expression "%" unary_expression
                           ;
 
 /* from C reference: "Expressions with unary operators group right to left" */
