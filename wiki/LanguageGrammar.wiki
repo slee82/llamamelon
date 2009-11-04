@@ -92,7 +92,8 @@ variable_declarators : variable_declarator
                      | variable_declarators "," variable_declarator
                      ;
 
-variable_declarator : identifier "=" expression
+variable_declarator : identifier
+                    | identifier "=" expression
                     ;
 
 type : "number"
