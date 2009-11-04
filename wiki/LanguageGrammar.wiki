@@ -29,6 +29,10 @@ statement : function_definition
           | body_statement
           ;
 
+body_statement_list : body_statement
+                    | body_statement_list body_statement
+                    ;
+
 /*Body Statements are all statements except function declarations*/
 body_statement : if_statement
                | iteration_statement
@@ -40,10 +44,7 @@ body_statement : if_statement
                | assignment_statement
                ;
 
-body_statement_list : body_statement
-                    | body_statement_list body_statement
-                    ;
-
+/**FUNCTION_DEFINITION**/
 function_definition : "function" identifier "(" parameter_list ")" "returns" type ":" body_statement_list "end"
                     ;
 
@@ -54,15 +55,19 @@ parameter_list : parameter
 parameter : type identifier
           ;
 
+/**SIM_FUNCTION_DEFINITION**/
 sim_function_definition : "simfunction" identifier "is:" body_statement_list "end"
                         ;
 
+/**ACTIVATE_STATEMENT**/
 activate_statement : "activate" identifier ";"
                    ;
 
+/**PRINT_STATEMENT**/
 print_statement : "print" expression ";"
                 ;
 
+/**IF_STATEMENT**/
 if_statement : "if" "(" expression ")" "then:" body_statement_list "end"
              | "if" "(" expression ")" "then:" body_statement_list else_statement "end"
              ;
@@ -70,21 +75,24 @@ if_statement : "if" "(" expression ")" "then:" body_statement_list "end"
 else_statement : "else:" body_statement_list
                ;
 
+/**ITERATION_STATEMENT**/
 iteration_statement : "do:" expression "times:" body_statement_list "end"
                     | "foreach" identifier "in" identifier ":" body_statement_list "end"
                     ;
 
+/**JUMP_STATEMENT**/
 jump_statement : "stopdo" ";"
                | "return" expression ";"
                | "return" ";"
                ;
-               
+              
+/**ASSIGNMENT_STATEMENT**/ 
 assignment_statement : identifier assignment_operator expression ";"
                      ;
 
 assignment_operator : "=" | "+=" | "-=" | "*=" | "/=" | "%=" ;
 
-/*The declaration node in A13 of K&R is hard to follow. I feel like ours can be simpler, like the Java one.*/
+/**DECLARATION**/
 declaration : type variable_declarators ";"
             ;
 
@@ -96,6 +104,7 @@ variable_declarator : identifier
                     | identifier "=" expression
                     ;
 
+/*TYPE*/
 type : "number"
      | "string"
      | "list"
@@ -105,18 +114,17 @@ type : "number"
      | "nothing"
      ;
 
-/* use multiple nonterminals to represent precedence, just like in the C grammar */
 
+/**EXPRESSION_STATEMENT**/
 expression_statement : ";"
                      | expression ";"
                      ;
 
-/* no C_style assignments in the middle of expressions (for now, unless everyone 
-   wants it) */
-
+/*EXPRESSION*/
 expression : logical_or_expression
            ;
 
+/*LOGICAL*/
 logical_or_expression : logical_and_expression
                       | logical_or_expression "or" logical_and_expression
                       ;
@@ -129,14 +137,7 @@ logical_not_expression : comparison_expression
                        | "not" logical_not_expression
                        ;
 
-/* 
- * following Python where '==' is at the same preccedence as '>', '<', etc.
- * different from C where equality comes first. For example,
- *
- * "1 == 3 > 2" would return true in C, because the expression is evaluated as
- * "1 == (3 > 2)" instead of "(1 == 3) > 2", which is how Python interprets it.
- */
-
+/*COMPARISON*/
 comparison_expression : addition_expression
                       | comparison_expression "is"   addition_expression
                       | comparison_expression "isnot" addition_expression
@@ -146,6 +147,7 @@ comparison_expression : addition_expression
                       | comparison_expression "<="   addition_expression
                       ;
 
+/*ARITHMETIC*/
 addition_expression : multiplication_expression
                     | addition_expression "+" multiplication_expression
                     | addition_expression "-" multiplication_expression
@@ -157,7 +159,7 @@ multiplication_expression : unary_expression
                           | multiplication_expression "%" unary_expression
                           ;
 
-/* from C reference: "Expressions with unary operators group right to left" */
+/*UNARY*/
 unary_expression : postfix_expression
                  | "++" unary_expression
                  | "--" unary_expression
@@ -165,7 +167,7 @@ unary_expression : postfix_expression
                  | "any" unary_expression
                  ;
 
-/* from C reference: "The operators in postfix expressions group left to right" */
+/*POSTFIX*/
 postfix_expression : primary_expression
                    | postfix_expression "'s" identifier // attribute/stats call
                    | postfix_expression "where" "(" expression ")"
@@ -173,16 +175,12 @@ postfix_expression : primary_expression
                    | postfix_expression "--"
                    ;
 
-/*
- * since we're not going to pass around function pointers like C, calling
- * functions is as simple as getting an identifier, and can be pushed down to
- * "primary expressions"
- */
-
+/*PRIMARY*/
 primary_expression : atom_expression
                    | function_call
                    ;
 
+/*FUNCTION_CALL*/
 function_call : identifier "(" ")"
               | identifier "(" argument_list ")"
               ;
@@ -191,6 +189,7 @@ argument_list : expression
               | argument_list "," expression
               ;
 
+/*ATOM_EXPRESSION*/
 atom_expression : identifier
                 | number
                 | string
