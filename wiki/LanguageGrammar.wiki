@@ -12,6 +12,7 @@ The grammar has the undefined terminal symbols: _identifier, string, number_.
 %token string
 %token number
 
+
 %%
 program : statement_list
         ;
@@ -58,18 +59,15 @@ activate_statement : "activate" identifier ";"
 print_statement : "print" expression ";"
                 ;
 
-if_statement : "if" "(" expression ")" "then:" body_statement_list else_statement
+if_statement : "if" "(" expression ")" "then:" body_statement_list "end"
+             | "if" "(" expression ")" "then:" body_statement_list else_statement "end"
              ;
 
-else_statement : "end"
-               | "elseif" "(" expression ")" "then:" body_statement_list else_statement
-               | "else:" body_statement_list "end"
+else_statement : "else:" body_statement_list
                ;
 
-iteration_statement : "while" "(" expression ")" "do:" body_statement_list "end"
-                    | "do:" body_statement_list "while" "(" expression ")" ";"
-                    | "for" identifier "from" number "to" number "step" number "do:" body_statement_list "end"
-                    | "foreach" identifier "in" identifier "do:" body_statement_list "end"
+iteration_statement : "do:" expression "times:" body_statement_list "end"
+                    | "foreach" identifier "in" identifier ":" body_statement_list "end"
                     ;
 
 jump_statement : "break" ";"
@@ -78,7 +76,7 @@ jump_statement : "break" ";"
                ;
 
 /*The declaration node in A13 of K&R is hard to follow. I feel like ours can be simpler, like the Java one.*/
-declaration : type variable_declarators
+declaration : type variable_declarators ";"
             ;
 
 variable_declarators : variable_declarator
@@ -168,9 +166,9 @@ unary_expression : postfix_expression
 /* from C reference: "The operators in postfix expressions group left to right" */
 postfix_expression : primary_expression
                    | postfix_expression "'s" identifier // attribute/stats call
+                   | postfix_expression "where" "(" expression ")"
                    | postfix_expression "++"
                    | postfix_expression "--"
-                   | postfix_expression "where" "(" expression ")"
                    ;
 
 /*
@@ -185,19 +183,11 @@ primary_expression : atom_expression
 
 function_call : identifier "(" ")"
               | identifier "(" argument_list ")"
-              | "sim" "(" sim_arguments ")"
               ;
 
 argument_list : expression
               | argument_list "," expression
               ;
-
-sim_arguments : sim_arg "," sim_arg "," number
-              ;
-
-sim_arg : expression
-        | "(" sim_arguments ")"
-        ;
 
 atom_expression : identifier
                 | number
@@ -205,7 +195,4 @@ atom_expression : identifier
                 | "(" expression ")" // completes the cycle
                 ;
 %%
-
-
-
 }}}
