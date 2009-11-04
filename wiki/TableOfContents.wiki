@@ -4,6 +4,7 @@
     * [LanguageReferenceManual Language Reference Manual]
 
     * [LanguageGrammar Full Grammar]
+    * [Grammar_Explanation Grammar Explanation]
     * [SyntaxRules Full Syntax]
     * [CSVStruct CSV Files - Structure]
 
