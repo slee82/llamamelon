@@ -195,6 +195,7 @@ atom_expression : identifier
                 | number
                 | string
                 | list_initializer
+                | "nothing"
                 | "(" expression ")" // completes the cycle
                 ;
 
