@@ -63,11 +63,11 @@ activate_statement : "activate" identifier ";"
 print_statement : "print" expression ";"
                 ;
 
-if_statement : "if" "(" expression ")" "then:" body_statement_list else_statement
+if_statement : "if" "(" expression ")" "then:" body_statement_list "end"
+             | "if" "(" expression ")" "then:" body_statement_list else_statement "end"
              ;
 
-else_statement : "end"
-               | "else:" body_statement_list else_statement
+else_statement : "else:" body_statement_list
                ;
 
 iteration_statement : "do:" expression "times:" body_statement_list "end"
