@@ -57,7 +57,7 @@ simfunction basicSimulation is:
     list bestBatters = top(9, team1 where (type is "batter"), AVG);
     player batter = any bestBatters;
 
-    list bestPitchers = bottom(4, team2 where (type is "pitcher"), AVG);
+    list bestPitchers = bottom(4, team2 where (type is "pitcher"), ERA);
     player pitcher = any bestPitchers;
     /*I am introducing new conditional shortcuts ’top’ and ’lowest’ because doing ’AVG > 3.0’ might
     not work for a team with bad players (would return no players). I think these keywords come
