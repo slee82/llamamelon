@@ -16,6 +16,7 @@ The grammar has the undefined terminal symbols: _identifier, string, number_.
 
 
 %%
+/***PROGRAM***/
 program : statement_list
         ;
 
@@ -111,6 +112,7 @@ type : "number"
      | "list"
      | "team"
      | "player"
+     | "nothing"
      ;
 
 /* use multiple nonterminals to represent precedence, just like in the C grammar */
