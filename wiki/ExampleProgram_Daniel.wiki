@@ -54,8 +54,11 @@ simfunction basicSimulation is:
 
   do 5 times:
     /*Select random players from the best 5 of each team*/
-    player batter = any team1 where (type is "batter" and AVG is top 5);
-    player pitcher = any team2 where (type is "pitcher" and ERA is lowest 5);
+    list bestBatters = top(9, team1 where (type is "batter"), AVG);
+    player batter = any bestBatters;
+
+    list bestPitchers = top(4, team2 where (type is "pitcher"), AVG);
+    player pitcher = any bestPitchers;
     /*I am introducing new conditional shortcuts ’top’ and ’lowest’ because doing ’AVG > 3.0’ might
     not work for a team with bad players (would return no players). I think these keywords come
     in handy for selecting best players, which is something you do a lot when simulating baseball.
