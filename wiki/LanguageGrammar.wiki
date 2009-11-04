@@ -101,6 +101,7 @@ type : "number"
      | "list"
      | "team"
      | "player"
+     | "stat"
      | "nothing"
      ;
 
