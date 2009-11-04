@@ -95,13 +95,8 @@ variable_declarators : variable_declarator
 variable_declarator : identifier "=" variable_initializer
                     ;
 
-variable_initializer : list_initializer
-                     | expression
+variable_initializer : expression
                      ;
-
-list_initializer : "[" variable_list "]"
-                 | "[" "]"
-                 ;
 
 variable_list : variable_initializer
               | variable_list "," variable_initializer
@@ -204,7 +199,12 @@ argument_list : expression
 atom_expression : identifier
                 | number
                 | string
+                | list_initializer
                 | "(" expression ")" // completes the cycle
                 ;
+
+list_initializer : "[" variable_list "]"
+                 | "[" "]"
+                 ;
 %%
 }}}
