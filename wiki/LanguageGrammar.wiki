@@ -74,7 +74,7 @@ iteration_statement : "do:" expression "times:" body_statement_list "end"
                     | "foreach" identifier "in" identifier ":" body_statement_list "end"
                     ;
 
-jump_statement : "break" ";"
+jump_statement : "stopdo" ";"
                | "return" expression ";"
                | "return" ";"
                ;
