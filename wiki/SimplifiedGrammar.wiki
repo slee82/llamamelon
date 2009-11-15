@@ -1,5 +1,19 @@
 #summary The grammar we're going to start with. More stuff from the original will be added as we go.
 
+= Program +
+
+hello.ball
+{{{
+print "Playball!";
+}}}
+
+Run like this:
+{{{
+$ ball hello.ball
+Playball!
+$
+}}}
+
 = Grammar =
 
 #summary The full grammar for our language
