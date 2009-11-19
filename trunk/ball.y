@@ -2,16 +2,13 @@
     import java.io.*;
 %}
 
-%token identifier
 %token STRING
 %token SEMICOLON
 %token PRINT
-%token number
-
 
 %%
  /***PROGRAM***/
-program : statement_list
+program : statement_list  { System.out.println(""); }
 ;
 
 statement_list : statement
@@ -67,7 +64,7 @@ primary_expression : atom_expression
 ;
 
 /*ATOM_EXPRESSION*/
-atom_expression : STRING
+atom_expression : STRING { System.out.println("got string " + $1.sval); }
 ;
 
 %%
@@ -91,13 +88,20 @@ atom_expression : STRING
   public void yyerror (String error) {
     System.err.println ("Error: " + error);
   }
+
   /* lexer is created in the constructor */
-  public parser(Reader r) {
+  public Parser(Reader r) {
     lexer = new Yylex(r, this);
   }
 
   /* that's how you use the parser */
   public static void main(String args[]) throws IOException {
-    parser yyparser = new parser(new FileReader(args[0]));
-    yyparser.yyparse();
+      if (args.length == 0) {
+          System.err.println("no arguments");
+          System.exit(0);
+      }
+      Parser yyparser = new Parser(new FileReader(args[0]));
+      yyparser.yyparse();
+
   }
+
