@@ -1,0 +1,27 @@
+#summary SVN Information
+#labels Phase-Implementation
+
+= Introduction =
+
+SVN info Page!
+
+
+= Details =
+
+Ok boys, this is how you get it all functioning…
+
+Visit
+	
+   * http://code.google.com/p/llamamelon/source/checkout *
+
+Copy the link that has the *HTTPS*  (S IS KEY) and get your password via the link below.
+
+Now take that link and type it into your terminal.  
+
+Enter your password when prompted and voila, you are golden.
+
+If you get problems (like I did asking for a log editor or SVN Editor or something) you have to edit your bash profile.
+
+
+== Notes ==
+More will be added when we need to branch off the main trunk and make our own sandboxes to play in...
