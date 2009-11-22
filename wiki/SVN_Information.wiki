@@ -1,10 +1,7 @@
-#summary SVN Information
 #labels Phase-Implementation
-
 = Introduction =
 
-SVN info Page!
-
+SVN Info Page!
 
 = Details =
 
