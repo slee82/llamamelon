@@ -4,6 +4,9 @@
  * SymbolTable.java - Symbol Table definition and methods
  */
 
+/**
+ * 
+ */
 public class SymbolTable {
 
 }
