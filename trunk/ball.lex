@@ -1,44 +1,87 @@
+/*
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * ball.lex - Lexer specification of the BALL language (using JFlex)
+ */
 
 %%
 
 %byaccj
 
-%{
-  /* store a reference to the parser object */
-  private Parser yyparser;
+/* 
+ * =========================================================
+ *  This section goes straight into Yylex.java untranslated
+ * =========================================================
+ */
 
-  /* constructor taking an additional parser object */
-  public Yylex(java.io.Reader r, Parser yyparser) {
-    this(r);
-    this.yyparser = yyparser;
-  }
-%}
+%{ // open escape section
+
+/* store a reference to the parser object */
+private Parser yyparser;
+
+/* store a reference to the symbol table */
+private SymbolTable table;
+
+/* 
+ * constructor initializes both the parser and table references.
+ */
+public Yylex(java.io.Reader r, Parser yyparser, SymbolTable table) {
+   	this(r);
+   	this.yyparser = yyparser;
+   	this.table = table;
+}
+
+%} // close escape section
+
+/* 
+ * =====================
+ *  Regular Expressions
+ * =====================
+ */
 
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
 
-/* comments */
-Comment = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
+/* Comments */
+Comment 				= {TraditionalComment}	
+						| {EndOfLineComment} 
+						| {DocumentationComment}
 
-TraditionalComment   = "/*" [^*] ~"*/" | "/*" "*"+ "/"
-EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}
-DocumentationComment = "/**" {CommentContent} "*"+ "/"
-CommentContent       = ( [^*] | \*+ [^/*] )*
+TraditionalComment   	= "/*" [^*] ~"*/" | "/*" "*"+ "/"
+EndOfLineComment     	= "//" {InputCharacter}* {LineTerminator}
+DocumentationComment 	= "/**" {CommentContent} "*"+ "/"
+CommentContent       	= ( [^*] | \*+ [^/*] )*
 
-Identifier = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
+/* Constants */
+StringConst				= \"([^\"\\]|\\.)*\"
+
+/* Identifiers */
+Identifier 				= [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 %%
 
-";"	{ return Parser.SEMICOLON; }
-print	{ 
-	System.out.println("lexer: found 'print'");
-	return Parser.PRINT; 
-	}
-\"([^\"\\]|\\.)*\" { yyparser.yylval = new ParserVal(yytext());
-                     return Parser.STRING; }
+/* 
+ * ======================
+ *  Lexer (Syntax) Rules
+ * ======================
+ */
+ 
+";"				{ return Parser.SEMICOLON; }
 
-//{Identifier}                   { return Parser.IDENTIFIER; }
+print			{ /* got a print statement, add to sym. tbl. and notify parser */
+					System.out.println("lexer: found 'print'");
+					// TODO: add symbol table addition code here
+					return Parser.PRINT; // TODO: couple return with table reference
+				}
+					
+{StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
+					yyparser.yylval = new ParserVal(yytext());
+					// TODO: add symbol table addition code here
+                   	return Parser.STRING; // TODO: couple return with table reference
+                }
 
-{Comment} { /* ignore */ }
-{WhiteSpace} { /* ignore */ }
+//{Identifier}	{ return Parser.IDENTIFIER; }
+
+{Comment} 		{ /* ignore */ }
+{WhiteSpace}	{ /* ignore */ }
