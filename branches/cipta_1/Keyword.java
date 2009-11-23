@@ -8,10 +8,6 @@ public class Keyword extends Token {
         this.lexeme = lex;
     }
     
-    public String toString() {
-        return ("(" + super.toString() + " " + lexeme + ")");
-    }
-    
     /*
      * Premade keywords
      */

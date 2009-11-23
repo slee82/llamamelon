@@ -19,7 +19,6 @@ public class Token {
 
     /**
      * Constructor sets the type of the token
-     * 
      * @param tag
      */
     public Token(Tag t) {

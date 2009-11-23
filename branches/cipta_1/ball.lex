@@ -69,15 +69,17 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ";"             { return Parser.SEMICOLON; }
 
-print           { /* got a print statement, add to sym. tbl. and notify parser */
-                    // TODO: add symbol table addition code here
+print           { /* got a print statement, notify parser */
                     System.out.println("lexer: found 'print'");
+                    yyparser.yylval =  new ParserVal(Keyword.print);
                     return Parser.PRINT; // TODO: couple return with table reference
                 }
 
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
                     // TODO: add symbol table addition code here
-                    yyparser.yylval = new ParserVal(yytext());
+                    StringConst s = new StringConst(yytext());
+                    table.putEntry(s, null);
+                    yyparser.yylval = new ParserVal(s);
                     return Parser.STRING; // TODO: couple return with table reference
                 }
 

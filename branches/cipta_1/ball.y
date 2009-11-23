@@ -83,7 +83,7 @@ primary_expression : atom_expression
 ;
 
 /*ATOM_EXPRESSION*/
-atom_expression : STRING { System.out.println("got string " + $1.sval); }
+atom_expression : STRING { System.out.println("got string " + $1.obj); }
 ;
 
 %%

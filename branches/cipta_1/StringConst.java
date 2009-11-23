@@ -7,5 +7,9 @@ public class StringConst extends Token {
         super(Tag.STRINGCONST);
         this.val = s; 
     }
+    
+    public String toString() {
+        return ("(" + super.toString() + " " + val + ")");
+    }
 
 }

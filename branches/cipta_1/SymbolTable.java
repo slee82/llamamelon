@@ -4,9 +4,21 @@
  * SymbolTable.java - Symbol Table definition and methods
  */
 
+import java.util.HashMap;
+
 /**
  * 
  */
 public class SymbolTable {
 
+    private HashMap<Token,Object> table;
+    
+    public SymbolTable() {
+        table = new HashMap<Token, Object>();
+    }
+    
+    public void putEntry(Token key, Object val) {
+        table.put(key, val);
+    }
+    
 }
