@@ -31,7 +31,7 @@
         this.table = table;
     }
 
-    %} // close escape section
+%} // close escape section
 
 /* 
  * =====================
@@ -70,14 +70,14 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 ";"             { return Parser.SEMICOLON; }
 
 print           { /* got a print statement, add to sym. tbl. and notify parser */
-                    System.out.println("lexer: found 'print'");
                     // TODO: add symbol table addition code here
+                    System.out.println("lexer: found 'print'");
                     return Parser.PRINT; // TODO: couple return with table reference
                 }
 
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
-                    yyparser.yylval = new ParserVal(yytext());
                     // TODO: add symbol table addition code here
+                    yyparser.yylval = new ParserVal(yytext());
                     return Parser.STRING; // TODO: couple return with table reference
                 }
 
