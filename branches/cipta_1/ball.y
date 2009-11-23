@@ -1,12 +1,31 @@
+/*
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * ball.y - Parser specification of the BALL language (using BYACC/J)
+ */
+
 %{
-    import java.io.*;
+import java.io.*;
 %}
+
+/* 
+ * ===============================================================
+ *  Token declarations for communication between lexer and parser
+ * ===============================================================
+ */
 
 %token STRING
 %token SEMICOLON
 %token PRINT
 
 %%
+
+/* 
+ * ==================
+ *  Language Grammar
+ * ==================
+ */
+
  /***PROGRAM***/
 program : statement_list  { System.out.println(""); }
 ;
@@ -69,42 +88,55 @@ atom_expression : STRING { System.out.println("got string " + $1.sval); }
 
 %%
 
-  /* a reference to the lexer object */
-  private Yylex lexer;
-  /* a reference to the symbol table */
-  private SymbolTable table;
+/* 
+ * ====================================================================
+ *  Other enhancements to the parser class, plus constructors and main
+ * ====================================================================
+ */
 
-  /* interface to the lexer */
-  private int yylex () {
-    int yyl_return = -1;
+/* a reference to the lexer object */
+private Yylex lexer;
+  
+/* a reference to the symbol table */
+private SymbolTable table;
+
+/* interface to the lexer */
+private int yylex () {
+	int yyl_return = -1;
+	
     try {
-      yyl_return = lexer.yylex();
+		yyl_return = lexer.yylex();
     }
     catch (IOException e) {
-      System.err.println("IO error :"+e);
+		System.err.println("yylex: IO error :"+e);
     }
-    return yyl_return;
-  }
+	return yyl_return;
+}
 
-  /* error reporting */
-  public void yyerror (String error) {
-    System.err.println ("Error: " + error);
-  }
+/* error reporting */
+public void yyerror (String error) {
+	System.err.println ("Error: " + error);
+}
 
-  /* lexer is created in the constructor */
-  public Parser(Reader r, SymbolTable table) {
+/* lexer is created in the constructor */
+public Parser(Reader r, SymbolTable table) {
     lexer = new Yylex(r, this);
     this.table = table;
-  }
+}
 
-  /* that's how you use the parser */
-  public static void main(String args[]) throws IOException {
-      if (args.length == 0) {
-          System.err.println("no arguments");
-          System.exit(0);
-      }
-      Parser yyparser = new Parser(new FileReader(args[0]));
-      yyparser.yyparse();
+/* 
+ * ===============
+ *  Main function
+ * ===============
+ */
 
-  }
+/* that's how you use the parser */
+public static void main(String args[]) throws IOException {
+	if (args.length == 0) {
+		System.err.println("no arguments");
+		System.exit(0);
+	}
+	Parser yyparser = new Parser(new FileReader(args[0]));
+	yyparser.yyparse();
+}
 
