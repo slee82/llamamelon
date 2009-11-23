@@ -26,7 +26,7 @@ import java.io.*;
  * ==================
  */
 
- /***PROGRAM***/
+/***PROGRAM***/
 program : statement_list  { System.out.println(""); }
 ;
 
@@ -120,7 +120,7 @@ public void yyerror (String error) {
 
 /* lexer is created in the constructor */
 public Parser(Reader r, SymbolTable table) {
-    lexer = new Yylex(r, this);
+    lexer = new Yylex(r, this, table);
     this.table = table;
 }
 
@@ -136,7 +136,7 @@ public static void main(String args[]) throws IOException {
 		System.err.println("no arguments");
 		System.exit(0);
 	}
-	Parser yyparser = new Parser(new FileReader(args[0]));
+	Parser yyparser = new Parser(new FileReader(args[0]), new SymbolTable());
 	yyparser.yyparse();
 }
 
