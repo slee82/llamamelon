@@ -6,11 +6,14 @@
 %{
   /* store a reference to the parser object */
   private Parser yyparser;
+  /* store a reference to the symbol table */
+  private SymbolTable table;
 
   /* constructor taking an additional parser object */
-  public Yylex(java.io.Reader r, Parser yyparser) {
+  public Yylex(java.io.Reader r, Parser yyparser, SymbolTable table) {
     this(r);
     this.yyparser = yyparser;
+    this.table = table;
   }
 %}
 

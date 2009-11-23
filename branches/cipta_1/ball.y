@@ -71,6 +71,8 @@ atom_expression : STRING { System.out.println("got string " + $1.sval); }
 
   /* a reference to the lexer object */
   private Yylex lexer;
+  /* a reference to the symbol table */
+  private SymbolTable table;
 
   /* interface to the lexer */
   private int yylex () {
@@ -90,8 +92,9 @@ atom_expression : STRING { System.out.println("got string " + $1.sval); }
   }
 
   /* lexer is created in the constructor */
-  public Parser(Reader r) {
+  public Parser(Reader r, SymbolTable table) {
     lexer = new Yylex(r, this);
+    this.table = table;
   }
 
   /* that's how you use the parser */
