@@ -6,4 +6,4 @@ Parser : ball.lex ball.y
 
 .PHONY : clean
 clean:
-	rm -f Yylex.java Parser.java ParserVal.java *.class
+	rm -f *.java~ Yylex.java Parser.java ParserVal.java *.class
