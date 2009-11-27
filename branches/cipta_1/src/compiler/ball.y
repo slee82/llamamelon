@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import lexer.*;
 import codegen.*;
 
+/* necessary because ParserVal deals with generics */
 @SuppressWarnings("unchecked")
 %}
 
@@ -37,7 +38,7 @@ program :
         System.err.println("adding node for _program_");
         LinkedList<Stmt> stlist = (LinkedList<Stmt>)$1.obj;
         Program top = new Program(stlist, outname);
-        top.gen();
+        top.gen(); // moves to intermediate code generation stage
     }
 ;
 
@@ -161,13 +162,16 @@ public Parser(Reader r, SymbolTable table, String out) {
  * ===============
  */
 
-/* that's how you use the parser */
+
 public static void main(String args[]) throws IOException {
 	if (args.length == 0) {
 		System.err.println("no arguments");
 		System.exit(0);
 	}
     
+    /*
+     * Determine the name of the output file
+     */
     String name = args[0];
     name = name.substring(name.lastIndexOf('/')+1);
     
@@ -182,6 +186,9 @@ public static void main(String args[]) throws IOException {
         System.exit(1);
     }
     
+    /*
+     * create the parser 
+     */
 	Parser yyparser = new Parser(new FileReader(args[0]), 
             new SymbolTable(), name);
 	yyparser.yyparse();

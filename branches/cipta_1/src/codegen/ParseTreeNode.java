@@ -1,7 +1,6 @@
 package codegen;
 
-public class ParseTreeNode {
-
-    public ParseTreeNode() {
-    }
+public abstract class ParseTreeNode {
+    
+    public abstract void gen();
 }

@@ -30,8 +30,8 @@ import codegen.*;
     /* 
      * constructor initializes both the parser and table references.
      */
-    public Yylex(java.io.Reader r, Parser yyparser, SymbolTable table) {
-        this(r);
+    public Yylex(java.io.Reader source, Parser yyparser, SymbolTable table) {
+        this(source);
         this.yyparser = yyparser;
         this.table = table;
     }
