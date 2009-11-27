@@ -5,7 +5,7 @@ public class StringConst extends Token {
 
     public StringConst(String s) {
         super(Tag.STRINGCONST);
-        this.val = s; 
+        this.val = s;
     }
     
     public String toString() {

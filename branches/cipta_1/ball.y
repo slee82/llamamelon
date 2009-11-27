@@ -32,7 +32,7 @@ import java.util.LinkedList;
 /***PROGRAM***/
 program : 
     statement_list { 
-        System.out.println("adding node for _program_");
+        System.err.println("adding node for _program_");
         LinkedList<Stmt> stlist = (LinkedList<Stmt>)$1.obj;
         Program top = new Program(stlist, outname);
         top.gen();
@@ -52,59 +52,63 @@ statement_list :
     }
 ;
 
-statement : body_statement { $$ = $1 }
+statement : body_statement { $$ = $1; }
 ;
 
 /*Body Statements are all statements except function declarations*/
-body_statement : print_statement { $$ = $1 }
+body_statement : print_statement { $$ = $1; }
 ;
 
 /**PRINT_STATEMENT**/
 print_statement : 
     PRINT expression SEMICOLON {
-        
+        $$ = new ParserVal(new PrintStmt((Expr)$2.obj));
     }
 ;
 
 /*EXPRESSION*/
-expression : logical_or_expression
+expression : logical_or_expression { $$ = $1; }
 ;
 
 /*LOGICAL*/
-logical_or_expression : logical_and_expression
+logical_or_expression : logical_and_expression { $$ = $1; }
 ;
 
-logical_and_expression : logical_not_expression
+logical_and_expression : logical_not_expression { $$ = $1; }
 ;
 
-logical_not_expression : comparison_expression
+logical_not_expression : comparison_expression { $$ = $1; }
 ;
 
 /*COMPARISON*/
-comparison_expression : addition_expression
+comparison_expression : addition_expression { $$ = $1; }
 ;
 
 /*ARITHMETIC*/
-addition_expression : multiplication_expression
+addition_expression : multiplication_expression { $$ = $1; }
 ;
 
-multiplication_expression : unary_expression
+multiplication_expression : unary_expression { $$ = $1; }
 ;
 
 /*UNARY*/
-unary_expression : postfix_expression
+unary_expression : postfix_expression { $$ = $1; }
 ;
 
 /*POSTFIX*/
-postfix_expression : primary_expression
+postfix_expression : primary_expression { $$ = $1; }
 ;
 
 /*PRIMARY*/
-primary_expression : atom_expression
+primary_expression : atom_expression { $$ = $1; }
 ;
 
 /*ATOM_EXPRESSION*/
-atom_expression : STRING { System.out.println("got string " + $1.obj); }
+atom_expression : 
+    STRING { 
+        System.err.println("got string " + $1.obj); 
+        $$ = new ParserVal(new Expr((StringConst)(val_peek(0).obj)));
+    }
 ;
 
 %%
@@ -161,8 +165,16 @@ public static void main(String args[]) throws IOException {
 		System.err.println("no arguments");
 		System.exit(0);
 	}
+    
+    String name = args[0];
+    int val = name.lastIndexOf('.');
+    while (val != -1) {
+        name = name.substring(0, val);
+        val = name.lastIndexOf('.');
+    }
+    
 	Parser yyparser = new Parser(new FileReader(args[0]), 
-            new SymbolTable(), args[0]);
+            new SymbolTable(), name);
 	yyparser.yyparse();
 }
 

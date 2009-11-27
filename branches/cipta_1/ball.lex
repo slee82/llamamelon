@@ -70,7 +70,7 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 ";"             { return Parser.SEMICOLON; }
 
 print           { /* got a print statement, notify parser */
-                    System.out.println("lexer: found 'print'");
+                    System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);
                     return Parser.PRINT; // TODO: couple return with table reference
                 }

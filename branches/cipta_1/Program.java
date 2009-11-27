@@ -21,7 +21,7 @@ public class Program extends ParseTreeNode {
             cur.gen();
         }
         
-        System.out.println("public class " + outname + "\t}\n}");
+        System.out.println("\t}\n}");
     }
     
     private String outname;
