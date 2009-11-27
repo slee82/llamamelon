@@ -169,10 +169,17 @@ public static void main(String args[]) throws IOException {
 	}
     
     String name = args[0];
+    name = name.substring(name.lastIndexOf('/')+1);
+    
     int val = name.lastIndexOf('.');
     while (val != -1) {
         name = name.substring(0, val);
         val = name.lastIndexOf('.');
+    }
+    
+    if (name.length() < 1) {
+        System.err.println("invalid name");
+        System.exit(1);
     }
     
 	Parser yyparser = new Parser(new FileReader(args[0]), 
