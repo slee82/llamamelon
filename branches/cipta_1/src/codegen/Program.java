@@ -1,5 +1,6 @@
-import java.util.LinkedList;
+package codegen;
 
+import java.util.LinkedList;
 
 public class Program extends ParseTreeNode {
 

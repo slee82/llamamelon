@@ -4,6 +4,7 @@
  * SymbolTable.java - Symbol Table definition and methods
  */
 
+import lexer.*;
 import java.util.HashMap;
 
 /**

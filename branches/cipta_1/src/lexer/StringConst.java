@@ -1,3 +1,4 @@
+package lexer;
 
 public class StringConst extends Token {
     

@@ -3,6 +3,7 @@
  * Team llamamelon - BALL language
  * Token.java - Tokens passed to the symbol table
  */
+package lexer;
 
 /**
  * Primitive token type. Subclasses of these tokens will be put in the symbol
