@@ -3,6 +3,7 @@
  * Team llamamelon - BALL language
  * SymbolTable.java - Symbol Table definition and methods
  */
+package compiler;
 
 import lexer.*;
 import java.util.HashMap;

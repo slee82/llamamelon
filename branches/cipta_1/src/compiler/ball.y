@@ -7,6 +7,8 @@
 %{
 import java.io.*;
 import java.util.LinkedList;
+import lexer.*;
+import codegen.*;
 
 @SuppressWarnings("unchecked")
 %}

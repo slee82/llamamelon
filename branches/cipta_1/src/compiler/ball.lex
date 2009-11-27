@@ -4,11 +4,14 @@
  * ball.lex - Lexer specification of the BALL language (using JFlex)
  */
 
-package lexer;  
+package compiler;
+import lexer.*;
+import codegen.*;
 
 %%
 
 %byaccj
+%public
 
 /* 
  * =========================================================
