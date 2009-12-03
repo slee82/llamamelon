@@ -1,6 +1,6 @@
 Team Name: Houston Astros
-Type:Team Stats 
-Header:W,L 74,88
+Header:W,L
+74,88
 Type:Batter 
 Header:Name,AB,R,H,2B,3B,HR,BB 
 Ivan Rodriguez,327,41,82,15,2,8,13 

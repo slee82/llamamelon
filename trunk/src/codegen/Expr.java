@@ -10,7 +10,7 @@ public class Expr extends ParseTreeNode {
     
     public void gen() {
         // later needs to differ by type
-        System.out.println(stringval);
+        System.out.print(stringval);
     }
 
     private int type;
