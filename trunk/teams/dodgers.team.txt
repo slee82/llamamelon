@@ -1,7 +1,8 @@
 Team Name: Los Angeles Dodgers
 Header:W,L
 95,67
-Type:Batter 
+
+Type:Batter 
 Header:Name,AB,R,H,2B,3B,HR,BB 
 Russell Martin,505,63,126,19,0,7,69
 James Loney*,576,73,162,25,2,13,70
@@ -18,7 +19,7 @@ Hiroki Kuroda,28,1,4,0,0,0,2
 
 Type:Pitcher 
 Header:Name,IP,H,ER,BB,K
-Randy Wolf*,214.1,178,77,58,160
-Chad Billingsley,196.1,173,88,86,179
-Clayton Kershaw*,171.0,119,53,91,185
-Hiroki Kuroda,117.1,110,49,24,87
+Randy Wolf*,214,178,77,58,160
+Chad Billingsley,196,173,88,86,179
+Clayton Kershaw*,171,119,53,91,185
+Hiroki Kuroda,117,110,49,24,87
