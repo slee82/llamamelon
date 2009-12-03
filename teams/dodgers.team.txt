@@ -1,6 +1,6 @@
-Team Name: Los Angeles Dodgers 
-Type:Team Stats 
-Header:W,L 95,67
+Team Name: Los Angeles Dodgers
+Header:W,L
+95,67
 Type:Batter 
 Header:Name,AB,R,H,2B,3B,HR,BB 
 Russell Martin,505,63,126,19,0,7,69

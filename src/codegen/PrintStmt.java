@@ -7,7 +7,7 @@ public class PrintStmt extends Stmt {
     }
     
     public void gen() {
-        System.out.println("System.out.println(");
+        System.out.print("System.out.println(");
         toprint.gen();
         System.out.println(");");
     }
