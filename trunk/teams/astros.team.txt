@@ -20,9 +20,9 @@ Felipe Paulino,25,0,1,0,0,0,0
 
 Type:Pitcher 
 Header:Name,IP,K,H,BB,ER 
-Wandy Rodriguez,205,192,69,63,193 
-Roy Oswalt,181,183,83,42,138 
-Brian Moehler,154,187,94,51,91 
-Mike Hampton,112,128,66,46,74
-Felipe Paulino,97,126,68,37,93 
-Russ Ortiz,85,95,53,48,65
+Wandy Rodriguez,205.2,192,69,63,193 
+Roy Oswalt,181.1,183,83,42,138 
+Brian Moehler,154.2,187,94,51,91 
+Mike Hampton,112.0,128,66,46,74
+Felipe Paulino,97.2,126,68,37,93 
+Russ Ortiz,85.2,95,53,48,65
