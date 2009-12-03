@@ -1,10 +1,8 @@
-//
-//  Loader.java
-//  CSV File Loader
-//
-//  Created by team llamamelon.
-//  Ball, the programming language.
-//
+/*
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Loader.java - CSV File Loader
+ */
 
 import java.util.*;
 import java.io.*;
@@ -12,7 +10,7 @@ import java.io.*;
 public class Loader {
 
     public static void main (String args[]){
-        load(args[0]);
+        System.out.println(load(args[0]));
     }
 	
 	//==============LOAD=============
@@ -120,7 +118,6 @@ public class Loader {
 		TeamObj theTeam = new TeamObj(teamName, teamWins, teamLosses);
 		theTeam.setBatters(batters);	//add players
 		theTeam.setPitchers(pitchers);
-		System.out.println(theTeam);
 		return theTeam;
 	}
 	
