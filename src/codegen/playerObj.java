@@ -115,6 +115,18 @@ public class playerObj {
 	public String getName() {
 		return name;
 	}
+	
+	public String toString(){
+		String toReturn = "";
+		
+		if(type == BATTER){	//Create concatenation depending on player type
+			toReturn = name+","+ab+","+r+","+h+","+dbl+","+tpl+","+hr+","+bb;
+		}else {
+			toReturn += name+","+ip+","+h+","+er+","+bb+","+k;
+		}
+		
+		return toReturn;
+	}
 
 	private String name;
 
