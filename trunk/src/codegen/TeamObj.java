@@ -16,6 +16,14 @@ public class TeamObj {
 			pitchers.add(p);
 	}
 	
+	public void setBatters(ArrayList<playerObj> a) {
+		batters = a;
+	}
+	
+	public void setPitchers(ArrayList<playerObj> a) {
+		pitchers = a;
+	}
+	
 	public ArrayList<playerObj> getBatters() {
 		return batters;
 	}
@@ -40,6 +48,25 @@ public class TeamObj {
 	}
 	public int getL() {
 		return l;
+	}
+	
+	public String toString(){
+		String toReturn = "";
+		toReturn += "Team Name: " + name + "\n" + "Header:W,L\n";
+		toReturn += Integer.toString(w) + "," + Integer.toString(l) + "\n\n";
+		
+		toReturn += "Type:Batter\nHeader:Name,AB,R,H,2B,3B,HR,BB\n";
+		int i;
+		for(i=0; i<batters.size(); i++){
+			toReturn += batters.get(i) + "\n";
+		}
+		
+		toReturn += "\nType:Pitcher\nHeader:Name,IP,H,ER,BB,K\n";
+		for(i=0; i<pitchers.size(); i++){
+			toReturn += pitchers.get(i) + "\n";
+		}
+		
+		return toReturn;
 	}
 
 	private String name;
