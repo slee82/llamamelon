@@ -129,6 +129,6 @@ public class playerObj {
 	private int er;
 	private int k;
 	
-	public int PITCHER = 1;
-	public int BATTER = 2;
+	public final static int PITCHER = 1;
+	public final static int BATTER = 2;
 }
