@@ -20,7 +20,7 @@ public class playerObj {
 	}
 	
 	// This is the pitcher constructor
-	public playerObj (String name, int type, int ip, int h,
+	public playerObj (String name, int type, double ip, int h,
 			int er, int bb, int k) {
 		if (type != PITCHER) {
 			System.err.println("Incorrect Player Type Found");
@@ -88,7 +88,7 @@ public class playerObj {
 		return bb;
 	}
 
-	public int getIp() {
+	public double getIp() {
 		if (type != PITCHER) {
 			System.err.println("Incorrect Statistic Requested");
 			return -1;
@@ -137,7 +137,7 @@ public class playerObj {
 	private int tpl;
 	private int hr;
 	private int bb;
-	private int ip;
+	private double ip;
 	private int er;
 	private int k;
 	
