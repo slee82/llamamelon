@@ -49,6 +49,7 @@
 			<src path="${src.dir}/compiler"/>
 			<src path="${src.dir}/lexer"/>
 			<src path="${src.dir}/codegen"/>
+			<src path="${src.dir}/javabackend"/>
 		</javac>
 	</target>
 
