@@ -1,0 +1,2 @@
+team Indians = load("Indians.team");
+print "the Indians has won " + Indians's Wins + " times";
