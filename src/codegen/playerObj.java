@@ -1,7 +1,7 @@
 
 public class playerObj {
 
-	// This is the batter constructor
+	/* This is the batter constructor */
 	public playerObj (String name, int type, int ab, int r,
 			int h, int dbl, int tpl, int hr, int bb) {
 		if (type != BATTER) {
