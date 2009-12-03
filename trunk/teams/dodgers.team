@@ -5,21 +5,21 @@ Header:W,L
 Type:Batter 
 Header:Name,AB,R,H,2B,3B,HR,BB 
 Russell Martin,505,63,126,19,0,7,69
-James Loney*,576,73,162,25,2,13,70
+James Loney,576,73,162,25,2,13,70
 Orlando Hudson#,551,74,156,35,6,9,62
 Rafael Furcal#,613,92,165,28,5,9,61
 Casey Blake,485,84,136,25,6,18,63
 Manny Ramirez,352,62,102,24,2,19,71
 Matt Kemp,606,97,180,25,7,26,52
-Andre Ethier*,596,92,162,42,3,31,72
-Randy Wolf*,68,5,11,4,0,1,2
+Andre Ethier,596,92,162,42,3,31,72
+Randy Wolf,68,5,11,4,0,1,2
 Chad Billingsley,56,2,10,2,0,1,4
-Clayton Kershaw*,48,2,5,0,0,0,3
+Clayton Kershaw,48,2,5,0,0,0,3
 Hiroki Kuroda,28,1,4,0,0,0,2
 
 Type:Pitcher 
-Header:Name,IP,H,ER,BB,K
-Randy Wolf*,214.1,178,77,58,160
+Header:Name,IP,H,ER,BB,SO
+Randy Wolf,214.1,178,77,58,160
 Chad Billingsley,196.1,173,88,86,179
-Clayton Kershaw*,171.0,119,53,91,185
+Clayton Kershaw,171.0,119,53,91,185
 Hiroki Kuroda,117.1,110,49,24,87
