@@ -1,0 +1,28 @@
+Team Name: Houston Astros
+Type:Team Stats 
+Header:W,L 74,88
+Type:Batter 
+Header:Name,AB,R,H,2B,3B,HR,BB 
+Ivan Rodriguez,327,41,82,15,2,8,13 
+Lance Berkman,460,73,126,31,1,25,97 
+Kazuo Matsui,476,56,119,20,2,9,34 
+Miguel Tejada,635,83,199,46,1,14,19 
+Geoff Blum,381,34,94,14,1,10,33 
+Carlos Lee,610,65,183,35,1,26,41 
+Michael Bourn,606,97,173,27,12,3,63 
+Hunter Pence,585,76,165,26,5,25,58 
+Wandy Rodriguez,63,4,8,3,0,0,1 
+Roy Oswalt,49,4,6,0,0,0,2 
+Brian Moehler,42,0,1,0,0,0,1 
+Mike Hampton,37,6,12,1,0,1,2 
+Russ Ortiz,28,2,5,0,0,1,1 
+Felipe Paulino,25,0,1,0,0,0,0 
+
+Type:Pitcher 
+Header:Name,IP,K,H,BB,ER 
+Wandy Rodriguez,205.2,192,69,63,193 
+Roy Oswalt,181.1,183,83,42,138 
+Brian Moehler,154.2,187,94,51,91 
+Mike Hampton,112.0,128,66,46,74
+Felipe Paulino,97.2,126,68,37,93 
+Russ Ortiz,85.2,95,53,48,65
