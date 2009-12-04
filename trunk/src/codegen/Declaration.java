@@ -13,35 +13,35 @@ public class Declaration extends Stmt {
     //Constructor: Get Type and Identifiers
     public Declaration(Type type, ArrayList<ArrayList> identifiers) {
 	this.type = type.getType();		//extract the Strings
-	
-	int i;	
-	for(i=0; i<identifiers.size(); i++){	//set the identifier string to id1, id2, ...
-		Identifier id  = (Identifier) identifiers.get(i).get(0);
-		
-		if(i>0)	//dont put a comma at the beginning
-			this.identifier += "," + id.getID();
-		else
-			this.identifier = id.getID();
-		
-		//check is the last identifier has an = sign for assignment
-		if(i == identifiers.size()-1 && identifiers.get(i).size() > 1){
-			this.val = (Expr)identifiers.get(i).get(1);
-		}
-	}
+	idexpPairs = identifiers;
     }
     
     //generate the declaration
     public void gen() {
-        System.out.print(type + " " + identifier);
-	if(val != null){		//if the variable is to be initialized
-		System.out.print(" = ");
-        	val.gen();
+        System.out.print(type + " ");
+	
+	int i;
+	for(i=0; i<idexpPairs.size(); i++){	//set the identifier string to id1, id2, ...
+		ArrayList ar = (ArrayList) idexpPairs.get(i);
+		Identifier id  = (Identifier) ar.get(0);
+		
+		if(i>0)	//dont put a comma at the beginning
+			System.out.print("," + id.getID());
+		else
+			System.out.print(id.getID());
+		
+		//check is the last identifier has an = sign for assignment
+		if(ar.size() > 1){
+			Expr x = (Expr) ar.get(1);
+			System.out.print(" = ");
+			x.gen();
+		}
 	}
+
         System.out.println(";");
     }
     
     private String type;
-    private String identifier;
-    private Expr val = null;
+    private ArrayList idexpPairs;
 
 }

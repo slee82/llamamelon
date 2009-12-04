@@ -171,11 +171,13 @@ argument_list : expression {
 
 
 /*ATOM_EXPRESSION*/
-atom_expression : 
-    STRING { 
-        System.err.println("got string " + $1.obj); 
-        $$ = new ParserVal(new Expr((StringConst)(val_peek(0).obj)));
-    }
+atom_expression : STRING { 
+        		System.err.println("got string " + $1.obj); 
+        		$$ = new ParserVal(new Expr((StringConst)($1.obj)));
+    		}
+		| IDENTIFIER {
+			$$ = new ParserVal(new Expr((Identifier)($1.obj)));
+		}
 ;
 
 %%
