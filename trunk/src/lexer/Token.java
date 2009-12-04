@@ -13,7 +13,7 @@ package lexer;
 public class Token {
 
     public enum Tag {
-        PRINT, IDENT, STRINGCONST, TYPE
+        PRINT, IDENT, STRINGCONST, TYPE, NUMERICCONST
     }
 
     public final Tag tag;

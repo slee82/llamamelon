@@ -59,7 +59,8 @@ DocumentationComment    = "/**" {CommentContent} "*"+ "/"
 CommentContent          = ( [^*] | \*+ [^/*] )*
 
 /* Constants */
-StringConst	            = \"([^\"\\]|\\.)*\"
+StringConst	        = \"([^\"\\]|\\.)*\"
+NumericConst		= 0 | [1-9][0-9]*
 
 /* Types */
 Type			= number|string|list|team|player|stat|nothing
@@ -99,6 +100,14 @@ print           { /* got a print statement, notify parser */
                     table.putEntry(s, null);
                     yyparser.yylval = new ParserVal(s);
                     return Parser.STRING; // TODO: couple return with table reference
+                }
+
+{NumericConst}	{ /* got a number, add to sym. tbl. and notify parser */
+		    System.err.println("lexer: found a Numeric Const");
+                    NumericConst n = new NumericConst(yytext());
+                    table.putEntry(n, null);
+                    yyparser.yylval = new ParserVal(n);
+                    return Parser.NUMBER; // TODO: couple return with table reference
                 }
 
 {Type}		{   /* got a type, notify parser */

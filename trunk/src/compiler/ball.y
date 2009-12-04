@@ -180,7 +180,7 @@ atom_expression : STRING {
 			$$ = new ParserVal(new Expr((Identifier)($1.obj)));
 		}
 		| NUMBER {
-			
+			$$ = new ParserVal(new Expr((NumericConst)($1.obj)));
 		}
 ;
 
