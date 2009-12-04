@@ -61,6 +61,10 @@ CommentContent          = ( [^*] | \*+ [^/*] )*
 /* Constants */
 StringConst	            = \"([^\"\\]|\\.)*\"
 
+/* Types */
+Type			= number|string|list|team|player|stat|nothing
+
+
 /* Identifiers */
 Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
@@ -74,6 +78,14 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ";"             { return Parser.SEMICOLON; }
 
+","             { return Parser.COMMA; }
+
+"="		{ return Parser.EQL; }
+
+"("		{ return Parser.OPAREN; }
+
+")"		{ return Parser.CPAREN; }
+
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);
@@ -82,13 +94,26 @@ print           { /* got a print statement, notify parser */
 
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
                     // TODO: add symbol table addition code here
+		    System.err.println("lexer: found a String Const");
                     StringConst s = new StringConst(yytext());
                     table.putEntry(s, null);
                     yyparser.yylval = new ParserVal(s);
                     return Parser.STRING; // TODO: couple return with table reference
                 }
 
-//{Identifier}	{ return Parser.IDENTIFIER; }
+{Type}		{   /* got a type, notify parser */
+		    Type t = new Type(yytext());
+		    yyparser.yylval = new ParserVal(t);
+		    System.err.println("lexer: found type");
+		    return Parser.TYPE;
+		}
+
+{Identifier}	{   /* got an identifier, notify parser */
+		    Identifier i = new Identifier(yytext());
+		    yyparser.yylval = new ParserVal(i);
+		    System.err.println("lexer: found identifier");
+		    return Parser.IDENTIFIER;
+		}
 
 {Comment} 		{ /* ignore */ }
 {WhiteSpace}	{ /* ignore */ }

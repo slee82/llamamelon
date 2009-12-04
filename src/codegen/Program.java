@@ -1,5 +1,10 @@
-package codegen;
+/*
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Program.java - Code Generator for the program
+ */
 
+package codegen;
 import java.util.LinkedList;
 
 public class Program extends ParseTreeNode {
@@ -19,6 +24,7 @@ public class Program extends ParseTreeNode {
         
         for (Object each : statements) {
             Stmt cur = (Stmt) each;
+	    System.out.print("\t\t");
             cur.gen();
         }
         
