@@ -7,6 +7,7 @@
 %{
 import java.io.*;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import lexer.*;
 import codegen.*;
 
@@ -21,8 +22,14 @@ import codegen.*;
  */
 
 %token STRING
+%token IDENTIFIER
 %token SEMICOLON
+%token EQL
+%token COMMA
+%token OPAREN
+%token CPAREN
 %token PRINT
+%token TYPE
 
 %%
 
@@ -59,7 +66,8 @@ statement : body_statement { $$ = $1; }
 ;
 
 /*Body Statements are all statements except function declarations*/
-body_statement : print_statement { $$ = $1; }
+body_statement : declaration { $$ = $1; }
+	| print_statement { $$ = $1; }
 ;
 
 /**PRINT_STATEMENT**/
@@ -67,6 +75,38 @@ print_statement :
     PRINT expression SEMICOLON {
         $$ = new ParserVal(new PrintStmt((Expr)$2.obj));
     }
+;
+
+/**DECLARATION**/
+declaration : TYPE variable_declarators SEMICOLON {
+		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
+		}
+;
+
+variable_declarators : variable_declarator {
+			ArrayList<ArrayList> a = new ArrayList<ArrayList>();
+			a.add((ArrayList)$1.obj);
+			$$ = new ParserVal (a);
+		     }
+                     | variable_declarators COMMA variable_declarator {
+			ArrayList<ArrayList> a = new ArrayList<ArrayList>();
+			a.addAll((ArrayList)$1.obj);
+			a.add((ArrayList)$3.obj);
+			$$ = new ParserVal (a);
+		     }
+;
+
+variable_declarator : IDENTIFIER {
+			ArrayList a = new ArrayList();
+			a.add($1.obj);
+			$$ = new ParserVal (a);
+		    }
+                    | IDENTIFIER EQL expression {
+			ArrayList a = new ArrayList();
+			a.add($1.obj);
+			a.add($3.obj);
+			$$ = new ParserVal (a);
+		    }
 ;
 
 /*EXPRESSION*/
@@ -104,7 +144,31 @@ postfix_expression : primary_expression { $$ = $1; }
 
 /*PRIMARY*/
 primary_expression : atom_expression { $$ = $1; }
+		   | function_call { $$ = $1; }
 ;
+
+/*FUNCTION_CALL*/
+function_call : IDENTIFIER OPAREN CPAREN {
+		$$ = new ParserVal(new Funcall((Identifier)$1.obj));
+	      }	
+              | IDENTIFIER OPAREN argument_list CPAREN {
+		$$ = new ParserVal(new Funcall((Identifier)$1.obj, (ArrayList<Expr>)$3.obj));
+	      }	
+              ;
+
+argument_list : expression {
+		ArrayList<Expr> a = new ArrayList<Expr>();
+		a.add((Expr)$1.obj);
+		$$ = new ParserVal(a);
+	      }
+              | argument_list COMMA expression {
+		ArrayList<Expr> a = new ArrayList<Expr>();
+		a.addAll((ArrayList<Expr>)$1.obj);
+		a.add((Expr)$3.obj);
+		$$ = new ParserVal(a);
+	      }
+              ;
+
 
 /*ATOM_EXPRESSION*/
 atom_expression : 
@@ -134,7 +198,6 @@ private String outname;
 /* interface to the lexer */
 private int yylex () {
 	int yyl_return = -1;
-	
     try {
 		yyl_return = lexer.yylex();
     }

@@ -1,3 +1,8 @@
+/*
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * playerObj.java - Players class
+ */
 
 public class playerObj {
 
