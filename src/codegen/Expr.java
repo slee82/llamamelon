@@ -19,6 +19,11 @@ public class Expr extends ParseTreeNode {
 	type = IDENTIFIER;
     }
 
+    public Expr(NumericConst n) {
+        this.stringval = n.val;
+	type = NUMERICCONST;
+    }
+
     public Expr() {
     }
     
@@ -36,4 +41,5 @@ public class Expr extends ParseTreeNode {
 
     public static final int STRINGCONST=1;
     public static final int IDENTIFIER=2;
+    public static final int NUMERICCONST=3;
 }

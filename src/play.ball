@@ -4,3 +4,5 @@ print Dodgers;
 
 print "\nTHE ASTROS";
 print Astros;
+
+print 5;
