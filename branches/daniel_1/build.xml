@@ -5,6 +5,7 @@
 	<property name="src.dir" value="src" />
 	<property name="build.dir" value="build" />
 	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="backend.dir" value="${build.dir}/classes/javabackend" />
 
 	<property name="lex.dir" value="src/lexer" />
 	<property name="lex.outdir" value="src/compiler" />	
@@ -27,6 +28,10 @@
 	<target name="compile">
 		<!-- make the output path -->
 		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${backend.dir}" />
+		<copy todir="${build.dir}/classes/teams">
+    			<fileset dir="teams"/>
+  		</copy>
 
 		<!-- generate the lexer -->
 		<exec executable="jflex">
@@ -49,8 +54,8 @@
 			<src path="${src.dir}/compiler"/>
 			<src path="${src.dir}/lexer"/>
 			<src path="${src.dir}/codegen"/>
-			<src path="${src.dir}/javabackend"/>
 		</javac>
+		<javac srcdir="${src.dir}/javabackend" destdir="${backend.dir}"/>
 	</target>
 
 </project>
