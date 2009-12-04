@@ -23,6 +23,7 @@ import codegen.*;
 
 %token STRING
 %token IDENTIFIER
+%token NUMBER
 %token SEMICOLON
 %token EQL
 %token COMMA
@@ -177,6 +178,9 @@ atom_expression : STRING {
     		}
 		| IDENTIFIER {
 			$$ = new ParserVal(new Expr((Identifier)($1.obj)));
+		}
+		| NUMBER {
+			
 		}
 ;
 
