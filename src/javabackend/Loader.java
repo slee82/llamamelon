@@ -28,7 +28,7 @@ public class Loader {
 		
 		String line; //hold the current line
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(fileName));
+			BufferedReader in = new BufferedReader(new FileReader("../teams/" + fileName));
 			try{
 				
 				if((line = percolateThrough(in)) != null) {	//if the file is not empty

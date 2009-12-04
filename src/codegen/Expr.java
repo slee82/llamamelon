@@ -11,6 +11,12 @@ public class Expr extends ParseTreeNode {
 
     public Expr(StringConst const1) {
         this.stringval = const1.val;
+	type = STRINGCONST;
+    }
+
+    public Expr(Identifier id) {
+        this.stringval = id.getID();
+	type = IDENTIFIER;
     }
 
     public Expr() {
@@ -21,6 +27,13 @@ public class Expr extends ParseTreeNode {
         System.out.print(stringval);
     }
 
+    public String toString(){
+	return stringval;
+    }
+
     private int type;
     private String stringval;
+
+    public static final int STRINGCONST=1;
+    public static final int IDENTIFIER=2;
 }
