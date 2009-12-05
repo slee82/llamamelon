@@ -33,7 +33,19 @@ public class playerObj {
 		}
 		this.name = name;
 		this.type = type;
-		this.ip = ip;
+		if ((int)ip == ip)
+			this.ip = ip;
+		else {
+			this.ip = (int)ip;
+			if (ip - (int)ip == .1)
+				this.ip += (1/3);
+			else if (ip - (int)ip == .2)
+				this.ip += (2/3);
+			else {
+				System.err.println("Incorrect Innings Pitched Value");
+				return;
+			}
+		}
 		this.h = h;
 		this.er = er;
 		this.bb = bb;
