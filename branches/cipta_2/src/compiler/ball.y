@@ -71,17 +71,26 @@ statement :
 ;
 
 body_statement_list : 
-    body_statement {}
-    | body_statement_list body_statement {}
+    body_statement {
+        LinkedList<Stmt> newlist = new LinkedList<Stmt>();
+        newlist.addLast((Stmt)$1.obj);
+        $$ = new ParserVal(newlist);
+    }
+    | body_statement_list body_statement {
+        LinkedList<Stmt> cur = (LinkedList<Stmt>)$1.obj;
+        cur.addLast((Stmt)$2.obj);
+        $$ = new ParserVal(cur);
+    }
 ;
 
 /* Body Statements are all statements except function declarations */
-body_statement : declaration { $$ = $1; }
+body_statement : 
+    declaration { $$ = $1; }
 	| print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
 ;
 
-/**FUNCTION_DEFINITION**/
+/** FUNCTION_DEFINITION* */
 function_definition :
     FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
         System.err.println("parser: function definition");
@@ -182,7 +191,12 @@ variable_declarator : IDENTIFIER {
 		    }
 ;
 
-jump_statement : RETURN expression SEMICOLON
+jump_statement : 
+    RETURN expression SEMICOLON {
+        ReturnStmt newret = new ReturnStmt((Expr)$2.obj);
+        $$ = new ParserVal(newret);
+    }
+;
 
 /* EXPRESSION */
 expression : logical_or_expression { $$ = $1; }
