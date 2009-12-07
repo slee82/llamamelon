@@ -24,6 +24,7 @@ public class Program extends ParseTreeNode {
 	for (Declaration each : varDeclarations){
 	    	System.out.print("\t");
 		each.gen();
+		System.out.print("\n");
 	}
 
         System.out.println("\tpublic static void main (String args[]) "+
