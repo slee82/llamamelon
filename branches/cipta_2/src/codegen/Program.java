@@ -17,18 +17,19 @@ public class Program extends ParseTreeNode {
     /**
      * for now, gen() prints to stdout
      */
-    public void gen() {
-        System.out.println("public class " + outname + " {");
-        System.out.println("\tpublic static void main (String args[]) "+
-                "throws Exception {");
+    public String code() {
+        String result = "public class " + outname + " {\n";
+        result += "\tpublic static void main (String args[]) "+
+                "throws Exception {\n";
         
         for (Object each : statements) {
             Stmt cur = (Stmt) each;
-	    System.out.print("\t\t");
-            cur.gen();
+            result += "\t\t";
+            result += cur.code();
         }
         
-        System.out.println("\t}\n}");
+        result += "\t}\n}\n";
+        return result;
     }
     
     private String outname;

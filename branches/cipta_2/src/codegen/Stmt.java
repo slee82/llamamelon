@@ -11,6 +11,11 @@ public class Stmt extends ParseTreeNode {
     int p;
 
     public void gen() {
-        System.out.println(";");
+        System.out.println(this.code());
+    }
+
+    public String code() {
+        // TODO Auto-generated method stub
+        return ";";
     }
 }

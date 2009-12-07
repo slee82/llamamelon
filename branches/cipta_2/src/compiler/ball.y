@@ -85,6 +85,24 @@ body_statement : declaration { $$ = $1; }
 function_definition :
     FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
         System.err.println("parser: function definition");
+        
+        HashMap<Identifier,Type> paramlist = (HashMap<Identifier,Type>)$4.obj;
+        Type retType = (Type)$7.obj;
+        LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$9.obj;
+        
+        FuncDef newfun = null;
+        try {
+            // Let FuncDef constructor check correctness
+            newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
+        } catch (Exception e) {
+            System.err.println("parser: funcdef: error: " + e.getLocalizedMessage());
+        } finally {
+            if (!(newfun instanceof FuncDef)) {
+                System.err.println("parser: funcdef: creating function node failed, exiting");
+                System.exit(1);
+            }
+        }
+        
         $$ = new ParserVal(null);
     }
 ;

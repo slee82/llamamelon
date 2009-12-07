@@ -19,6 +19,7 @@ public class Identifier extends Token {
             return false; // not equal
         Identifier otheri = (Identifier) other;
         return (otheri.val.equals(this.val));
+        
     }
     
     public String toString() {
