@@ -45,7 +45,7 @@ program :
     statement_list { 
         System.err.println("adding node for _program_");
         LinkedList<Stmt> stlist = (LinkedList<Stmt>)$1.obj;
-        Program top = new Program(stlist, outname);
+        Program top = new Program(stlist, outname, varDeclarations);
         top.gen(); // moves to intermediate code generation stage
     }
 ;
@@ -67,7 +67,7 @@ statement : body_statement { $$ = $1; }
 ;
 
 /*Body Statements are all statements except function declarations*/
-body_statement : declaration { $$ = $1; }
+body_statement : declaration {$$ = new ParserVal (new Stmt()); }
 	| print_statement { $$ = $1; }
 ;
 
@@ -80,7 +80,7 @@ print_statement :
 
 /**DECLARATION**/
 declaration : TYPE variable_declarators SEMICOLON {
-		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
+			varDeclarations.addLast(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
 		}
 ;
 
@@ -200,6 +200,9 @@ private SymbolTable table;
 
 /* what to call the class */
 private String outname;
+
+/*A list of variable declarations */
+LinkedList<Declaration> varDeclarations = new LinkedList<Declaration>();
 
 /* interface to the lexer */
 private int yylex () {

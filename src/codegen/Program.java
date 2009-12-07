@@ -9,21 +9,28 @@ import java.util.LinkedList;
 
 public class Program extends ParseTreeNode {
 
-    public Program(LinkedList stmts, String outname) {
+    public Program(LinkedList<Stmt> stmts, String outname, LinkedList<Declaration> varDeclarations) {
         this.outname = outname;
         this.statements = stmts;
+	this.varDeclarations = varDeclarations;
     }
 
     /**
      * for now, gen() prints to stdout
      */
     public void gen() {
-        System.out.println("public class " + outname + " {");
+        System.out.println("public class " + outname + " {\n");
+	
+	for (Declaration each : varDeclarations){
+	    	System.out.print("\t");
+		each.gen();
+	}
+
         System.out.println("\tpublic static void main (String args[]) "+
                 "throws Exception {");
         
-        for (Object each : statements) {
-            Stmt cur = (Stmt) each;
+        for (Stmt each : statements) {
+            Stmt cur = each;
 	    System.out.print("\t\t");
             cur.gen();
         }
@@ -32,5 +39,6 @@ public class Program extends ParseTreeNode {
     }
     
     private String outname;
-    private LinkedList statements;
+    private LinkedList<Stmt> statements;
+    private LinkedList<Declaration> varDeclarations;
 }

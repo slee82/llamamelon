@@ -18,7 +18,7 @@ public class Declaration extends Stmt {
     
     //generate the declaration
     public void gen() {
-        System.out.print(type + " ");
+        System.out.print("static " + type + " ");
 	
 	int i;
 	for(i=0; i<idexpPairs.size(); i++){	//set the identifier string to id1, id2, ...
