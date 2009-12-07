@@ -6,8 +6,7 @@
 
 %{
 import java.io.*;
-import java.util.LinkedList;
-import java.util.ArrayList;
+import java.util.*;
 import lexer.*;
 import codegen.*;
 
@@ -90,12 +89,41 @@ function_definition :
     }
 ;
 
-parameter_list : parameter
-               | parameter_list COMMA parameter
-               ;
+parameter_list : 
+    parameter {
+        // keep track of what names have been used, etc.
+        HashMap<Identifier,Type> paramlist = new HashMap<Identifier,Type>();
+        
+        Identifier name = (Identifier)((Object[])$1.obj)[1];
+        Type t = (Type)((Object[])$1.obj)[0];
+        
+        paramlist.put(name, t);
+        $$ = new ParserVal(paramlist);
+    }
+    | parameter_list COMMA parameter {
+        // add to previous parameter list
+        HashMap<Identifier,Type> paramlist = (HashMap<Identifier,Type>)$1.obj;
 
-parameter : TYPE IDENTIFIER
-          ;
+        Identifier name = (Identifier)((Object[])$2.obj)[1];
+        Type t = (Type)((Object[])$2.obj)[0];
+      
+        if (paramlist.containsKey(name)) {
+            System.err.println("parser: error: parameter with same name " + 
+                    name + " already present.");
+            System.exit(1);
+        }
+        
+        paramlist.put(name, t);
+        $$ = new ParserVal(paramlist);
+    }
+;
+
+parameter : 
+    TYPE IDENTIFIER {
+        // returns the Type and Identifier objects as a pair
+        $$ = new ParserVal(new Object[] {$1.obj, $2.obj});
+    }
+    ;
 
 /** PRINT_STATEMENT* */
 print_statement : 
