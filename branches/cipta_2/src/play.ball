@@ -1,0 +1,13 @@
+/* This is the first comment */
+/*** This is the second comment ***/
+// This is the third comment */
+
+
+team Dodgers = load("dodgers.team"), Astros = load("astros.team");
+print "THE DODGERS:";
+print Dodgers;
+
+print "\nTHE ASTROS";
+print Astros;
+
+print 5;
