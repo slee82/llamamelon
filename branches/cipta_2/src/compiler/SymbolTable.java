@@ -23,4 +23,8 @@ public class SymbolTable {
         table.put(key, val);
     }
     
+    public Object getEntry(Token key) {
+        return table.get(key);
+    }
+    
 }

@@ -19,5 +19,9 @@ public class Keyword extends Token {
      * Premade keywords
      */
     public static final Keyword
-        print = new Keyword(Tag.PRINT, "print");
+        print = new Keyword(Tag.PRINT, "print"),
+        function = new Keyword(Tag.FUNCTION, "function"),
+        end = new Keyword(Tag.END, "end"),
+        ret = new Keyword(Tag.RETURN, "return"),
+        returns = new Keyword(Tag.RETURNS, "returns");
 }

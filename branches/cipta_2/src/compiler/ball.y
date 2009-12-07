@@ -1,7 +1,7 @@
 /*
- * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
- * Team llamamelon - BALL language
- * ball.y - Parser specification of the BALL language (using BYACC/J)
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009 Team llamamelon -
+ * BALL language ball.y - Parser specification of the BALL language (using
+ * BYACC/J)
  */
 
 %{
@@ -15,9 +15,9 @@ import codegen.*;
 @SuppressWarnings("unchecked")
 %}
 
-/* 
- * ===============================================================
- *  Token declarations for communication between lexer and parser
+/*
+ * =============================================================== Token
+ * declarations for communication between lexer and parser
  * ===============================================================
  */
 
@@ -25,22 +25,25 @@ import codegen.*;
 %token IDENTIFIER
 %token NUMBER
 %token SEMICOLON
+%token COLON
 %token EQL
 %token COMMA
 %token OPAREN
 %token CPAREN
 %token PRINT
+%token FUNCTION
+%token RETURN
+%token RETURNS
 %token TYPE
+%token END
 
 %%
 
-/* 
- * ==================
- *  Language Grammar
- * ==================
+/*
+ * ================== Language Grammar ==================
  */
 
-/***PROGRAM***/
+/** *PROGRAM** */
 program : 
     statement_list { 
         System.err.println("adding node for _program_");
@@ -63,22 +66,45 @@ statement_list :
     }
 ;
 
-statement : body_statement { $$ = $1; }
+statement : 
+    body_statement { $$ = $1; }
+    | function_definition { $$ = $1; }
 ;
 
-/*Body Statements are all statements except function declarations*/
+body_statement_list : 
+    body_statement {}
+    | body_statement_list body_statement {}
+;
+
+/* Body Statements are all statements except function declarations */
 body_statement : declaration { $$ = $1; }
 	| print_statement { $$ = $1; }
+    | jump_statement { $$ = $1; }
 ;
 
-/**PRINT_STATEMENT**/
+/**FUNCTION_DEFINITION**/
+function_definition :
+    FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
+        System.err.println("parser: function definition");
+        $$ = new ParserVal(null);
+    }
+;
+
+parameter_list : parameter
+               | parameter_list COMMA parameter
+               ;
+
+parameter : TYPE IDENTIFIER
+          ;
+
+/** PRINT_STATEMENT* */
 print_statement : 
     PRINT expression SEMICOLON {
         $$ = new ParserVal(new PrintStmt((Expr)$2.obj));
     }
 ;
 
-/**DECLARATION**/
+/** DECLARATION* */
 declaration : TYPE variable_declarators SEMICOLON {
 		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
 		}
@@ -110,11 +136,13 @@ variable_declarator : IDENTIFIER {
 		    }
 ;
 
-/*EXPRESSION*/
+jump_statement : RETURN expression SEMICOLON
+
+/* EXPRESSION */
 expression : logical_or_expression { $$ = $1; }
 ;
 
-/*LOGICAL*/
+/* LOGICAL */
 logical_or_expression : logical_and_expression { $$ = $1; }
 ;
 
@@ -124,31 +152,31 @@ logical_and_expression : logical_not_expression { $$ = $1; }
 logical_not_expression : comparison_expression { $$ = $1; }
 ;
 
-/*COMPARISON*/
+/* COMPARISON */
 comparison_expression : addition_expression { $$ = $1; }
 ;
 
-/*ARITHMETIC*/
+/* ARITHMETIC */
 addition_expression : multiplication_expression { $$ = $1; }
 ;
 
 multiplication_expression : unary_expression { $$ = $1; }
 ;
 
-/*UNARY*/
+/* UNARY */
 unary_expression : postfix_expression { $$ = $1; }
 ;
 
-/*POSTFIX*/
+/* POSTFIX */
 postfix_expression : primary_expression { $$ = $1; }
 ;
 
-/*PRIMARY*/
+/* PRIMARY */
 primary_expression : atom_expression { $$ = $1; }
 		   | function_call { $$ = $1; }
 ;
 
-/*FUNCTION_CALL*/
+/* FUNCTION_CALL */
 function_call : IDENTIFIER OPAREN CPAREN {
 		$$ = new ParserVal(new Funcall((Identifier)$1.obj));
 	      }	
@@ -171,7 +199,7 @@ argument_list : expression {
               ;
 
 
-/*ATOM_EXPRESSION*/
+/* ATOM_EXPRESSION */
 atom_expression : STRING { 
         		System.err.println("got string " + $1.obj); 
         		$$ = new ParserVal(new Expr((StringConst)($1.obj)));
@@ -186,9 +214,9 @@ atom_expression : STRING {
 
 %%
 
-/* 
- * ====================================================================
- *  Other enhancements to the parser class, plus constructors and main
+/*
+ * ==================================================================== Other
+ * enhancements to the parser class, plus constructors and main
  * ====================================================================
  */
 
@@ -225,10 +253,8 @@ public Parser(Reader r, SymbolTable table, String out) {
     outname = out;
 }
 
-/* 
- * ===============
- *  Main function
- * ===============
+/*
+ * =============== Main function ===============
  */
 
 
@@ -256,7 +282,7 @@ public static void main(String args[]) throws IOException {
     }
     
     /*
-     * create the parser 
+     * create the parser
      */
 	Parser yyparser = new Parser(new FileReader(args[0]), 
             new SymbolTable(), name);
