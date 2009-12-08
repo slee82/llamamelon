@@ -1,5 +1,6 @@
 package codegen;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -39,10 +40,28 @@ public class FuncDef extends Stmt {
         
         String line = "\n\t\t"; // indentation
         
+        // create new bindings in parameter
+        SymbolTable inTable = new SymbolTable(true, table);
+        for (Identifier param : this.paramlist.keySet()) {
+            // implicitly make declarations
+            Object[] decl_contents = new Object[2];
+            // Type param
+            decl_contents[0] = param;
+            decl_contents[1] = null;
+
+            ArrayList<Object[]> temp = new ArrayList<Object[]>();
+            temp.add(decl_contents);
+
+            Declaration newdec = new Declaration(this.paramlist.get(param),
+                    temp);
+            inTable.putEntry(param, newdec);
+        }
+
+        
         Iterator<Stmt> bodyIter = bodylist.iterator();
         while (bodyIter.hasNext()) {
             Stmt cur = bodyIter.next();
-            begin += (line + cur.code(table)); // code for each statement    
+            begin += (line + cur.code(inTable)); // code for each statement    
         }
         
         begin += "\n\t}";

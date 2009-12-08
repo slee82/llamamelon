@@ -14,7 +14,7 @@ import compiler.SymbolTable;
 public class Declaration extends Stmt {
 
     // Constructor: Get Type and Identifiers
-    public Declaration(Type type, ArrayList<ArrayList> identifiers) {
+    public Declaration(Type type, ArrayList<Object[]> identifiers) {
         this.type = type; // extract the Strings
         idexpPairs = identifiers;
     }
@@ -26,8 +26,8 @@ public class Declaration extends Stmt {
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string
             // to id1, id2, ...
-            ArrayList ar = (ArrayList) idexpPairs.get(i);
-            Identifier id = (Identifier) ar.get(0);
+            Object[] ar = idexpPairs.get(i);
+            Identifier id = (Identifier) ar[0];
             if (!table.available(id)) {
                 throw new RuntimeException("declaration: init: identifier " + id + " in use.");
             }
@@ -38,9 +38,9 @@ public class Declaration extends Stmt {
                 begin += (id.getID());
 
             // check is the last identifier has an = sign for assignment
-            if (ar.size() > 1) {
+            if (ar[1] != null) {
                 
-                Expr x = (Expr) ar.get(1);
+                Expr x = (Expr) ar[1];
                 // check if the expression returns the correct type
                 if (!(x.getType(table).equals(this.type))) {
                     throw new RuntimeException("declaration: expression type " + 
@@ -73,18 +73,18 @@ public class Declaration extends Stmt {
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string
             // to id1, id2, ...
-            ArrayList ar = (ArrayList) idexpPairs.get(i);
-            Identifier id = (Identifier) ar.get(0);
+            Object[] ar = idexpPairs.get(i);
+            Identifier id = (Identifier) ar[0];
             
             if (!table.available(id)) {
                 throw new RuntimeException("declaration: global_main: identifier " + id + " in use.");
             }
 
             // check is the last identifier has an = sign for assignment
-            if (ar.size() > 1) {
+            if (ar[1] != null) {
                 begin += (id.getID());
                 
-                Expr x = (Expr) ar.get(1);
+                Expr x = (Expr) ar[1];
                 if (!(x.getType(table).equals(this.type))) {
                     throw new RuntimeException("declaration: expression type " + 
                             x.getType(table) + " does not match type; expected " 
@@ -112,8 +112,8 @@ public class Declaration extends Stmt {
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string
             // to id1, id2, ...
-            ArrayList ar = (ArrayList) idexpPairs.get(i);
-            Identifier id = (Identifier) ar.get(0);
+            Object[] ar = idexpPairs.get(i);
+            Identifier id = (Identifier) ar[0];
             
             // check if all identifiers are entered correctly in the table
             if (!((table.getEntry(id)) == this)) {
@@ -130,8 +130,8 @@ public class Declaration extends Stmt {
         System.out.println(begin);
     }
 
-    private Type type;
+    public final Type type;
 
-    private ArrayList<ArrayList> idexpPairs;
+    private ArrayList<Object[]> idexpPairs;
 
 }

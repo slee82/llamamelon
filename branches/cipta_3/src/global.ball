@@ -3,6 +3,7 @@
 // This is the third comment */
 
 function myfun ( number p ) returns number :
+	print p;
 	return 10;
 end
 

@@ -46,24 +46,17 @@ public class Expr extends ParseTreeNode {
             } else if (val instanceof FuncDef) {
                 throw new RuntimeException("expr: identifier " + ident 
                         + " is a function.");
-            }
-            return (Type)val;
+            } else if (val instanceof Declaration)
+                return ((Declaration)val).type;
         }
         return new Type(this.type.val);
-    }
-
-    /**
-     * Outputs the Java code for this expression to the standard output.
-     */
-    public void gen(SymbolTable table) {
-        // later needs to differ by type
-        System.out.print(this.code(table));
     }
 
     /**
      * @return Java code for this expression.
      */
     public String code(SymbolTable table) {
+        this.getType(table);
         return this.stringval;
     }
 

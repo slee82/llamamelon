@@ -26,23 +26,24 @@ public class Funcall extends Expr {
     /* Generate the code */
     public String code(SymbolTable table) {
         checkBuiltIn();
-        
+
         /*
          * Check function return types, etc
          */
         Object def = table.getEntry(name);
         if (!(def instanceof FuncDef)) {
-            throw new RuntimeException("funcall: identifier " + name + 
-                    " invalid, either nonexistent or not a function");
+            throw new RuntimeException("funcall: identifier " + name
+                    + " invalid, either nonexistent or not a function");
         }
-        
+
         String begin = (name.getID() + "(");
         if (args != null) { // print out all the args
             int i;
             for (i = 0; i < args.size(); i++) {
                 if (i > 0)
                     begin += (","); // comma separated
-                begin += args.get(i).code(table); // call gen() of each argument
+                begin += args.get(i).code(table); // call gen() of each
+                                                    // argument
             }
         }
         begin += (")");

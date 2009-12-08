@@ -163,34 +163,36 @@ print_statement :
 /**DECLARATION**/
 declaration : 
     TYPE variable_declarators SEMICOLON {
-		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
+		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList<Object[]>)$2.obj));
 	}
 ;
 
-variable_declarators : variable_declarator {
-			ArrayList<ArrayList> a = new ArrayList<ArrayList>();
-			a.add((ArrayList)$1.obj);
-			$$ = new ParserVal (a);
-		     }
-                     | variable_declarators COMMA variable_declarator {
-			ArrayList<ArrayList> a = new ArrayList<ArrayList>();
-			a.addAll((ArrayList)$1.obj);
-			a.add((ArrayList)$3.obj);
-			$$ = new ParserVal (a);
-		     }
+variable_declarators : 
+    variable_declarator {
+        ArrayList<Object[]> a = new ArrayList<Object[]>();
+        a.add((Object[])$1.obj);
+        $$ = new ParserVal (a);
+    }
+    | variable_declarators COMMA variable_declarator {
+        ArrayList<Object[]> a = (ArrayList<Object[]>)$1.obj;
+        a.add((Object[])$3.obj);
+        $$ = new ParserVal (a);
+    }
 ;
 
-variable_declarator : IDENTIFIER {
-			ArrayList a = new ArrayList();
-			a.add($1.obj);
-			$$ = new ParserVal (a);
-		    }
-                    | IDENTIFIER EQL expression {
-			ArrayList a = new ArrayList();
-			a.add($1.obj);
-			a.add($3.obj);
-			$$ = new ParserVal (a);
-		    }
+variable_declarator : 
+    IDENTIFIER {
+	    Object[] a = new Object[2];
+	    a[0] = $1.obj;
+        a[1] = null;
+	    $$ = new ParserVal (a);
+    }
+    | IDENTIFIER EQL expression {
+        Object[] a = new Object[2];
+        a[0] = $1.obj;
+        a[1] = $3.obj;
+        $$ = new ParserVal (a);
+    }
 ;
 
 jump_statement : 
