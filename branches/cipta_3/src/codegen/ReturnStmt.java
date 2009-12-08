@@ -1,31 +1,39 @@
 package codegen;
 
+import compiler.SymbolTable;
+
 import lexer.*;
 
 public class ReturnStmt extends Stmt {
 
     public ReturnStmt(Expr expr) {
         this.expression = expr;
-        if (expr == null) {
-            this.type = new Type("nothing");
-        } else {
-            this.type = expr.getType();
-        }
+    }
+    
+    public ReturnStmt() {
+        this.expression = null;
     }
 
-    public Expr expression;
-    public Type type;
-    
+    public final Expr expression;
+
+    /**
+     * Return value depends on what the expression evaluates to, which in turn
+     * depends on the expression's type, which (might) depend on what type the
+     * variables found inside the expression are.
+     */
+    public Type getType(SymbolTable table) {
+        if (this.expression == null) {
+            return new Type("nothing");
+        }
+        return expression.getType(table);
+    }
+
     @Override
-    public String code() {
+    public String code(SymbolTable table) {
         String stmt = "return ";
-        stmt += expression.code();
+        stmt += expression.code(table);
         stmt += " ;";
         return stmt;
-    }
-    @Override
-    public void gen() {
-        System.out.println(this.code());
     }
 
 }

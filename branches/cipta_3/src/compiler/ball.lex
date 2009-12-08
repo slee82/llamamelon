@@ -135,7 +135,7 @@ returns         {
 {Type}		{   /* got a type, notify parser */
 		    Type t = new Type(yytext());
 		    yyparser.yylval = new ParserVal(t);
-		    System.err.println("lexer: found type");
+		    System.err.println("lexer: found type " + t);
 		    return Parser.TYPE;
 		}
 

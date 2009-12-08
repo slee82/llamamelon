@@ -44,13 +44,19 @@ import codegen.*;
  * ==================
  */
 
+/*
+ * NOTE: ALL CODE CHECKING AND GENERATION STARTS AFTER TOP.GEN(). what the
+ * byacc/j code does is just to prepare the program structure.
+ */
+
+
 /***PROGRAM***/
 program : 
     statement_list { 
         System.err.println("adding node for _program_");
         LinkedList<Stmt> stlist = (LinkedList<Stmt>)$1.obj;
-        Program top = new Program(stlist, outname, varDeclarations, table);
-        top.gen(); // moves to intermediate code generation stage
+        Program top = new Program(stlist, outname);
+        top.gen(table); // moves to intermediate code generation stage
     }
 ;
 
@@ -103,18 +109,7 @@ function_definition :
         Type retType = (Type)$7.obj;
         LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$9.obj;
         
-        FuncDef newfun = null;
-        try {
-            // Let FuncDef constructor check correctness
-            newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
-        } catch (Exception e) {
-            System.err.println("parser: funcdef: error: " + e.getLocalizedMessage());
-        } finally {
-            if (!(newfun instanceof FuncDef)) {
-                System.err.println("parser: funcdef: creating function node failed, exiting");
-                System.exit(1);
-            }
-        }
+        FuncDef newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
         
         table.putEntry(name, newfun);
         $$ = new ParserVal(newfun);
@@ -139,6 +134,7 @@ parameter_list :
         Identifier name = (Identifier)((Object[])$2.obj)[1];
         Type t = (Type)((Object[])$2.obj)[0];
       
+        // simple error checking on paramlist
         if (paramlist.containsKey(name)) {
             System.err.println("parser: error: parameter with same name " + 
                     name + " already present.");
@@ -260,7 +256,6 @@ argument_list : expression {
               | argument_list COMMA expression {
 		ArrayList<Expr> a = new ArrayList<Expr>();
 		a.addAll((ArrayList<Expr>)$1.obj);
-		a.add((Expr)$3.obj);
 		$$ = new ParserVal(a);
 	      }
               ;
@@ -356,7 +351,7 @@ public static void main(String args[]) throws IOException {
      * create the parser
      */
 	Parser yyparser = new Parser(new FileReader(args[0]), 
-            new SymbolTable(), name);
+            new SymbolTable(true), name);
 	yyparser.yyparse();
 }
 

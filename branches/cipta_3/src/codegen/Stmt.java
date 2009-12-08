@@ -8,9 +8,4 @@ package codegen;
 
 public abstract class Stmt extends ParseTreeNode {
 
-    int p;
-
-    public abstract void gen();
-
-    public abstract String code();
 }

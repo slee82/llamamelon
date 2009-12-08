@@ -6,24 +6,21 @@
 
 package codegen;
 
+import compiler.SymbolTable;
+
 public class PrintStmt extends Stmt {
 
     public PrintStmt(Expr expr) {
         this.toprint = expr;
     }
     
-    public String code() {
+    public String code(SymbolTable table) {
         String begin = "System.out.println(";
-        begin += toprint.code();
+        begin += toprint.code(table);
         begin += (");\n");
         return begin;
     }
     
     private Expr toprint;
-
-    @Override
-    public void gen() {
-        System.out.println(this.code());
-    }
 
 }
