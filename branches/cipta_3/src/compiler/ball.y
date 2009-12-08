@@ -163,7 +163,6 @@ print_statement :
 /**DECLARATION**/
 declaration : 
     TYPE variable_declarators SEMICOLON {
-		varDeclarations.addLast(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
 		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
 	}
 ;

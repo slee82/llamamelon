@@ -11,7 +11,7 @@ import lexer.Type;
 
 public class FuncDef extends Stmt {
 
-    public FuncDef(Identifier name, Type retType, HashMap<Identifier, Type> paramlist, LinkedList<Stmt> bodylist) {
+    public FuncDef(Identifier name, Type retType, HashMap<Identifier,Type> paramlist, LinkedList<Stmt> bodylist) {
         
         this.name = name;
         this.retType = retType;
@@ -21,7 +21,11 @@ public class FuncDef extends Stmt {
     
     @Override
     public String code(SymbolTable table) {
-        return "        /* function " + name + " moved outside main(). */";
+        /*
+         * LINE BELOW MEANS FUNCTION ACCESSIBLE ONLY AFTER DECL IN .BALL file.
+         */
+        table.putEntry(this.name, this);
+        return "/* function " + name + " moved outside main(). */";
     }
     
     public String globalCode(SymbolTable table) {
@@ -50,6 +54,7 @@ public class FuncDef extends Stmt {
         for (Identifier id : paramlist2.keySet()) {
             res += ", " + paramlist2.get(id).getType() + " " + id.getID();
         }
+
         return res.substring(1);
     }
 

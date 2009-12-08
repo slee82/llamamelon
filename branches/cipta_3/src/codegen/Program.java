@@ -7,7 +7,6 @@
 package codegen;
 
 import java.util.LinkedList;
-
 import compiler.SymbolTable;
 
 public class Program extends ParseTreeNode {
@@ -46,16 +45,12 @@ public class Program extends ParseTreeNode {
             } else {
                 cur.gen(table);
             }
+
         }
 
-        for (Declaration each : varDeclarations) {
-            System.out.print("\t");
-            each.gen(table);
-            System.out.print("\n");
-        }
-
-        System.out.println("\t}\n");
+        System.out.println("\t}"); // end main()
         
+
         /*
          * FUNCTION DEFINITIONS
          */
@@ -63,7 +58,13 @@ public class Program extends ParseTreeNode {
             if (each instanceof FuncDef) {
                 FuncDef define = (FuncDef) each;
                 System.out.println(define.globalCode(table));
+                System.out.println();
             }
+        }
+
+        for (Declaration each : varDeclarations) {
+            System.out.print("\t");
+            each.genGlobalDecl(table);
         }
         
         System.out.println("}");

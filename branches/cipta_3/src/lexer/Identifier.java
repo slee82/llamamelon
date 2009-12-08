@@ -14,12 +14,18 @@ public class Identifier extends Token {
      * Overrides equals method. Two identifiers are equal if the words they
      * contain are equal.
      */
+    @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Identifier))
+        if (!(other instanceof Identifier)) {
             return false; // not equal
+        }
         Identifier otheri = (Identifier) other;
-        return (otheri.val.equals(this.val));
-        
+        return (otheri.val.equals(this.val));   
+    }
+    
+    @Override
+    public int hashCode() {
+        return this.val.hashCode();
     }
     
     public String toString() {

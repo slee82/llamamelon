@@ -8,7 +8,6 @@ package codegen;
 
 import lexer.*;
 import java.util.ArrayList;
-
 import compiler.SymbolTable;
 
 public class Funcall extends Expr {
@@ -27,6 +26,15 @@ public class Funcall extends Expr {
     /* Generate the code */
     public String code(SymbolTable table) {
         checkBuiltIn();
+        
+        /*
+         * Check function return types, etc
+         */
+        Object def = table.getEntry(name);
+        if (!(def instanceof FuncDef)) {
+            throw new RuntimeException("funcall: identifier " + name + 
+                    " invalid, either nonexistent or not a function");
+        }
         
         String begin = (name.getID() + "(");
         if (args != null) { // print out all the args

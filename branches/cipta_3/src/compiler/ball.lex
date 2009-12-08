@@ -119,14 +119,14 @@ returns         {
                     // TODO: add symbol table addition code here
 		    System.err.println("lexer: found a String Const");
                     StringConst s = new StringConst(yytext());
-                    table.putEntry(s, null);
+                    //table.putEntry(s, null);
                     yyparser.yylval = new ParserVal(s);
                     return Parser.STRING; // TODO: couple return with table reference
                 }
 
 {NumericConst}	{ /* got a number, add to sym. tbl. and notify parser */
 		            NumericConst n = new NumericConst(yytext());
-                    table.putEntry(n, null);
+                    //table.putEntry(n, null);
                     yyparser.yylval = new ParserVal(n);
                     System.err.println("lexer: found a Numeric Const " + n);
                     return Parser.NUMBER; // TODO: couple return with table reference
@@ -137,7 +137,7 @@ returns         {
 		    yyparser.yylval = new ParserVal(t);
 		    System.err.println("lexer: found type " + t);
 		    return Parser.TYPE;
-		}
+		    }
 
 {Identifier}	{   /* got an identifier, notify parser */
 		    Identifier i = new Identifier(yytext());
@@ -145,7 +145,7 @@ returns         {
 		    System.err.println("lexer: found identifier \"" + i.getID() + "\"");
             
             // add the identifier to the symbol table in case we need it later
-            table.putEntry(i, null);
+            //table.putEntry(i, null);
 		    return Parser.IDENTIFIER;
 		}
 

@@ -17,7 +17,7 @@ public class PrintStmt extends Stmt {
     public String code(SymbolTable table) {
         String begin = "System.out.println(";
         begin += toprint.code(table);
-        begin += (");\n");
+        begin += (");");
         return begin;
     }
     

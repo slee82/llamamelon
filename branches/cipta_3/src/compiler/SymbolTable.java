@@ -6,7 +6,6 @@
 package compiler;
 
 import lexer.*;
-
 import java.util.HashMap;
 
 /**
@@ -37,7 +36,7 @@ public class SymbolTable {
      * @param nextLookup
      */
     public SymbolTable(boolean isTop, SymbolTable nextLookup) {
-        this.table = new HashMap<Token, Object>();
+        this.table = new HashMap<Identifier, Object>();
         this.isTopTable = isTop;
         this.nextLookup = nextLookup;
     }
@@ -46,7 +45,7 @@ public class SymbolTable {
         this(isTop, null);
     }
 
-    public void putEntry(Token key, Object val) {
+    public void putEntry(Identifier key, Object val) {
         table.put(key, val);
     }
 
@@ -58,7 +57,7 @@ public class SymbolTable {
      * @param key what Token (usually identifier) needs to be searched
      * @return null if not found, the Object if found (may still be null)
      */
-    public Object getEntry(Token key) {
+    public Object getEntry(Identifier key) {
         if (table.containsKey(key)) {
             return table.get(key);
         }
@@ -68,28 +67,40 @@ public class SymbolTable {
         }
         return this.nextLookup.getEntry(key);
     }
-
+    
     public Object[] getVals() {
         return table.values().toArray();
     }
 
+    public Object[] getKeys() {
+        return table.keySet().toArray();
+    }
+    
     /**
      * @param id
      * @param type
      * @return true if an identifier with name specified by id and type
      *         specified by type can be made in the current table.
      */
-    public boolean available(Token id) {
-        if (table.containsKey(id)) return false;
+    public boolean available(Identifier id) {
+        if (table.get(id) instanceof Identifier) return false;
         if (isTopTable) return true;
+        if (nextLookup == null) return true;
         return nextLookup.available(id);
     }
 
-    private HashMap<Token, Object> table;
+    public int size() {
+        // TODO Auto-generated method stub
+        return table.size();
+    }
+    
+    private HashMap<Identifier, Object> table;
 
     // cannot change the chain
     public final SymbolTable nextLookup;
 
     public final boolean isTopTable;
+
+
 
 }

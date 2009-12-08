@@ -29,7 +29,7 @@ public class Declaration extends Stmt {
             ArrayList ar = (ArrayList) idexpPairs.get(i);
             Identifier id = (Identifier) ar.get(0);
             if (!table.available(id)) {
-                throw new RuntimeException("declaration: identifier " + id + " in use.");
+                throw new RuntimeException("declaration: init: identifier " + id + " in use.");
             }
 
             if (i > 0) // dont put a comma at the beginning
@@ -51,6 +51,8 @@ public class Declaration extends Stmt {
                 begin += (" = ");
                 begin += x.code(table);
             }
+            
+            table.putEntry(id, this);
         }
 
         begin += (";\n");
@@ -75,7 +77,7 @@ public class Declaration extends Stmt {
             Identifier id = (Identifier) ar.get(0);
             
             if (!table.available(id)) {
-                throw new RuntimeException("declaration: identifier " + id + " in use.");
+                throw new RuntimeException("declaration: global_main: identifier " + id + " in use.");
             }
 
             // check is the last identifier has an = sign for assignment
@@ -91,13 +93,13 @@ public class Declaration extends Stmt {
                 
                 begin += " = ";
                 begin += x.code(table);
-                begin += ";\n";
-                
-                table.putEntry(id, this);
+                begin += "; ";
             }
+            
+            table.putEntry(id, this);
         }
         
-        System.out.print(begin);
+        System.out.println(begin);
     }
     
     /**
@@ -115,7 +117,7 @@ public class Declaration extends Stmt {
             
             // check if all identifiers are entered correctly in the table
             if (!((table.getEntry(id)) == this)) {
-                throw new RuntimeException("declaration: identifier " + id + " mismatched.");
+                throw new RuntimeException("declaration: init: identifier " + id + " mismatched.");
             }
 
             if (i > 0) // dont put a comma at the beginning
@@ -124,12 +126,12 @@ public class Declaration extends Stmt {
                 begin += (id.getID());
         }
 
-        begin += (";\n");
+        begin += (";");
         System.out.println(begin);
     }
 
     private Type type;
 
-    private ArrayList idexpPairs;
+    private ArrayList<ArrayList> idexpPairs;
 
 }
