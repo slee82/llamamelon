@@ -9,10 +9,14 @@ import java.util.LinkedList;
 
 public class Program extends ParseTreeNode {
 
-    public Program(LinkedList<Stmt> stmts, String outname, LinkedList<Declaration> varDeclarations) {
+    public Program(LinkedList stmts, String outname) {
         this.outname = outname;
         this.statements = stmts;
-	this.varDeclarations = varDeclarations;
+        this.varDeclarations = varDeclarations;
+    }
+    
+    public String code() {
+    	throw new RuntimeException("Programs shouldn't be collected as strings.");
     }
 
     /**

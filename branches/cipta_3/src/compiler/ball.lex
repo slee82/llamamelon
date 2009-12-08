@@ -87,10 +87,32 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ")"		{ return Parser.CPAREN; }
 
+":"     { return Parser.COLON; }
+
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);
                     return Parser.PRINT; // TODO: couple return with table reference
+                }
+
+function        {
+                    yyparser.yylval = new ParserVal(Keyword.function);
+                    return Parser.FUNCTION;
+                }
+
+return          {
+                    yyparser.yylval = new ParserVal(Keyword.ret);
+                    return Parser.RETURN;
+                }
+
+end             {
+                    yyparser.yylval = new ParserVal(Keyword.end);
+                    return Parser.END;
+                }
+
+returns         {
+                    yyparser.yylval = new ParserVal(Keyword.returns);
+                    return Parser.RETURNS;
                 }
 
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
@@ -120,7 +142,10 @@ print           { /* got a print statement, notify parser */
 {Identifier}	{   /* got an identifier, notify parser */
 		    Identifier i = new Identifier(yytext());
 		    yyparser.yylval = new ParserVal(i);
-		    System.err.println("lexer: found identifier");
+		    System.err.println("lexer: found identifier \"" + i.getID() + "\"");
+            
+            // add the identifier to the symbol table in case we need it later
+            table.putEntry(i, null);
 		    return Parser.IDENTIFIER;
 		}
 

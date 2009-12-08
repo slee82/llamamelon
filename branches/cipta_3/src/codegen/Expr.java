@@ -11,32 +11,41 @@ public class Expr extends ParseTreeNode {
 
     public Expr(StringConst const1) {
         this.stringval = const1.val;
-	type = STRINGCONST;
+        type = new Type("number");
     }
 
     public Expr(Identifier id) {
         this.stringval = id.getID();
-	type = IDENTIFIER;
+        // TODO: find out identifier type through symbol table.
+        type = new Type("identifier");
     }
 
     public Expr(NumericConst n) {
         this.stringval = n.val;
-	type = NUMERICCONST;
+        type = new Type("string");
     }
 
     public Expr() {
     }
     
+    /**
+     * Outputs the Java code for this expression to the standard output.
+     */
     public void gen() {
         // later needs to differ by type
-        System.out.print(stringval);
+        System.out.print(this.code());
     }
+    
+    /**
+     * @return Java code for this expression.
+     */
+    public String code() { return this.stringval; }
 
     public String toString(){
 	return stringval;
     }
 
-    private int type;
+    private Type type;
     private String stringval;
 
     public static final int STRINGCONST=1;

@@ -12,10 +12,11 @@ public class PrintStmt extends Stmt {
         this.toprint = expr;
     }
     
-    public void gen() {
-        System.out.print("System.out.println(");
-        toprint.gen();
-        System.out.println(");");
+    public String code() {
+        String begin = "System.out.println(";
+        begin += toprint.code();
+        begin += (");\n");
+        return begin;
     }
     
     private Expr toprint;

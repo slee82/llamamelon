@@ -8,5 +8,9 @@ package codegen;
 
 public abstract class ParseTreeNode {
     
-    public abstract void gen();
+    public void gen() {
+        System.out.println(this.code());
+    }
+    
+    public abstract String code();
 }

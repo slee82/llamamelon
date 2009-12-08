@@ -6,8 +6,7 @@
 
 %{
 import java.io.*;
-import java.util.LinkedList;
-import java.util.ArrayList;
+import java.util.*;
 import lexer.*;
 import codegen.*;
 
@@ -25,12 +24,17 @@ import codegen.*;
 %token IDENTIFIER
 %token NUMBER
 %token SEMICOLON
+%token COLON
 %token EQL
 %token COMMA
 %token OPAREN
 %token CPAREN
 %token PRINT
+%token FUNCTION
+%token RETURN
+%token RETURNS
 %token TYPE
+%token END
 
 %%
 
@@ -63,13 +67,92 @@ statement_list :
     }
 ;
 
-statement : body_statement { $$ = $1; }
+statement : 
+    body_statement { $$ = $1; }
+    | function_definition { $$ = $1; }
 ;
 
-/*Body Statements are all statements except function declarations*/
-body_statement : declaration {$$ = new ParserVal (new Stmt()); }
-	| print_statement { $$ = $1; }
+body_statement_list : 
+    body_statement {
+        LinkedList<Stmt> newlist = new LinkedList<Stmt>();
+        newlist.addLast((Stmt)$1.obj);
+        $$ = new ParserVal(newlist);
+    }
+    | body_statement_list body_statement {
+        LinkedList<Stmt> cur = (LinkedList<Stmt>)$1.obj;
+        cur.addLast((Stmt)$2.obj);
+        $$ = new ParserVal(cur);
+    }
 ;
+
+/* Body Statements are all statements except function declarations */
+body_statement : 
+    declaration { $$ = $1; }
+	| print_statement { $$ = $1; }
+    | jump_statement { $$ = $1; }
+;
+
+/** FUNCTION_DEFINITION* */
+function_definition :
+    FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
+        System.err.println("parser: function definition");
+        
+        HashMap<Identifier,Type> paramlist = (HashMap<Identifier,Type>)$4.obj;
+        Type retType = (Type)$7.obj;
+        LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$9.obj;
+        
+        FuncDef newfun = null;
+        try {
+            // Let FuncDef constructor check correctness
+            newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
+        } catch (Exception e) {
+            System.err.println("parser: funcdef: error: " + e.getLocalizedMessage());
+        } finally {
+            if (!(newfun instanceof FuncDef)) {
+                System.err.println("parser: funcdef: creating function node failed, exiting");
+                System.exit(1);
+            }
+        }
+        
+        $$ = new ParserVal(null);
+    }
+;
+
+parameter_list : 
+    parameter {
+        // keep track of what names have been used, etc.
+        HashMap<Identifier,Type> paramlist = new HashMap<Identifier,Type>();
+        
+        Identifier name = (Identifier)((Object[])$1.obj)[1];
+        Type t = (Type)((Object[])$1.obj)[0];
+        
+        paramlist.put(name, t);
+        $$ = new ParserVal(paramlist);
+    }
+    | parameter_list COMMA parameter {
+        // add to previous parameter list
+        HashMap<Identifier,Type> paramlist = (HashMap<Identifier,Type>)$1.obj;
+
+        Identifier name = (Identifier)((Object[])$2.obj)[1];
+        Type t = (Type)((Object[])$2.obj)[0];
+      
+        if (paramlist.containsKey(name)) {
+            System.err.println("parser: error: parameter with same name " + 
+                    name + " already present.");
+            System.exit(1);
+        }
+        
+        paramlist.put(name, t);
+        $$ = new ParserVal(paramlist);
+    }
+;
+
+parameter : 
+    TYPE IDENTIFIER {
+        // returns the Type and Identifier objects as a pair
+        $$ = new ParserVal(new Object[] {$1.obj, $2.obj});
+    }
+    ;
 
 /**PRINT_STATEMENT**/
 print_statement : 
@@ -79,9 +162,11 @@ print_statement :
 ;
 
 /**DECLARATION**/
-declaration : TYPE variable_declarators SEMICOLON {
-			varDeclarations.addLast(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
-		}
+declaration : 
+    TYPE variable_declarators SEMICOLON {
+		varDeclarations.addLast(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
+		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList)$2.obj));
+	}
 ;
 
 variable_declarators : variable_declarator {
@@ -110,11 +195,18 @@ variable_declarator : IDENTIFIER {
 		    }
 ;
 
-/*EXPRESSION*/
+jump_statement : 
+    RETURN expression SEMICOLON {
+        ReturnStmt newret = new ReturnStmt((Expr)$2.obj);
+        $$ = new ParserVal(newret);
+    }
+;
+
+/* EXPRESSION */
 expression : logical_or_expression { $$ = $1; }
 ;
 
-/*LOGICAL*/
+/* LOGICAL */
 logical_or_expression : logical_and_expression { $$ = $1; }
 ;
 
@@ -124,31 +216,31 @@ logical_and_expression : logical_not_expression { $$ = $1; }
 logical_not_expression : comparison_expression { $$ = $1; }
 ;
 
-/*COMPARISON*/
+/* COMPARISON */
 comparison_expression : addition_expression { $$ = $1; }
 ;
 
-/*ARITHMETIC*/
+/* ARITHMETIC */
 addition_expression : multiplication_expression { $$ = $1; }
 ;
 
 multiplication_expression : unary_expression { $$ = $1; }
 ;
 
-/*UNARY*/
+/* UNARY */
 unary_expression : postfix_expression { $$ = $1; }
 ;
 
-/*POSTFIX*/
+/* POSTFIX */
 postfix_expression : primary_expression { $$ = $1; }
 ;
 
-/*PRIMARY*/
+/* PRIMARY */
 primary_expression : atom_expression { $$ = $1; }
 		   | function_call { $$ = $1; }
 ;
 
-/*FUNCTION_CALL*/
+/* FUNCTION_CALL */
 function_call : IDENTIFIER OPAREN CPAREN {
 		$$ = new ParserVal(new Funcall((Identifier)$1.obj));
 	      }	
@@ -171,7 +263,7 @@ argument_list : expression {
               ;
 
 
-/*ATOM_EXPRESSION*/
+/* ATOM_EXPRESSION */
 atom_expression : STRING { 
         		System.err.println("got string " + $1.obj); 
         		$$ = new ParserVal(new Expr((StringConst)($1.obj)));
@@ -234,7 +326,6 @@ public Parser(Reader r, SymbolTable table, String out) {
  * ===============
  */
 
-
 public static void main(String args[]) throws IOException {
 	if (args.length == 0) {
 		System.err.println("no arguments");
@@ -259,7 +350,7 @@ public static void main(String args[]) throws IOException {
     }
     
     /*
-     * create the parser 
+     * create the parser
      */
 	Parser yyparser = new Parser(new FileReader(args[0]), 
             new SymbolTable(), name);
