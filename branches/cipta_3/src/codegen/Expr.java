@@ -11,7 +11,7 @@ public class Expr extends ParseTreeNode {
 
     public Expr(StringConst const1) {
         this.stringval = const1.val;
-        type = new Type("number");
+        type = new Type("string");
     }
 
     public Expr(Identifier id) {
@@ -22,11 +22,13 @@ public class Expr extends ParseTreeNode {
 
     public Expr(NumericConst n) {
         this.stringval = n.val;
-        type = new Type("string");
+        type = new Type("number");
     }
 
     public Expr() {
     }
+    
+    public Type getType() { return new Type(this.type.val); }
     
     /**
      * Outputs the Java code for this expression to the standard output.

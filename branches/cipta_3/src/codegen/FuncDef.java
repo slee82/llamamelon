@@ -18,7 +18,7 @@ public class FuncDef extends Stmt {
                 ReturnStmt ret = (ReturnStmt) inner;
                 if (!(ret.type.equals(retType))) {
                     throw new IllegalArgumentException("funcdef: conflicting return type in function "+ 
-                            name +", expected " + retType + ", but got " + ret.type);
+                            name +", \n    expected " + retType + ", but got " + ret.type);
                 }
             }
         }
@@ -46,13 +46,16 @@ public class FuncDef extends Stmt {
             begin += (line + cur.code()); // code for each statement    
         }
         
-        begin += "\n        }";
+        begin += "\n    }";
         return begin;
     }
 
     private static String plistCode(HashMap<Identifier, Type> paramlist2) {
-        // TODO Auto-generated method stub
-        return null;
+        String res = "";
+        for (Identifier id : paramlist2.keySet()) {
+            res += ", " + paramlist2.get(id).getType() + " " + id.getID();
+        }
+        return res.substring(1);
     }
 
     Identifier name;

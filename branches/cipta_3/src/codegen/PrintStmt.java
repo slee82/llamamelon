@@ -21,4 +21,9 @@ public class PrintStmt extends Stmt {
     
     private Expr toprint;
 
+    @Override
+    public void gen() {
+        System.out.println(this.code());
+    }
+
 }

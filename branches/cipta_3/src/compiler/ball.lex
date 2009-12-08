@@ -125,10 +125,10 @@ returns         {
                 }
 
 {NumericConst}	{ /* got a number, add to sym. tbl. and notify parser */
-		    System.err.println("lexer: found a Numeric Const");
-                    NumericConst n = new NumericConst(yytext());
+		            NumericConst n = new NumericConst(yytext());
                     table.putEntry(n, null);
                     yyparser.yylval = new ParserVal(n);
+                    System.err.println("lexer: found a Numeric Const " + n);
                     return Parser.NUMBER; // TODO: couple return with table reference
                 }
 

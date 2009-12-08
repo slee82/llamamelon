@@ -21,6 +21,16 @@ public class Type extends Token {
         super(Tag.TYPE);
         this.val = s;
     }
+    
+    public boolean equals(Object other) {
+        if (!(other instanceof Type)) return false;
+        Type o = (Type)other;
+        return this.val.equals(o.val);
+    }
+    
+    public String toString() {
+        return "<type '" + val + "'>";
+    }
 
     /**
      * @return the corresponding Java type of this type token.

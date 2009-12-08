@@ -26,5 +26,9 @@ public class SymbolTable {
     public Object getEntry(Token key) {
         return table.get(key);
     }
+
+    public Object[] getVals() {
+        return table.values().toArray();
+    }
     
 }

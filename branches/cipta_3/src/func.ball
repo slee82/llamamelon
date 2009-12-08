@@ -3,14 +3,9 @@
 // This is the third comment */
 
 function myfun ( number p ) returns number :
-	print "\nprinting inside a function";
-	print p;
 	return 10;
 end
 
-print "\nTHE ASTROS";
-print Astros;
-number k = 7;
-print myfun(k);
+print myfun(33);
 
 print 5;

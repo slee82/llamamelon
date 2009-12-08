@@ -18,9 +18,9 @@ public class TeamObj {
 	}
 	
 	public void addPlayer(playerObj p) {
-		if (p.getType() == p.BATTER)
+		if (p.getType() == playerObj.BATTER)
 			batters.add(p);
-		if (p.getType() == p.PITCHER)
+		if (p.getType() == playerObj.PITCHER)
 			pitchers.add(p);
 	}
 	

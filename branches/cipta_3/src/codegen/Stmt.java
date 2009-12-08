@@ -6,16 +6,11 @@
 
 package codegen;
 
-public class Stmt extends ParseTreeNode {
+public abstract class Stmt extends ParseTreeNode {
 
     int p;
 
-    public void gen() {
-        System.out.println(this.code());
-    }
+    public abstract void gen();
 
-    public String code() {
-        // TODO Auto-generated method stub
-        return ";";
-    }
+    public abstract String code();
 }

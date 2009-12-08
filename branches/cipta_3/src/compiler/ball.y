@@ -49,7 +49,7 @@ program :
     statement_list { 
         System.err.println("adding node for _program_");
         LinkedList<Stmt> stlist = (LinkedList<Stmt>)$1.obj;
-        Program top = new Program(stlist, outname, varDeclarations);
+        Program top = new Program(stlist, outname, varDeclarations, table);
         top.gen(); // moves to intermediate code generation stage
     }
 ;
@@ -97,6 +97,8 @@ function_definition :
     FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
         System.err.println("parser: function definition");
         
+        Identifier name = (Identifier)$2.obj;
+        
         HashMap<Identifier,Type> paramlist = (HashMap<Identifier,Type>)$4.obj;
         Type retType = (Type)$7.obj;
         LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$9.obj;
@@ -114,7 +116,8 @@ function_definition :
             }
         }
         
-        $$ = new ParserVal(null);
+        table.putEntry(name, newfun);
+        $$ = new ParserVal(newfun);
     }
 ;
 

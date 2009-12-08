@@ -47,4 +47,9 @@ public class Declaration extends Stmt {
 
     private ArrayList idexpPairs;
 
+    @Override
+    public void gen() {
+        System.out.println(this.code());
+    }
+
 }
