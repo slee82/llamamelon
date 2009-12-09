@@ -49,7 +49,7 @@ public class Type extends Token {
         if (val.equals("stat"))
             return "stat";
         if (val.equals("nothing"))
-            return null;
+            return "void";
 
         return val;
     }

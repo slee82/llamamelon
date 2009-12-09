@@ -144,6 +144,12 @@ body_statement :
 ;
 
 /** FUNCTION_DEFINITION **/
+
+/*
+ * In BALL, function definitions can only happen in the top level. Naturally,
+ * the only variables they'll get access to is global variables, parameters,
+ * and variables declared in the body itself. 
+ */
 function_definition :
     FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
         System.err.println("parser: function definition");
@@ -190,6 +196,7 @@ parameter_list :
         LinkedHashMap<Identifier,Type> paramlist = 
             (LinkedHashMap<Identifier,Type>)$1.obj;
 
+        // parse the parameter, just like before
         Object[] param = (Object[]) $3.obj;
         Identifier name = (Identifier)(param[1]);
         Type t = (Type)((Object[])$3.obj)[0];
@@ -258,6 +265,17 @@ variable_declarator :
     }
 ;
 
+/*
+ * Return statements
+ * -----------------
+ * Functions need to verify what they return to the program. However, since
+ * function bodies themselves are multi-layered structures, the "return"
+ * statement might be buried deep somewhere inside a loop within a conditional
+ * inside another loop, for example.
+ * 
+ * TODO: implement multi-layered return checking. In particular, examine return
+ *       types of statements that contain statements.
+ */
 jump_statement : 
     RETURN expression SEMICOLON {
         ReturnStmt newret = new ReturnStmt((Expr)$2.obj);
@@ -266,6 +284,14 @@ jump_statement :
 ;
 
 /**ASSIGNMENT_STATEMENT**/ 
+/*
+ * A few notes on assignment:
+ * - the normal EQL operator, '=', can be used on any type. All other operators
+ *   must be a number assignment (for example, 'team x += load("dodgers.team");'
+ *   returns an error)
+ * - both the variable the identifier is referring to and the expression must
+ *   match in type.
+ */
 assignment_statement :
     // make the node
     IDENTIFIER assignment_operator expression SEMICOLON {
@@ -277,6 +303,7 @@ assignment_statement :
     }
 ;
 
+/* operators of assignment */
 assignment_operator : 
     EQL { $$ = new ParserVal(AssignmentStmt.Op.EQL); }
     | PLUSEQL { $$ = new ParserVal(AssignmentStmt.Op.PLUSEQL); }
@@ -288,6 +315,7 @@ assignment_operator :
 
 
 /**EXPRESSION_STATEMENT**/
+/* simply evaluate the expression. Usually wanted for the side effects. */
 expression_statement : 
     SEMICOLON {
         ExprStmt stmt = new ExprStmt();

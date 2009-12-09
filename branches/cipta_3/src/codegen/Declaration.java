@@ -103,11 +103,12 @@ public class Declaration extends Stmt {
     }
     
     /**
-     * 
+     * Print to stdout the declaration code, intended to be used by Program to
+     * output global variable declarations in class level, not main()
      * @param table
      */
     public void genGlobalDecl(SymbolTable table) {
-        String begin = (type.getType() + " ");
+        String begin = ("private static " + type.getType() + " ");
 
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string

@@ -15,7 +15,7 @@ public class ExprStmt extends Stmt {
     @Override
     public String code(SymbolTable table) {
         if (expr == null) return ";";
-        return expr.code(table);
+        return expr.code(table).concat(";");
     }
     
     private Expr expr;
