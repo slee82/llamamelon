@@ -139,11 +139,16 @@ body_statement_list :
  * level of the java output) is not supported by the BALL language. 
  */
 body_statement : 
-    declaration { $$ = $1; }
+      declaration { $$ = $1; }
     | expression_statement { $$ = $1; }
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
+	/*The following allows for BALL to accept functions with no body.
+	 *This is hackerish, and prints out a single';'.
+	 *TODO: Decide wether to make a 'EmptyStmt' Class.
+	 */
+    | { $$ = new ParserVal(new ExprStmt()); }
 ;
 
 /** FUNCTION_DEFINITION **/

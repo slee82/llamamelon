@@ -1,11 +1,7 @@
 package codegen;
 
-//import java.util.ArrayList;
-//import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-
-//import compiler.SymbolTable;
 
 import lexer.Identifier;
 import lexer.Type;
