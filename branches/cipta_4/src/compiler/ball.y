@@ -27,8 +27,7 @@ import codegen.*;
 %token COLON
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
 %token COMMA
-%token OPAREN
-%token CPAREN
+%token OPAREN, CPAREN
 %token PRINT
 %token FUNCTION
 %token SIMFUNCTION

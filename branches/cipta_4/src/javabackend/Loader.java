@@ -25,8 +25,8 @@ public class Loader {
 		String teamName = "Unnamed Team";
 		int teamWins = 0;
 		int teamLosses = 0;
-		ArrayList<playerObj> batters = new ArrayList<playerObj>();		//will contain extracted batters
-		ArrayList<playerObj> pitchers = new ArrayList<playerObj>();		//will contain extracted pitchers
+		ArrayList<PlayerObj> batters = new ArrayList<PlayerObj>();		//will contain extracted batters
+		ArrayList<PlayerObj> pitchers = new ArrayList<PlayerObj>();		//will contain extracted pitchers
 		
 		String line; //hold the current line
 		try {
@@ -141,7 +141,7 @@ public class Loader {
 	//read a new line until end of this goup of players.
 	//for each line create a player and add to the returned list.
 	//===========================================================
-	public static ArrayList<playerObj> readBatters(BufferedReader in, String aLine) throws IOException {
+	public static ArrayList<PlayerObj> readBatters(BufferedReader in, String aLine) throws IOException {
 		
 		in.mark(5000);
 		String line = aLine;
@@ -150,7 +150,7 @@ public class Loader {
 		else	//header check
 			System.err.println("Warning: Headers not provided for Batters. Unclean CSV.");
 	
-		ArrayList<playerObj> batters = new ArrayList<playerObj>();
+		ArrayList<PlayerObj> batters = new ArrayList<PlayerObj>();
 		String batterName = "Unnamed Batter";
 		int AB = 0;
 		int R = 0;
@@ -197,7 +197,7 @@ public class Loader {
 			}
 			
 			//Add this new player
-			batters.add(new playerObj(batterName, playerObj.BATTER, AB, R, H, DBL, TPL, HR, BB));
+			batters.add(new PlayerObj(batterName, PlayerObj.BATTER, AB, R, H, DBL, TPL, HR, BB));
 			line = percolateThrough(in);
 		}
 		return batters;
@@ -207,7 +207,7 @@ public class Loader {
 	//read a new line until end of this goup of players.
 	//for each line create a player and add to the returned list.
 	//===========================================================
-	public static ArrayList<playerObj> readPitchers(BufferedReader in, String aLine) throws IOException {
+	public static ArrayList<PlayerObj> readPitchers(BufferedReader in, String aLine) throws IOException {
 		
 		in.mark(5000);
 		String line = aLine;
@@ -216,7 +216,7 @@ public class Loader {
 		else		//header check
 			System.err.println("Warning: Headers not provided for Pitchers. Unclean CSV.");
 		
-		ArrayList<playerObj> pitchers = new ArrayList<playerObj>();
+		ArrayList<PlayerObj> pitchers = new ArrayList<PlayerObj>();
 		String pitcherName = "Unnamed Pitcher";
 		double IP = 0;
 		int H = 0;
@@ -255,7 +255,7 @@ public class Loader {
 			}
 			
 			//Add this new player
-			pitchers.add(new playerObj(pitcherName, playerObj.PITCHER, IP, H, ER, BB, K));
+			pitchers.add(new PlayerObj(pitcherName, PlayerObj.PITCHER, IP, H, ER, BB, K));
 			line = percolateThrough(in);
 		}
 		return pitchers;

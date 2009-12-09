@@ -45,6 +45,12 @@ public class FuncDef extends Stmt {
          */
         // TODO: add code for checking return type
         
+        Object res = table.getEntry(this.name);
+        if (res != null) {
+            throw new RuntimeException ("funcdef: identifier " + name +
+                    " in use as " + res);
+        }
+        
         String begin = "\n\tprivate static " + this.retType.getType() + " " + this.name.getID()
             + " (" + this.plistCode() + " ) {";
         

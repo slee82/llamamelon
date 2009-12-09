@@ -26,6 +26,7 @@ body_statement : if_statement
                | iteration_statement
                | jump_statement
                | declaration
+               | stat_declaration
                | expression_statement
                | activate_statement
                | print_statement
@@ -93,13 +94,22 @@ variable_declarator : identifier
                     | identifier "=" expression
                     ;
 
+/*
+ * This is necessary because the compilation rules for stat declarations are
+ * different to variable declarations. In variable declarations, the expression
+ * is evaluated, but in stat declarations the expression is encapsulated into
+ * a function.
+ */
+stat_declaration : "stat" identifier "=" expression ";"
+                 ;
+
 /*TYPE*/
 type : "number"
      | "string"
      | "list"
      | "team"
      | "player"
-     | "stat"
+     //| "stat"
      | "nothing"
      ;
 
