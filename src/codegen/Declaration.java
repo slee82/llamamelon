@@ -55,7 +55,7 @@ public class Declaration extends Stmt {
             table.putEntry(id, this);
         }
 
-        begin += (";");
+        begin += (";\n");
         return begin;
     }
 

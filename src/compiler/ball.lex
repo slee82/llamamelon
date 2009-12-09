@@ -60,7 +60,7 @@ CommentContent          = ( [^*] | \*+ [^/*] )*
 
 /* Constants */
 StringConst	        = \"([^\"\\]|\\.)*\"
-NumericConst		= 0 | [0-9]*[.]?[0-9]+
+NumericConst		= 0 | [1-9][0-9]*
 
 /* Types */
 Type			= number|string|list|team|player|stat|nothing
@@ -81,7 +81,7 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ","     { return Parser.COMMA; }
 
-"="	{ return Parser.EQL; }
+"="		{ return Parser.EQL; }
 
 "+="    { return Parser.PLUSEQL; }
 
@@ -93,11 +93,9 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "%="    { return Parser.MODEQL; }
 
-"("	{ return Parser.OPAREN; }
+"("		{ return Parser.OPAREN; }
 
-")"	{ return Parser.CPAREN; }
-
-"is"	{ return Parser.IS; }
+")"		{ return Parser.CPAREN; }
 
 ":"     { return Parser.COLON; }
 
@@ -110,11 +108,6 @@ print           { /* got a print statement, notify parser */
 function        {
                     yyparser.yylval = new ParserVal(Keyword.function);
                     return Parser.FUNCTION;
-                }
-
-simfunction     {
-                    yyparser.yylval = new ParserVal(Keyword.simfunction);
-                    return Parser.SIMFUNCTION;
                 }
 
 return          {
