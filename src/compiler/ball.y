@@ -171,6 +171,7 @@ function_definition :
         
         FuncDef newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
         
+        table.putEntry(name, newfun);
         $$ = new ParserVal(newfun);
     }
 ;
