@@ -31,8 +31,10 @@ import codegen.*;
 %token CPAREN
 %token PRINT
 %token FUNCTION
+%token SIMFUNCTION
 %token RETURN
 %token RETURNS
+%token IS
 %token TYPE
 %token END
 
@@ -111,6 +113,7 @@ statement_list :
 statement : 
     body_statement { $$ = $1; }
     | function_definition { $$ = $1; }
+    | sim_function_definition { $$ = $1; }
 ;
 
 /*
@@ -138,7 +141,7 @@ body_statement_list :
 body_statement : 
     declaration { $$ = $1; }
     | expression_statement { $$ = $1; }
-	| print_statement { $$ = $1; }
+    | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
 ;
@@ -170,6 +173,26 @@ function_definition :
         LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$9.obj;
         
         FuncDef newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
+        
+        table.putEntry(name, newfun);
+        $$ = new ParserVal(newfun);
+    }
+;
+
+/** SIM_FUNCTION_DEFINITION **/
+
+/*
+ * Just like Function definitions, Sim function definitions can only happen in the top level.
+ * The only variables they'll get access to are the global team1 and team2 parameters.
+ */
+sim_function_definition :
+    SIMFUNCTION IDENTIFIER IS COLON body_statement_list END {
+        System.err.println("parser: simfunction definition");
+        
+        Identifier name = (Identifier)$2.obj;
+        LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$5.obj;
+        
+        SimFuncDef newfun = new SimFuncDef((Identifier)$2.obj, bodylist);
         
         table.putEntry(name, newfun);
         $$ = new ParserVal(newfun);
