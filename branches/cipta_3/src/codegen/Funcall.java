@@ -27,6 +27,9 @@ public class Funcall extends Expr {
         /*
          * Check function return types, etc
          */
+        Type built = checkBuiltIn();
+        if (built != null) return built;
+        
         Object def = table.getEntry(name);
         if (!(def instanceof FuncDef)) {
             throw new RuntimeException("funcall: identifier " + name
@@ -39,10 +42,9 @@ public class Funcall extends Expr {
 
     /* Generate the code */
     public String code(SymbolTable table) {
-        checkBuiltIn();
-
-        getType(table); 
-
+        getType(table);
+            
+        changeBuiltIn();
         String begin = (name.getID() + "(");
         if (args != null) { // print out all the args
             int i;
@@ -57,10 +59,18 @@ public class Funcall extends Expr {
         return begin;
     }
 
+    private void changeBuiltIn() {
+        if (name.equals(new Identifier("load"))) {
+            this.name = new Identifier("Loader.load");
+        }
+    }
+
     // Set the correct name for built-in functions
-    public void checkBuiltIn() {
-        if (name.getID().equals("load"))
-            name.setID("Loader.load");
+    public Type checkBuiltIn() {
+        if (name.equals(new Identifier("load"))) {
+            return new Type("team");
+        }
+        return null;
     }
 
     private ArrayList<Expr> args = null;

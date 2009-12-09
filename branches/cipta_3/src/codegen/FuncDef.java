@@ -13,18 +13,18 @@ import lexer.Type;
 public class FuncDef extends Stmt {
 
     public FuncDef(Identifier name, Type retType, LinkedHashMap<Identifier,Type> paramlist, LinkedList<Stmt> bodylist) {
-        
         this.name = name;
         this.retType = retType;
         this.paramlist = paramlist;
         this.bodylist = bodylist;
+
+        if (checkBuiltIn()) {
+            throw new RuntimeException("error: function name is used as builtin.");
+        }
     }
     
     @Override
     public String code(SymbolTable table) {
-        /*
-         * LINE BELOW MEANS FUNCTION ACCESSIBLE ONLY AFTER DECL IN .BALL file.
-         */
         table.putEntry(this.name, this);
         return "/* function " + name + " moved outside main(). */";
     }
@@ -75,6 +75,15 @@ public class FuncDef extends Stmt {
         }
 
         return res.substring(1);
+    }
+    
+    // Set the correct name for built-in functions
+    public boolean checkBuiltIn() {
+        if (name.getID().equals("load")) {
+            name = new Identifier("Loader.load");
+            return true;
+        }
+        return false;
     }
 
     Identifier name;

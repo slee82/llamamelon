@@ -40,9 +40,4 @@ public class Identifier extends Token {
     public String getID() {
         return val;
     }
-
-    public void setID(String s) {
-        val = s;
-    }
-
 }
