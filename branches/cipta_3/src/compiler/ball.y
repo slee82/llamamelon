@@ -25,7 +25,7 @@ import codegen.*;
 %token NUMBER
 %token SEMICOLON
 %token COLON
-%token EQL
+%token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
 %token COMMA
 %token OPAREN
 %token CPAREN
@@ -94,8 +94,10 @@ body_statement_list :
 /* Body Statements are all statements except function declarations */
 body_statement : 
     declaration { $$ = $1; }
+    | expression_statement { $$ = $1; }
 	| print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
+    | assignment_statement { $$ = $1; }
 ;
 
 /** FUNCTION_DEFINITION* */
@@ -121,7 +123,8 @@ parameter_list :
         // keep track of what names have been used, etc.
         HashMap<Identifier,Type> paramlist = new HashMap<Identifier,Type>();
         
-        Identifier name = (Identifier)((Object[])$1.obj)[1];
+        Object[] param = (Object[]) $1.obj;
+        Identifier name = (Identifier)(param[1]);
         Type t = (Type)((Object[])$1.obj)[0];
         
         paramlist.put(name, t);
@@ -131,8 +134,9 @@ parameter_list :
         // add to previous parameter list
         HashMap<Identifier,Type> paramlist = (HashMap<Identifier,Type>)$1.obj;
 
-        Identifier name = (Identifier)((Object[])$2.obj)[1];
-        Type t = (Type)((Object[])$2.obj)[0];
+        Object[] param = (Object[]) $3.obj;
+        Identifier name = (Identifier)(param[1]);
+        Type t = (Type)((Object[])$3.obj)[0];
       
         // simple error checking on paramlist
         if (paramlist.containsKey(name)) {
@@ -149,7 +153,10 @@ parameter_list :
 parameter : 
     TYPE IDENTIFIER {
         // returns the Type and Identifier objects as a pair
-        $$ = new ParserVal(new Object[] {$1.obj, $2.obj});
+        Object[] param = new Object[2];
+        param[0] = (Object)$1.obj;
+        param[1] = (Object)$2.obj;
+        $$ = new ParserVal(param);
     }
     ;
 
@@ -202,6 +209,41 @@ jump_statement :
     }
 ;
 
+/**ASSIGNMENT_STATEMENT**/ 
+assignment_statement :
+    // make the node
+    IDENTIFIER assignment_operator expression SEMICOLON {
+        AssignmentStmt node = 
+            new AssignmentStmt((Identifier)$1.obj, 
+                    (AssignmentStmt.Op)$2.obj,
+                    (Expr)$3.obj);
+        $$ = new ParserVal(node);
+    }
+;
+
+assignment_operator : 
+    EQL { $$ = new ParserVal(AssignmentStmt.Op.EQL); }
+    | PLUSEQL { $$ = new ParserVal(AssignmentStmt.Op.PLUSEQL); }
+    | MINEQL  { $$ = new ParserVal(AssignmentStmt.Op.MINEQL); }
+    | MULTEQL { $$ = new ParserVal(AssignmentStmt.Op.MULTEQL); }
+    | DIVEQL  { $$ = new ParserVal(AssignmentStmt.Op.DIVEQL); }
+    | MODEQL  { $$ = new ParserVal(AssignmentStmt.Op.MODEQL); }
+;
+
+
+/**EXPRESSION_STATEMENT**/
+expression_statement : 
+    SEMICOLON {
+        ExprStmt stmt = new ExprStmt();
+        $$ = new ParserVal(stmt);
+    }
+    | expression SEMICOLON {
+        ExprStmt stmt = new ExprStmt((Expr)$1.obj);
+        $$ = new ParserVal(stmt);
+    }
+;
+
+
 /* EXPRESSION */
 expression : logical_or_expression { $$ = $1; }
 ;
@@ -247,32 +289,34 @@ function_call : IDENTIFIER OPAREN CPAREN {
               | IDENTIFIER OPAREN argument_list CPAREN {
 		$$ = new ParserVal(new Funcall((Identifier)$1.obj, (ArrayList<Expr>)$3.obj));
 	      }	
-              ;
+;
 
-argument_list : expression {
-		ArrayList<Expr> a = new ArrayList<Expr>();
+argument_list : 
+    expression {
+        ArrayList<Expr> a = new ArrayList<Expr>();
 		a.add((Expr)$1.obj);
 		$$ = new ParserVal(a);
-	      }
-              | argument_list COMMA expression {
-		ArrayList<Expr> a = new ArrayList<Expr>();
-		a.addAll((ArrayList<Expr>)$1.obj);
+    }
+    | argument_list COMMA expression {
+		ArrayList<Expr> a = (ArrayList<Expr>)$1.obj;
+		a.add((Expr)$3.obj);
 		$$ = new ParserVal(a);
-	      }
-              ;
+    }
+;
 
 
 /* ATOM_EXPRESSION */
-atom_expression : STRING { 
-        		System.err.println("got string " + $1.obj); 
-        		$$ = new ParserVal(new Expr((StringConst)($1.obj)));
-    		}
-		| IDENTIFIER {
-			$$ = new ParserVal(new Expr((Identifier)($1.obj)));
-		}
-		| NUMBER {
-			$$ = new ParserVal(new Expr((NumericConst)($1.obj)));
-		}
+atom_expression : 
+    STRING { 
+        System.err.println("got string " + $1.obj); 
+        $$ = new ParserVal(new Expr((StringConst)($1.obj)));
+    }
+    | IDENTIFIER {
+        $$ = new ParserVal(new Expr((Identifier)($1.obj)));
+    }
+    | NUMBER {
+        $$ = new ParserVal(new Expr((NumericConst)($1.obj)));
+    }
 ;
 
 %%

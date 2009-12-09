@@ -6,6 +6,7 @@
 package compiler;
 
 import lexer.*;
+
 import java.util.HashMap;
 
 /**
@@ -68,6 +69,13 @@ public class SymbolTable {
         return this.nextLookup.getEntry(key);
     }
     
+
+    public boolean hasEntry(Identifier name) {
+        if (table.containsKey(name)) return true;
+        if (this.nextLookup == null) return false;
+        return this.nextLookup.hasEntry(name);
+    }
+    
     public Object[] getVals() {
         return table.values().toArray();
     }
@@ -100,7 +108,6 @@ public class SymbolTable {
     public final SymbolTable nextLookup;
 
     public final boolean isTopTable;
-
 
 
 }

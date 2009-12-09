@@ -77,11 +77,21 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
  * ======================
  */
 
-";"             { return Parser.SEMICOLON; }
+";"     { return Parser.SEMICOLON; }
 
-","             { return Parser.COMMA; }
+","     { return Parser.COMMA; }
 
 "="		{ return Parser.EQL; }
+
+"+="    { return Parser.PLUSEQL; }
+
+"-="    { return Parser.MINEQL; }
+
+"*="    { return Parser.MULTEQL; }
+
+"/="    { return Parser.DIVEQL; }
+
+"%="    { return Parser.MODEQL; }
 
 "("		{ return Parser.OPAREN; }
 
@@ -133,10 +143,10 @@ returns         {
                 }
 
 {Type}		{   /* got a type, notify parser */
-		    Type t = new Type(yytext());
-		    yyparser.yylval = new ParserVal(t);
-		    System.err.println("lexer: found type " + t);
-		    return Parser.TYPE;
+		        Type t = new Type(yytext());
+		        yyparser.yylval = new ParserVal(t);
+		        System.err.println("lexer: found type " + t);
+		        return Parser.TYPE;
 		    }
 
 {Identifier}	{   /* got an identifier, notify parser */
