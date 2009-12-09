@@ -28,6 +28,12 @@ public class FuncDef extends Stmt {
     
     @Override
     public String code(SymbolTable table) {
+        // check if name is still available
+        if (table.hasEntry(this.name)) {
+            throw new RuntimeException("funcdef: the name " + name + 
+                    " in use for " + table.getEntry(this.name));
+        }
+        
         table.putEntry(this.name, this);
         // make the code with respect to the current program view
         // that is, only know variables and functions already declared till now
