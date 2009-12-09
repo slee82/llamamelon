@@ -26,10 +26,17 @@ public class FuncDef extends Stmt {
     @Override
     public String code(SymbolTable table) {
         table.putEntry(this.name, this);
+        // make the code with respect to the current program view
+        // that is, only know variables and functions already declared till now
+        this.global = this.makeGlobalCode(table);
         return "/* function " + name + " moved outside main(). */";
     }
     
-    public String globalCode(SymbolTable table) {
+    public String globalCode() {
+        return this.global;
+    }
+    
+    private String makeGlobalCode(SymbolTable table) {
         /*
          * Check return type with body list
          */
@@ -85,6 +92,8 @@ public class FuncDef extends Stmt {
         }
         return false;
     }
+    
+    private String global = null;
 
     Identifier name;
 

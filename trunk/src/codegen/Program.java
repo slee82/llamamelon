@@ -57,7 +57,8 @@ public class Program extends ParseTreeNode {
         for (Object each : table.getVals()) {
             if (each instanceof FuncDef) {
                 FuncDef define = (FuncDef) each;
-                System.out.println(define.globalCode(table) + "\n");
+                // retreive delayed code
+                System.out.println(define.globalCode() + "\n");
             }
         }
 

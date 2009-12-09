@@ -1,5 +1,6 @@
 string hello = "hello";
 number num = 3;
+//myfun2(33); // this fails now
 
 /*
  * things that need to work in this block:
@@ -15,13 +16,15 @@ function myfun ( number p, number q, string k ) returns number :
 	k = "bawah";
 	print k; // should print "bawah", but original string untouched
 	p = 3;
-	myfun2 (p); // this is allowed in BALL
+	//print after; // string after is defined later, fail
+	//myfun2 (p); // this is not allowed, because myfun isn't known yet
 	return 10;
 end
 
 // redefining a number
 
 num = 32;
+string after = "23";
 
 function myfun2 ( number pq ) returns nothing :
 	print pq;
