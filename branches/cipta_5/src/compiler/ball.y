@@ -438,13 +438,13 @@ argument_list :
 atom_expression : 
     STRING { 
         System.err.println("got string " + $1.obj); 
-        $$ = new ParserVal(new Expr((StringConst)($1.obj)));
+        $$ = new ParserVal(new AtomicExpr((StringConst)($1.obj)));
     }
     | IDENTIFIER {
-        $$ = new ParserVal(new Expr((Identifier)($1.obj)));
+        $$ = new ParserVal(new AtomicExpr((Identifier)($1.obj)));
     }
     | NUMBER {
-        $$ = new ParserVal(new Expr((NumericConst)($1.obj)));
+        $$ = new ParserVal(new AtomicExpr((NumericConst)($1.obj)));
     }
 ;
 
