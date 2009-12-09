@@ -144,11 +144,6 @@ body_statement :
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
-	/*The following allows for BALL to accept functions with no body.
-	 *This is hackerish, and prints out a single';'.
-	 *TODO: Decide wether to make a 'EmptyStmt' Class.
-	 */
-    | { $$ = new ParserVal(new ExprStmt()); }
 ;
 
 /** FUNCTION_DEFINITION **/
@@ -159,7 +154,30 @@ body_statement :
  * and variables declared in the body itself. 
  */
 function_definition :
-    FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
+    FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON END {
+        System.err.println("parser: function definition");
+    
+        Identifier name = (Identifier)$2.obj;
+    
+        /*
+         * Special caution here on the hash implementation used for parameter
+         * list.
+         * 
+         * In BALL, the parameter list of the function behaves like Java. That
+         * is, the parameters' order is also important in distinguishing a
+         * function. Therefore, the LinkedHashMap class is used instead of the
+         * plain HashMap which may not preserve order.
+         */
+        LinkedHashMap<Identifier,Type> paramlist = (LinkedHashMap<Identifier,Type>)$4.obj;
+        Type retType = (Type)$7.obj;
+        LinkedList<Stmt> bodylist = new LinkedList<Stmt>();
+        bodylist.add(new ExprStmt());
+    
+        FuncDef newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
+    
+    	$$ = new ParserVal(newfun);
+    }
+    | FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
         System.err.println("parser: function definition");
         
         Identifier name = (Identifier)$2.obj;
