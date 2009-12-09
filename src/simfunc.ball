@@ -6,12 +6,14 @@ function myfun ( number p ) returns number :
 	return 10;
 end
 
-function myfun2 ( number pq ) returns number :
-	return pq;
+function myfun2 ( number p ) returns number :
+
 end
 
+team Dodgers = load("dodgers.team"), Astros = load("astros.team");
+
 simfunction mySimFunction is:
-	print team2;
+	print Dodgers;
 	return team1;
 end
 
