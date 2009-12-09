@@ -60,7 +60,7 @@ CommentContent          = ( [^*] | \*+ [^/*] )*
 
 /* Constants */
 StringConst	        = \"([^\"\\]|\\.)*\"
-NumericConst		= 0 | [1-9][0-9]*
+NumericConst		= 0 | [0-9]*[.]?[0-9]+
 
 /* Types */
 Type			= number|string|list|team|player|stat|nothing

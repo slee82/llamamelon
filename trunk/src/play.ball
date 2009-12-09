@@ -14,4 +14,8 @@ print Dodgers;
 print "\nTHE ASTROS";
 print Astros;
 
-print 5;
+print 15.123235234;
+print 0.0;
+print .99;
+print 1.1;
+print .1;

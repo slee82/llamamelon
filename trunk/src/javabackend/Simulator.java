@@ -11,12 +11,7 @@ import java.io.*;
 
 public class Simulator {
 
-    public static void main (String args[]){
-	
-    }
-
     public static TeamObj sim(TeamObj team1, TeamObj team2, float number){
     	
     }
-
 }
