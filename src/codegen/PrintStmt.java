@@ -1,12 +1,4 @@
-/*
- * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
- * Team llamamelon - BALL language
- * PrintStmt.java - Code Generator for print statements
- */
-
 package codegen;
-
-import compiler.SymbolTable;
 
 public class PrintStmt extends Stmt {
 
@@ -14,11 +6,10 @@ public class PrintStmt extends Stmt {
         this.toprint = expr;
     }
     
-    public String code(SymbolTable table) {
-        String begin = "System.out.println(";
-        begin += toprint.code(table);
-        begin += (");");
-        return begin;
+    public void gen() {
+        System.out.println("System.out.println(");
+        toprint.gen();
+        System.out.println(");");
     }
     
     private Expr toprint;

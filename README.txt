@@ -8,26 +8,23 @@ through it.
 
 Where are the source files?
 ---------------------------
-Our program consists of 16 java files now, most of them small files that contain
+Our program consists of 12 java files now, most of them small files that contain
 small fragments of the java code for a given nonterminal like print statements
-or the program. The source is located in ./src, divided to 4 packages.
+or the program. The source is located in ./src, divided to 3 packages.
 
-1. codegen  		= this package contains classes that correspond with the grammar
-              		 nonterminals found in our program. All of them are subclasses of
-              		 ParseTreeNode.java. Each has a method gen() that will print its 
-              		 java code to stdout (for now).
+1. codegen  = this package contains classes that correspond with the grammar
+              nonterminals found in our program. All of them are subclasses of
+              ParseTreeNode.java. Each has a method gen() that will print its 
+              java code to stdout (for now).
              
-2. compiler 		= this is where the compiler, that is the lexer and parser, are
-             		 defined The intermediate code generator is just the gen()
-              		 method for now, it might change when we add more stuff. The symbol
-             		 table is defined here as well.
+2. compiler = this is where the compiler, that is the lexer and parser, are
+              defined The intermediate code generator is just the gen()
+              method for now, it might change when we add more stuff. The symbol
+              table is defined here as well.
               
-3. lexer    		= this package contains classes for lexical analysis. Things like
-              		 what a token is, a keyword, string constants, etc. are defined
-              		 here.
-
-4. javabackend		= this package contains all of the supporting java files for ball.
-			 (for example, built-in functions and classes).
+3. lexer    = this package contains classes for lexical analysis. Things like
+              what a token is, a keyword, string constants, etc. are defined
+              here.
               
 Compiling and running the program
 ---------------------------------
