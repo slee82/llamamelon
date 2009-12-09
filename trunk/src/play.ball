@@ -2,6 +2,10 @@
 /*** This is the second comment ***/
 // This is the third comment */
 
+/*
+ * compile with -cp .:javabackend/
+ * run with -cp .:javabackend/
+ */
 
 team Dodgers = load("dodgers.team"), Astros = load("astros.team");
 print "THE DODGERS:";

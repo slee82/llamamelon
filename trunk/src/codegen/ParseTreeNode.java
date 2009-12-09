@@ -6,7 +6,13 @@
 
 package codegen;
 
+import compiler.SymbolTable;
+
 public abstract class ParseTreeNode {
     
-    public abstract void gen();
+    public void gen(SymbolTable table) {
+        System.out.println(this.code(table));
+    }
+    
+    public abstract String code(SymbolTable table);
 }
