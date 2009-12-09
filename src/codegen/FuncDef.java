@@ -22,6 +22,9 @@ public class FuncDef extends Stmt {
             throw new RuntimeException("error: function name is used as builtin.");
         }
     }
+
+    public FuncDef() {
+    }
     
     @Override
     public String code(SymbolTable table) {
