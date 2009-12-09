@@ -6,10 +6,6 @@
 
 package codegen;
 
-public class Stmt extends ParseTreeNode {
+public abstract class Stmt extends ParseTreeNode {
 
-    int p;
-
-    public void gen() {
-    }
 }

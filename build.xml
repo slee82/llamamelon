@@ -29,7 +29,7 @@
 		<!-- make the output path -->
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${backend.dir}" />
-		<copy todir="${build.dir}/classes/teams">
+		<copy todir="${build.dir}/teams">
     			<fileset dir="teams"/>
   		</copy>
 
