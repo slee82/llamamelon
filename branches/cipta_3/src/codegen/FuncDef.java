@@ -1,8 +1,8 @@
 package codegen;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import compiler.SymbolTable;
@@ -12,7 +12,7 @@ import lexer.Type;
 
 public class FuncDef extends Stmt {
 
-    public FuncDef(Identifier name, Type retType, HashMap<Identifier,Type> paramlist, LinkedList<Stmt> bodylist) {
+    public FuncDef(Identifier name, Type retType, LinkedHashMap<Identifier,Type> paramlist, LinkedList<Stmt> bodylist) {
         
         this.name = name;
         this.retType = retType;
@@ -36,7 +36,7 @@ public class FuncDef extends Stmt {
         // TODO: add code for checking return type
         
         String begin = "\n\tprivate static " + this.retType.getType() + " " + this.name.getID()
-            + " (" + FuncDef.plistCode(this.paramlist) + " ) {";
+            + " (" + this.plistCode() + " ) {";
         
         String line = "\n\t\t"; // indentation
         
@@ -68,10 +68,10 @@ public class FuncDef extends Stmt {
         return begin;
     }
 
-    private static String plistCode(HashMap<Identifier, Type> paramlist2) {
+    private String plistCode() {
         String res = "";
-        for (Identifier id : paramlist2.keySet()) {
-            res += ", " + paramlist2.get(id).getType() + " " + id.getID();
+        for (Identifier id : paramlist.keySet()) {
+            res += ", " + paramlist.get(id).getType() + " " + id.getID();
         }
 
         return res.substring(1);
@@ -81,7 +81,7 @@ public class FuncDef extends Stmt {
 
     Type retType;
 
-    HashMap<Identifier, Type> paramlist;
+    LinkedHashMap<Identifier, Type> paramlist;
 
     LinkedList<Stmt> bodylist;
 

@@ -22,11 +22,8 @@ public class Funcall extends Expr {
     public Funcall(Identifier name) {
         this.name = name;
     }
-
-    /* Generate the code */
-    public String code(SymbolTable table) {
-        checkBuiltIn();
-
+    
+    public Type getType(SymbolTable table) {
         /*
          * Check function return types, etc
          */
@@ -35,6 +32,16 @@ public class Funcall extends Expr {
             throw new RuntimeException("funcall: identifier " + name
                     + " invalid, either nonexistent or not a function");
         }
+        FuncDef define = (FuncDef)def;
+        return define.retType;
+
+    }
+
+    /* Generate the code */
+    public String code(SymbolTable table) {
+        checkBuiltIn();
+
+        getType(table); 
 
         String begin = (name.getID() + "(");
         if (args != null) { // print out all the args
@@ -57,7 +64,6 @@ public class Funcall extends Expr {
     }
 
     private ArrayList<Expr> args = null;
-
     private Identifier name;
 
 }

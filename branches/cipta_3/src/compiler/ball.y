@@ -45,12 +45,27 @@ import codegen.*;
  */
 
 /*
- * NOTE: ALL CODE CHECKING AND GENERATION STARTS AFTER TOP.GEN(). what the
- * byacc/j code does is just to prepare the program structure.
+ * What the heck is going on in here!?
+ * ===================================
+ * 
+ * To put it simple, all the grammar code does is laying out the structure of 
+ * the parse tree. No error checking is involved here. Only after the whole 
+ * parse tree is complete will error checking and code generation start.
+ * Therefore, gen() now takes a symbol table, because that's the phase that is
+ * going to need it the most.
+ */
+
+/*
+ * REMEMBER: ALL CODE CHECKING AND GENERATION STARTS AFTER TOP.GEN(TABLE). what
+ * the byacc/j code does is just to prepare the program structure.
  */
 
 
-/***PROGRAM***/
+/*** PROGRAM ***/
+/*
+ * This is the top node of the program. If the token sequence can be derived
+ * from this node, a Java program can be spit out by the compiler.
+ */
 program : 
     statement_list { 
         System.err.println("adding node for _program_");
@@ -60,24 +75,48 @@ program :
     }
 ;
 
+/*
+ * A statement list collects a sequence of statements inside a linked list (for
+ * easy sequential reading). The way the grammar works is that it first seeks
+ * the head of the statement list (by peeling off statements one by one from the
+ * end to the beginning). Then, as the list is propagated up the calls, it is
+ * appended with each "peel" of the list.
+ * 
+ * This kind of strategy when dealing with sequences of nodes that are all
+ * similar (like parameter lists, etc) is found throughout the grammar.
+ */
 statement_list : 
-    statement {
+    statement { // reached beginning of statement list
         LinkedList<Stmt> newlist = new LinkedList<Stmt>();
         newlist.addLast((Stmt)$1.obj);
         $$ = new ParserVal(newlist);
     }
-    | statement_list statement {
+    | statement_list statement { // add as we propagate up
         LinkedList<Stmt> cur = (LinkedList<Stmt>)$1.obj;
         cur.addLast((Stmt)$2.obj);
         $$ = new ParserVal(cur);
     }
 ;
 
+/*
+ * This represents a top-level statement. Since BALL has no main(), top-level
+ * statements can be anything from a print commant, assignment, function def,
+ * etc. BALL must then sort this to create a proper java program while
+ * preserving the meaning of the original source.
+ * 
+ * However, body statements, that is those that can appear in function bodies,
+ * loops or conditional blocks, cannot contain function definitions (nested
+ * func definitions are not supported by the BALL language).
+ */
 statement : 
     body_statement { $$ = $1; }
     | function_definition { $$ = $1; }
 ;
 
+/*
+ * Similar to statement_list, but specifically for body statements, that is
+ * function bodies, if blocks, et cetera.
+ */
 body_statement_list : 
     body_statement {
         LinkedList<Stmt> newlist = new LinkedList<Stmt>();
@@ -91,7 +130,11 @@ body_statement_list :
     }
 ;
 
-/* Body Statements are all statements except function declarations */
+/*
+ * Body Statements are all statements except function declarations. Having
+ * function declarations not on the top level (corresponding to the 'class'
+ * level of the java output) is not supported by the BALL language. 
+ */
 body_statement : 
     declaration { $$ = $1; }
     | expression_statement { $$ = $1; }
@@ -100,14 +143,23 @@ body_statement :
     | assignment_statement { $$ = $1; }
 ;
 
-/** FUNCTION_DEFINITION* */
+/** FUNCTION_DEFINITION **/
 function_definition :
     FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
         System.err.println("parser: function definition");
         
         Identifier name = (Identifier)$2.obj;
         
-        HashMap<Identifier,Type> paramlist = (HashMap<Identifier,Type>)$4.obj;
+        /*
+         * Special caution here on the hash implementation used for parameter
+         * list.
+         * 
+         * In BALL, the parameter list of the function behaves like Java. That
+         * is, the parameters' order is also important in distinguishing a
+         * function. Therefore, the LinkedHashMap class is used instead of the
+         * plain HashMap which may not preserve order.
+         */
+        LinkedHashMap<Identifier,Type> paramlist = (LinkedHashMap<Identifier,Type>)$4.obj;
         Type retType = (Type)$7.obj;
         LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$9.obj;
         
@@ -121,8 +173,11 @@ function_definition :
 parameter_list : 
     parameter {
         // keep track of what names have been used, etc.
-        HashMap<Identifier,Type> paramlist = new HashMap<Identifier,Type>();
+        // a LinkedHashMap stores entries in insertion order.
+        LinkedHashMap<Identifier,Type> paramlist = 
+            new LinkedHashMap<Identifier,Type>();
         
+        // parameter node returns a pair (Identifier, Type) inside an Object[]
         Object[] param = (Object[]) $1.obj;
         Identifier name = (Identifier)(param[1]);
         Type t = (Type)((Object[])$1.obj)[0];
@@ -132,7 +187,8 @@ parameter_list :
     }
     | parameter_list COMMA parameter {
         // add to previous parameter list
-        HashMap<Identifier,Type> paramlist = (HashMap<Identifier,Type>)$1.obj;
+        LinkedHashMap<Identifier,Type> paramlist = 
+            (LinkedHashMap<Identifier,Type>)$1.obj;
 
         Object[] param = (Object[]) $3.obj;
         Identifier name = (Identifier)(param[1]);
