@@ -32,7 +32,7 @@ public class ReturnStmt extends Stmt {
     public String code(SymbolTable table) {
         String stmt = "return ";
         stmt += expression.code(table);
-        stmt += " ;";
+        stmt += ";";
         return stmt;
     }
 
