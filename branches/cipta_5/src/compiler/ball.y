@@ -313,11 +313,32 @@ variable_declarator :
  * a function.
  */
 stat_declaration : 
-    STAT IDENTIFIER EQL expression SEMICOLON {
-        StatDef decl = new StatDef((Identifier)$2.obj, (Expr)$4.obj);
+    STAT IDENTIFIER EQL stat_expression SEMICOLON {
+        StatDef decl = new StatDef((Identifier)$2.obj, (StatExpr)$4.obj);
         $$ = new ParserVal(decl);
     }
 ;
+
+/* stats don't have access to the full expression grammar, just a part of it */
+stat_expression : 
+    stat_mult_expr { $$ = $1; }
+    ;
+
+stat_mult_expr : 
+    stat_atom_expr { $$ = $1; }
+    ;
+
+stat_atom_expr : 
+    IDENTIFIER {
+        $$ = new ParserVal(new StatAtom((Identifier)$1.obj));
+    }
+    | NUMBER {
+        $$ = new ParserVal(new StatAtom((NumericConst)$1.obj));
+    }
+    | OPAREN stat_expression CPAREN {
+        $$ = new ParserVal(new StatAtom((StatExpr)$1.obj));
+    }
+    ;
 
 /*
  * Return statements
