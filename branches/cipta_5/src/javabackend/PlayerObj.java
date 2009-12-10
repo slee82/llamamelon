@@ -6,10 +6,10 @@ package javabackend;
  * playerObj.java - Players class
  */
 
-public class playerObj {
+public class PlayerObj {
 
 	/* This is the batter constructor */
-	public playerObj (String name, int type, int ab, int r,
+	public PlayerObj (String name, int type, int ab, int r,
 			int h, int dbl, int tpl, int hr, int bb) {
 		if (type != BATTER) {
 			System.err.println("Incorrect Player Type Found");
@@ -27,7 +27,7 @@ public class playerObj {
 	}
 	
 	// This is the pitcher constructor
-	public playerObj (String name, int type, double ip, int h,
+	public PlayerObj (String name, int type, double ip, int h,
 			int er, int bb, int k) {
 		if (type != PITCHER) {
 			System.err.println("Incorrect Player Type Found");
