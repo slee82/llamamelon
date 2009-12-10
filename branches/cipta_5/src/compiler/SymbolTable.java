@@ -40,8 +40,11 @@ public class SymbolTable {
         this.table = new HashMap<Identifier, Object>();
         this.isTopTable = isTop;
         this.nextLookup = nextLookup;
+        // unused for now, but can be used later for dynamically figuring out
+        // indentation
+        this.hops = nextLookup == null ? 0 : nextLookup.hops + 1;
     }
-
+    
     public SymbolTable(boolean isTop) {
         this(isTop, null);
     }
@@ -106,6 +109,9 @@ public class SymbolTable {
 
     // cannot change the chain
     public final SymbolTable nextLookup;
+    
+    // how many hops until the base, used for java indentation.
+    public final int hops;
 
     public final boolean isTopTable;
 

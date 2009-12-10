@@ -117,6 +117,11 @@ simfunction     {
                     return Parser.SIMFUNCTION;
                 }
 
+stat     {
+    yyparser.yylval = new ParserVal(Keyword.stat);
+    return Parser.STAT;
+}
+
 return          {
                     yyparser.yylval = new ParserVal(Keyword.ret);
                     return Parser.RETURN;
