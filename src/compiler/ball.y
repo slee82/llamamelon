@@ -30,6 +30,7 @@ import codegen.*;
 %token OPAREN
 %token CPAREN
 %token PRINT
+%token ACTIVATE
 %token FUNCTION
 %token SIMFUNCTION
 %token RETURN
@@ -144,6 +145,7 @@ body_statement :
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
+    | activate_statement { $$ = $1; }
 ;
 
 /** FUNCTION_DEFINITION **/
@@ -216,7 +218,6 @@ sim_function_definition :
         
         SimFuncDef newfun = new SimFuncDef((Identifier)$2.obj, bodylist);
         
-        table.putEntry(name, newfun);
         $$ = new ParserVal(newfun);
     }
 ;
@@ -356,6 +357,17 @@ assignment_operator :
     | MULTEQL { $$ = new ParserVal(AssignmentStmt.Op.MULTEQL); }
     | DIVEQL  { $$ = new ParserVal(AssignmentStmt.Op.DIVEQL); }
     | MODEQL  { $$ = new ParserVal(AssignmentStmt.Op.MODEQL); }
+;
+
+/**ACTIVATE_STATEMENT**/ 
+/*
+ * Set Simulator.theSimFunction to the simulation function.
+ */
+activate_statement :
+    ACTIVATE IDENTIFIER SEMICOLON {
+	ActivateStmt activateNode = new ActivateStmt((Identifier)$2.obj);
+	$$ = new ParserVal(activateNode);
+    }
 ;
 
 

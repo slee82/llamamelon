@@ -39,14 +39,14 @@ public class FuncDef extends Stmt {
         return this.global;
     }
     
-    private String makeGlobalCode(SymbolTable table) {
+    protected String makeGlobalCode(SymbolTable table) {
         /*
          * Check return type with body list
          */
         // TODO: add code for checking return type
         
-        String begin = "\n\tprivate static " + this.retType.getType() + " " + this.name.getID()
-            + " (" + this.plistCode() + " ) {";
+        String begin = "\n\t" + privileges + " " + scope + " " + this.retType.getType() + " " + this.name.getID()
+            + " (" + this.plistCode() + " ){";
         
         String line = "\n\t\t"; // indentation
         
@@ -93,10 +93,14 @@ public class FuncDef extends Stmt {
             name = new Identifier("Loader.load");
             return true;
         }
+	if (name.getID().equals("sim")) {
+            name = new Identifier("Simulator.sim");
+            return true;
+        }
         return false;
     }
     
-    private String global = null;
+    protected String global = null;
 
     Identifier name;
 
@@ -105,6 +109,10 @@ public class FuncDef extends Stmt {
     LinkedHashMap<Identifier, Type> paramlist;
 
     LinkedList<Stmt> bodylist;
+
+    String privileges = "private";
+
+    String scope = "static";
 
 
 }
