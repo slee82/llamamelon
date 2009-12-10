@@ -118,7 +118,7 @@ public class SymbolTable {
         if (longest == null || longest.getID().length() <= 4) {
             // too short/no previous ones, generate random
             Random r = new Random();
-            String token = "tok_" + String.format("%x",Math.abs(r.nextLong()), 36);
+            String token = "tok_" + String.format("%x",Math.abs(r.nextInt()));
             longest = new Identifier(token);
         }
         
@@ -130,7 +130,29 @@ public class SymbolTable {
             throw new RuntimeException("ERROR: newID() result " + res + " in table.");
         return res;
     }
+
+    public String indent() {
+        return this.indent;
+    }
     
+    /*
+     * Because I'm lazy, this function is currently recursive.
+     */
+    public void increaseIndent(int i) {
+        if (i == 0) return;
+        this.indent = this.indent + "\t";
+        increaseIndent(i-1);
+    }
+    
+    /*
+     * Because I'm lazy, this function is also currently recursive.
+     */
+    public void decreaseIndent(int i) {
+        if (i == 0) return;
+        this.indent = this.indent.substring(1);
+        decreaseIndent(i-1);
+    }
+
     /**
      * Useful when creating a new identifier.
      * @return the identifier with the longest name, or possibly null
@@ -159,7 +181,7 @@ public class SymbolTable {
     // how many hops until the base, used for java indentation.
     public final int hops;
     
-    public final String indent;
+    private String indent;
 
     public final boolean isTopTable;
 
