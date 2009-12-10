@@ -35,14 +35,21 @@ public class playerObj {
 		}
 		this.name = name;
 		this.type = type;
-		if ((int)ip == ip)
+
+		String ipString = ""+ip;
+		String[] nums = ipString.split("\\.");
+		int decimalPart = Integer.parseInt(nums[1]);
+		int integerPart = Integer.parseInt(nums[0]);
+		System.out.println("Whole part: "+integerPart+" Decimal part:"+decimalPart);
+
+		if (decimalPart == 0)
 			this.ip = ip;
 		else {
-			this.ip = (int)ip;
-			if (ip - (int)ip == .1)
-				this.ip += (1/3);
-			else if (ip - (int)ip == .2)
-				this.ip += (2/3);
+			this.ip = integerPart;
+			if (decimalPart == 1)
+				this.ip += (1.0/3.0);
+			else if (decimalPart == 2)
+				this.ip += (2.0/3.0);
 			else {
 				System.err.println("Incorrect Innings Pitched Value");
 				return;
