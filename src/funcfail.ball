@@ -6,6 +6,7 @@ function myfun ( number p ) returns number :
 	return 10;
 end
 
+// same function name
 function myfun ( number pq ) returns number :
 	return pq;
 end

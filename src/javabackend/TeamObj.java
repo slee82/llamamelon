@@ -17,31 +17,31 @@ public class TeamObj {
 		this.l = l;
 	}
 	
-	public void addPlayer(playerObj p) {
-		if (p.getType() == playerObj.BATTER)
+	public void addPlayer(PlayerObj p) {
+		if (p.getType() == PlayerObj.BATTER)
 			batters.add(p);
-		if (p.getType() == playerObj.PITCHER)
+		if (p.getType() == PlayerObj.PITCHER)
 			pitchers.add(p);
 	}
 	
-	public void setBatters(ArrayList<playerObj> a) {
+	public void setBatters(ArrayList<PlayerObj> a) {
 		batters = a;
 	}
 	
-	public void setPitchers(ArrayList<playerObj> a) {
+	public void setPitchers(ArrayList<PlayerObj> a) {
 		pitchers = a;
 	}
 	
-	public ArrayList<playerObj> getBatters() {
+	public ArrayList<PlayerObj> getBatters() {
 		return batters;
 	}
 	
-	public ArrayList<playerObj> getPitchers() {
+	public ArrayList<PlayerObj> getPitchers() {
 		return pitchers;
 	}
 	
-	public ArrayList<playerObj> getPlayers() {
-		ArrayList<playerObj> players = new ArrayList<playerObj>();
+	public ArrayList<PlayerObj> getPlayers() {
+		ArrayList<PlayerObj> players = new ArrayList<PlayerObj>();
 		players.addAll(batters);
 		players.addAll(pitchers);
 		return players;
@@ -80,6 +80,6 @@ public class TeamObj {
 	private String name;
 	private int w;
 	private int l;
-	private ArrayList<playerObj> batters;
-	private ArrayList<playerObj> pitchers;
+	private ArrayList<PlayerObj> batters;
+	private ArrayList<PlayerObj> pitchers;
 }

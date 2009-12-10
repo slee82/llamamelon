@@ -45,7 +45,7 @@ public class Type extends Token {
         if (val.equals("team"))
             return "TeamObj";
         if (val.equals("player"))
-            return "playerObj";
+            return "PlayerObj";
         if (val.equals("stat"))
             return "stat";
         if (val.equals("nothing"))
