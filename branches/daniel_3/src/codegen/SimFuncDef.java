@@ -38,6 +38,14 @@ public class SimFuncDef extends FuncDef {
         }
     }
 
+    public String code(SymbolTable table) {
+        table.putEntry(this.simName, this);
+        // make the code with respect to the current program view
+        // that is, only know variables and functions already declared till now
+        global = this.makeGlobalCode(table);
+        return "/* simfunction " + simName + " moved outside main(). */";
+    }
+
     protected String makeGlobalCode(SymbolTable table) {
 	/* Ecapsulate the simulation function inside a SimFunction interface */
         String begin = "\tprivate static SimFunction " + simName.getID() + " = new SimFunction(){";

@@ -93,10 +93,14 @@ public class FuncDef extends Stmt {
             name = new Identifier("Loader.load");
             return true;
         }
+	if (name.getID().equals("sim")) {
+            name = new Identifier("Simulator.sim");
+            return true;
+        }
         return false;
     }
     
-    private String global = null;
+    protected String global = null;
 
     Identifier name;
 
