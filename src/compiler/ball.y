@@ -20,18 +20,12 @@ import codegen.*;
  * ===============================================================
  */
 
-%token STRING
-%token IDENTIFIER
-%token NUMBER
-%token SEMICOLON
-%token COLON
+%token STRING, IDENTIFIER, NUMBER
+%token SEMICOLON, COLON, COMMA
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
-%token COMMA
-%token OPAREN
-%token CPAREN
+%token OPAREN, CPAREN
 %token PRINT
-%token FUNCTION
-%token SIMFUNCTION
+%token FUNCTION, SIMFUNCTION, STAT
 %token RETURN
 %token RETURNS
 %token IS
@@ -140,6 +134,7 @@ body_statement_list :
  */
 body_statement : 
       declaration { $$ = $1; }
+    | stat_declaration { $$ = $1; }
     | expression_statement { $$ = $1; }
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
@@ -308,6 +303,17 @@ variable_declarator :
         a[1] = $3.obj;
         $$ = new ParserVal (a);
     }
+;
+
+
+/*
+ * This is necessary because the compilation rules for stat declarations are
+ * different to variable declarations. In variable declarations, the expression
+ * is evaluated, but in stat declarations the expression is encapsulated into
+ * a function.
+ */
+stat_declaration : 
+    STAT IDENTIFIER EQL expression SEMICOLON
 ;
 
 /*
