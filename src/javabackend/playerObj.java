@@ -40,7 +40,6 @@ public class playerObj {
 		String[] nums = ipString.split("\\.");
 		int decimalPart = Integer.parseInt(nums[1]);
 		int integerPart = Integer.parseInt(nums[0]);
-		System.out.println("Whole part: "+integerPart+" Decimal part:"+decimalPart);
 
 		if (decimalPart == 0)
 			this.ip = ip;
