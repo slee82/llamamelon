@@ -29,6 +29,7 @@ public class Loader {
 		ArrayList<playerObj> pitchers = new ArrayList<playerObj>();		//will contain extracted pitchers
 		
 		String line; //hold the current line
+
 		try {
 			BufferedReader in = new BufferedReader(new FileReader("../teams/" + fileName));
 			try{
