@@ -58,7 +58,7 @@ public class AssignmentStmt extends Stmt {
         // all OK, output the assignment code
         String result = name.getID() + " " + getOpCode() +
             " " + value.code(table) + ";";
-        return result;
+        return table.indent() + result;
     }
 
     private String getOpCode() {

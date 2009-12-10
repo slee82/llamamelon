@@ -33,7 +33,7 @@ public class ReturnStmt extends Stmt {
         String stmt = "return ";
         stmt += expression.code(table);
         stmt += ";";
-        return stmt;
+        return table.indent() + stmt;
     }
 
 }

@@ -77,7 +77,6 @@ public class Program extends ParseTreeNode {
         /*
          * DECLARATIONS
          */
-        System.out.println();
         for (Declaration each : varDeclarations) {
             each.genGlobalDecl(table);
         }

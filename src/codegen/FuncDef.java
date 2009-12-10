@@ -38,7 +38,7 @@ public class FuncDef extends Stmt {
         // make the code with respect to the current program view
         // that is, only know variables and functions already declared till now
         this.global = this.makeGlobalCode(table);
-        return "/* function " + name + " moved outside main(). */";
+        return table.indent() + "/* function " + name + " moved outside main(). */";
     }
     
     public String globalCode() {
@@ -50,11 +50,12 @@ public class FuncDef extends Stmt {
          * Check return type with body list
          */
         // TODO: add code for checking return type
+
+        // make as if for main, so push back indenting one tab
+        table.decreaseIndent(1);
         
-        String begin = "\n\tprivate static " + this.retType.getType() + " " + this.name.getID()
-            + " (" + this.plistCode() + " ) {";
-        
-        String line = "\n\t\t"; // indentation
+        String begin = table.indent() + "private static " + this.retType.getType() + " " + this.name.getID()
+            + " (" + this.plistCode() + " ) {\n";
         
         // create new bindings in parameter
         SymbolTable inTable = new SymbolTable(true, table);
@@ -77,10 +78,12 @@ public class FuncDef extends Stmt {
         Iterator<Stmt> bodyIter = bodylist.iterator();
         while (bodyIter.hasNext()) {
             Stmt cur = bodyIter.next();
-            begin += (line + cur.code(inTable)); // code for each statement    
+            begin += cur.code(inTable) + "\n"; // code for each statement    
         }
         
-        begin += "\n\t}";
+        begin += table.indent() + "}";
+        
+        table.increaseIndent(1);
         return begin;
     }
 
