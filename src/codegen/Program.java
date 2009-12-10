@@ -65,6 +65,7 @@ public class Program extends ParseTreeNode {
         /*
          * FUNCTION DEFINITIONS
          */
+        System.out.println();
         for (Object each : table.getVals()) {
             if (each instanceof FuncDef) {
                 FuncDef define = (FuncDef) each;
@@ -73,6 +74,10 @@ public class Program extends ParseTreeNode {
             }
         }
 
+        /*
+         * DECLARATIONS
+         */
+        System.out.println();
         for (Declaration each : varDeclarations) {
             each.genGlobalDecl(table);
         }

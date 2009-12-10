@@ -51,11 +51,11 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 /* Comments */
 Comment                 = {TraditionalComment}	
                         | {EndOfLineComment} 
-                        | {DocumentationComment}
+//                        | {DocumentationComment}
 
 TraditionalComment      = "/*" [^*] ~"*/" | "/*" "*"+ "/"
 EndOfLineComment        = "//" {InputCharacter}* {LineTerminator}
-DocumentationComment    = "/**" {CommentContent} "*"+ "/"
+//DocumentationComment    = "/**" {CommentContent} "*"+ "/"
 CommentContent          = ( [^*] | \*+ [^/*] )*
 
 /* Constants */
@@ -82,6 +82,12 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 ","     { return Parser.COMMA; }
 
 "="	{ return Parser.EQL; }
+
+"*" { return Parser.MULT; }
+
+"/" { return Parser.DIV; }
+
+"%" { return Parser.MOD; }
 
 "+="    { return Parser.PLUSEQL; }
 
