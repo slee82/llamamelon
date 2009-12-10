@@ -23,6 +23,7 @@ import codegen.*;
 %token STRING, IDENTIFIER, NUMBER
 %token SEMICOLON, COLON, COMMA
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
+%token MULT, DIV, MOD
 %token OPAREN, CPAREN
 %token PRINT
 %token FUNCTION, SIMFUNCTION, STAT
@@ -325,7 +326,18 @@ stat_expression :
     ;
 
 stat_mult_expr : 
-    stat_atom_expr { $$ = $1; }
+    stat_atom_expr { 
+        $$ = new ParserVal(new StatMult((StatAtom)$1.obj)); 
+    }
+    | stat_mult_expr MULT stat_atom_expr {
+        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.MULT));
+    }
+    | stat_mult_expr DIV stat_atom_expr {
+        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.DIV));
+    }
+    | stat_mult_expr MOD stat_atom_expr {
+        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.MOD));
+    }
     ;
 
 stat_atom_expr : 

@@ -38,7 +38,7 @@ print hello;
 
 print 5;
 
-/** 
+/*
  * OUTPUT:
  * -------
  * hello
