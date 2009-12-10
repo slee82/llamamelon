@@ -117,10 +117,11 @@ simfunction     {
                     return Parser.SIMFUNCTION;
                 }
 
-stat     {
-    yyparser.yylval = new ParserVal(Keyword.stat);
-    return Parser.STAT;
-}
+stat            {
+                    System.err.println("lexer: found 'stat' keyword.");
+                    yyparser.yylval = new ParserVal(Keyword.stat);
+                    return Parser.STAT;
+                }
 
 return          {
                     yyparser.yylval = new ParserVal(Keyword.ret);
@@ -139,7 +140,7 @@ returns         {
 
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
                     // TODO: add symbol table addition code here
-		    System.err.println("lexer: found a String Const");
+		            System.err.println("lexer: found a String Const");
                     StringConst s = new StringConst(yytext());
                     //table.putEntry(s, null);
                     yyparser.yylval = new ParserVal(s);
