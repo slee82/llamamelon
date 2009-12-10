@@ -2,7 +2,7 @@ package codegen;
 
 import compiler.SymbolTable;
 
-public class StatMult extends StatExpr {
+public class StatMult extends ParseTreeNode {
     
     public StatMult(StatAtom ls) {
         this(null,ls,null);

@@ -37,6 +37,20 @@ public class Program extends ParseTreeNode {
                 new BuiltinStatDef(new Identifier("TeamObj.W"), Type.teamStat));
         table.putEntry(new Identifier("L"), 
                 new BuiltinStatDef(new Identifier("TeamObj.L"), Type.teamStat));
+        table.putEntry(new Identifier("AB"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.AB"), Type.playerStat));
+        table.putEntry(new Identifier("R"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.R"), Type.playerStat));
+        table.putEntry(new Identifier("H"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.H"), Type.playerStat));
+        table.putEntry(new Identifier("DBL"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.DBL"), Type.playerStat));
+        table.putEntry(new Identifier("TPL"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.TPL"), Type.playerStat));
+        table.putEntry(new Identifier("HR"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.HR"), Type.playerStat));
+        table.putEntry(new Identifier("BB"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.BB"), Type.playerStat));
 
         System.out.println(table.indent() + "public static void main (String args[]) "
                 + "throws Exception {");

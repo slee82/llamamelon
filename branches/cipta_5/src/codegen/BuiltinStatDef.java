@@ -8,7 +8,7 @@ import lexer.Type;
 public class BuiltinStatDef extends StatDef {
 
     public BuiltinStatDef(Identifier identifier, Type type) {
-        super(identifier, new StatExpr());
+        super(identifier, null);
         if (!(type.equals(Type.playerStat) || type.equals(Type.teamStat))) {
             throw new IllegalArgumentException("error: builtin stats must " 
                     + "be of type playerStat or teamStat");
