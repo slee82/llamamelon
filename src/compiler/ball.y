@@ -23,7 +23,7 @@ import codegen.*;
 %token STRING, IDENTIFIER, NUMBER
 %token SEMICOLON, COLON, COMMA
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
-%token MULT, DIV, MOD
+%token PLUS, MIN, MULT, DIV, MOD
 %token OPAREN, CPAREN
 %token PRINT
 %token FUNCTION, SIMFUNCTION, STAT
@@ -322,7 +322,15 @@ stat_declaration :
 
 /* stats don't have access to the full expression grammar, just a part of it */
 stat_expression : 
-    stat_mult_expr { $$ = $1; }
+    stat_mult_expr { 
+        $$ = new ParserVal(new StatExpr((StatMult)$1.obj)); 
+    }
+    | stat_expression PLUS stat_mult_expr {
+        $$ = new ParserVal(new StatExpr((StatExpr)$1.obj, (StatMult)$3.obj, StatExpr.Op.PLUS));
+    }
+    | stat_expression MIN stat_mult_expr {
+        $$ = new ParserVal(new StatExpr((StatExpr)$1.obj, (StatMult)$3.obj, StatExpr.Op.MIN));
+    }
     ;
 
 stat_mult_expr : 
@@ -348,7 +356,7 @@ stat_atom_expr :
         $$ = new ParserVal(new StatAtom((NumericConst)$1.obj));
     }
     | OPAREN stat_expression CPAREN {
-        $$ = new ParserVal(new StatAtom((StatExpr)$1.obj));
+        $$ = new ParserVal(new StatAtom((StatExpr)$2.obj));
     }
     ;
 

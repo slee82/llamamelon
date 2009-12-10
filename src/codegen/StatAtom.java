@@ -9,7 +9,7 @@ import lexer.NumericConst;
  * Stat atomic expressions are either identifiers, numeric constants, or
  * other stat expressions inside parentheses.
  */
-public class StatAtom extends StatExpr {
+public class StatAtom extends ParseTreeNode {
     
     public StatAtom(Identifier stat) {
         id = stat;
@@ -46,7 +46,7 @@ public class StatAtom extends StatExpr {
             
             StatDef.consistentType(table, mydef);
             
-            return mydef.name.getID() + "(" + arg.getID() + ")";
+            return mydef.name.getID() + ".get(" + arg.getID() + ")";
         } else if (num != null) {
             return num.val;
         } else {
