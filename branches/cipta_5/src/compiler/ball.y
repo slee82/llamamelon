@@ -313,7 +313,10 @@ variable_declarator :
  * a function.
  */
 stat_declaration : 
-    STAT IDENTIFIER EQL expression SEMICOLON
+    STAT IDENTIFIER EQL expression SEMICOLON {
+        StatDef decl = new StatDef((Identifier)$2.obj, (Expr)$4.obj);
+        $$ = new ParserVal(decl);
+    }
 ;
 
 /*

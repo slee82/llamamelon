@@ -8,6 +8,7 @@ package compiler;
 import lexer.*;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Symbol table manages identifiers. Each instance corresponds to names present
@@ -43,6 +44,7 @@ public class SymbolTable {
         // unused for now, but can be used later for dynamically figuring out
         // indentation
         this.hops = nextLookup == null ? 0 : nextLookup.hops + 1;
+        this.indent = nextLookup == null ? "\t" : nextLookup.indent + "\t";
     }
     
     public SymbolTable(boolean isTop) {
@@ -101,10 +103,54 @@ public class SymbolTable {
     }
 
     public int size() {
-        // TODO Auto-generated method stub
         return table.size();
     }
+
+    /**
+     * Creates a new identifier that is unique throughout the symbol table.
+     * That is, does not conflict with any existing names or hide any name.
+     * @return the new Identifier, not yet added to the table.
+     */
+    public Identifier newID() {
+        Identifier longest = this.getLongestKey();
+        // in case of builtins like Loader.load -> _loader_load
+        // longer than longest ID means it can't be the same
+        if (longest == null || longest.getID().length() <= 4) {
+            // too short/no previous ones, generate random
+            Random r = new Random();
+            String token = "tok_" + String.format("%x",Math.abs(r.nextLong()), 36);
+            longest = new Identifier(token);
+        }
+        
+        String newID = "_" + longest.getID().replace('.', '_').toLowerCase();
+        Identifier res = new Identifier(newID);
+        
+        // shouldn't happen
+        if (this.hasEntry(res))
+            throw new RuntimeException("ERROR: newID() result " + res + " in table.");
+        return res;
+    }
     
+    /**
+     * Useful when creating a new identifier.
+     * @return the identifier with the longest name, or possibly null
+     */
+    private Identifier getLongestKey() {
+        Identifier curLongest = null;
+        for (Identifier id : this.table.keySet()) {
+            if (curLongest == null ||
+                    id.getID().length() > curLongest.getID().length()) {
+                curLongest = id;
+            }
+        }
+        
+        if (this.nextLookup == null) return curLongest;
+        
+        Identifier upID = this.nextLookup.getLongestKey();
+        if (upID.getID().length() > curLongest.getID().length()) return upID;
+        return curLongest;
+    }
+
     private HashMap<Identifier, Object> table;
 
     // cannot change the chain
@@ -112,8 +158,9 @@ public class SymbolTable {
     
     // how many hops until the base, used for java indentation.
     public final int hops;
+    
+    public final String indent;
 
     public final boolean isTopTable;
-
 
 }
