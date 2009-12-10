@@ -100,8 +100,24 @@ variable_declarator : identifier
  * is evaluated, but in stat declarations the expression is encapsulated into
  * a function.
  */
-stat_declaration : "stat" identifier "=" expression ";"
+stat_declaration : "stat" identifier "=" stat_expression ";"
                  ;
+
+stat_expression : stat_mult_expr
+                | stat_expression "+" stat_mult_expr
+                | stat_expression "-" stat_mult_expr
+                ;
+
+stat_mult_expr : stat_atom_expr
+               | stat_mult_expr "*" stat_atom_expr
+               | stat_mult_expr "/" stat_atom_expr
+               | stat_mult_expr "%" stat_atom_expr
+               ;
+
+stat_atom_expr : identifier
+               | number
+               | "(" stat_expression ")"
+               ;
 
 /*TYPE*/
 type : "number"
