@@ -216,7 +216,6 @@ sim_function_definition :
         
         SimFuncDef newfun = new SimFuncDef((Identifier)$2.obj, bodylist);
         
-        table.putEntry(name, newfun);
         $$ = new ParserVal(newfun);
     }
 ;
