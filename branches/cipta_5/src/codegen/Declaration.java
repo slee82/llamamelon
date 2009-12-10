@@ -21,7 +21,7 @@ public class Declaration extends Stmt {
 
     // generate the declaration
     public String code(SymbolTable table) {
-        String begin = (type.getType() + " ");
+        String begin = table.indent() + (type.getType() + " ");
 
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string
@@ -68,7 +68,7 @@ public class Declaration extends Stmt {
      * (genGlobalDecl takes care of the declarations)
      */
     public void genGlobalMain(SymbolTable table) {
-        String begin = "";
+        String begin = table.indent();
 
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string
@@ -108,7 +108,7 @@ public class Declaration extends Stmt {
      * @param table
      */
     public void genGlobalDecl(SymbolTable table) {
-        String begin = ("private static " + type.getType() + " ");
+        String begin = (table.indent() + "private static " + type.getType() + " ");
 
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string
