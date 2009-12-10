@@ -44,7 +44,7 @@ public class Simulator {
 
 		plays++;
 		if (plays > timesToPlay+20){
-		    System.out.println("Could not determine a winner after 20 tries, returning team1.");
+		    System.err.println("Could not determine a winner after 20 tries, returning team1.");
 		    return team1;
 		}
 		

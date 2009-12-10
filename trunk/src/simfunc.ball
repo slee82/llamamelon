@@ -2,21 +2,17 @@
 /*** This is the second comment ***/
 // This is the third comment */
 
-function myfun ( number p ) returns number :
-	return 10;
-end
-
-function myfun2 ( number p ) returns number :
-
+function myfun ( number p ) returns string:
+	return "PLAYING!";
 end
 
 team Dodgers = load("dodgers.team"), Astros = load("astros.team");
 
 simfunction mySimFunction is:
-	print Dodgers;
+	print myfun(33);
 	return team1;
 end
 
-print myfun(33);
+activate mySimFunction;
 
-print 5;
+print sim(Dodgers, Astros, 5);

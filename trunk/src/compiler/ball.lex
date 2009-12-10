@@ -107,6 +107,12 @@ print           { /* got a print statement, notify parser */
                     return Parser.PRINT; // TODO: couple return with table reference
                 }
 
+activate           { /* got anactivation statement, notify parser */
+                    System.err.println("lexer: found 'activate'");
+                    yyparser.yylval =  new ParserVal(Keyword.activate);
+                    return Parser.ACTIVATE;
+                }
+
 function        {
                     yyparser.yylval = new ParserVal(Keyword.function);
                     return Parser.FUNCTION;
