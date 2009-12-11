@@ -1,0 +1,2 @@
+team Dodgers1, Dodgers2 = load("dodgers.team");
+print "playball";

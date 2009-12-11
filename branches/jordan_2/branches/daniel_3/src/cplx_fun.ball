@@ -1,0 +1,17 @@
+string hello = "hello";
+number num = 3;
+
+function myfun ( number p, number q, string k ) returns number :
+	print k;
+	print p;
+	myfun2 (p); // this is allowed in BALL
+	return 10;
+end
+
+function myfun2 ( number pq ) returns nothing :
+	print pq;
+end
+
+print myfun(num, num, hello);
+
+print 5;
