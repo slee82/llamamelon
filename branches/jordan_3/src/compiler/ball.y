@@ -26,6 +26,7 @@ import codegen.*;
 %token SEMICOLON
 %token COLON
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
+
 %token COMMA
 %token OPAREN
 %token CPAREN
@@ -38,6 +39,8 @@ import codegen.*;
 %token IS
 %token TYPE
 %token END
+
+%left OPPLUS
 
 %%
 
@@ -404,7 +407,12 @@ comparison_expression : addition_expression { $$ = $1; }
 ;
 
 /* ARITHMETIC */
-addition_expression : multiplication_expression { $$ = $1; }
+addition_expression : multiplication_expression
+                    | addition_expression OPPLUS multiplication_expression {
+                    	ArithmeticExpr arithExpr = new ArithmeticExpr(ArithmeticExpr.Op.OPPLUS,(Expr)$1.obj, (Expr)$3.obj);
+                 		$$ = new ParserVal(arithExpr);
+                    	
+                    	}
 ;
 
 multiplication_expression : unary_expression { $$ = $1; }
