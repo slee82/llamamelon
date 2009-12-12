@@ -25,6 +25,7 @@ import codegen.*;
 %token NUMBER
 %token SEMICOLON
 %token COLON
+%token AND, OR, NOT
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
 %token PLUS, MIN, MULT, DIV, MOD
 %token COMMA
@@ -447,14 +448,21 @@ expression : logical_or_expression { $$ = $1; }
 ;
 
 /* LOGICAL */
-logical_or_expression : logical_and_expression { $$ = $1; }
-;
+logical_or_expression : logical_and_expression
+                      | logical_or_expression OR logical_and_expression { 
+                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.OR,(Expr)$1.obj, (Expr)$3.obj));}
+                      ;
 
-logical_and_expression : logical_not_expression { $$ = $1; }
-;
+logical_and_expression : logical_not_expression
+                       | logical_and_expression AND logical_not_expression { 
+                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.AND,(Expr)$1.obj, (Expr)$3.obj));}
+                       ;
 
-logical_not_expression : comparison_expression { $$ = $1; }
-;
+logical_not_expression : comparison_expression
+                       | NOT logical_not_expression { 
+                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.NOT,(Expr)$2.obj, null));}
+                       ;
+
 
 /* COMPARISON */
 comparison_expression : addition_expression { $$ = $1; }
