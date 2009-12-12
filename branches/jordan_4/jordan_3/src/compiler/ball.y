@@ -409,7 +409,7 @@ comparison_expression : addition_expression { $$ = $1; }
 addition_expression : multiplication_expression
                     | addition_expression PLUS multiplication_expression { 
                     	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.PLUS,(Expr)$1.obj, (Expr)$3.obj));}
-                    | addition_expression MIN multiplication_expression { 
+                    | addition_expression MIN multiplication_expression {  
                     	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MIN,(Expr)$1.obj, (Expr)$3.obj));}
 ;
 

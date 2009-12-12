@@ -1,8 +1,6 @@
 package codegen;
 
 import compiler.SymbolTable;
-
-import lexer.Identifier;
 import lexer.Type;
 
 public class ArithmeticExpr extends Expr {
@@ -27,7 +25,7 @@ public class ArithmeticExpr extends Expr {
     
     @Override
     public Type getType(SymbolTable table) {
-    	return new Type("number");
+    	return new Type("number") ;
     }
     
     private String getOpCode() {
