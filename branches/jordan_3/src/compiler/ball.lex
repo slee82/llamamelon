@@ -85,17 +85,17 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ","     { return Parser.COMMA; }
 
-"="	{ return Parser.EQL; }
+"="		{ return Parser.EQL; }
 
-"+" { return Parser.PLUS; }
+"+" 	{ return Parser.PLUS; }
 
-"-" { return Parser.MIN; }
+"-" 	{ return Parser.MIN; }
 
-"*" { return Parser.MULT; }
+"*" 	{ return Parser.MULT; }
 
-"/" { return Parser.DIV; }
+"/" 	{ return Parser.DIV; }
 
-"%" { return Parser.MOD; }
+"%" 	{ return Parser.MOD; }
 
 "+="    { return Parser.PLUSEQL; }
 
@@ -107,9 +107,9 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "%="    { return Parser.MODEQL; }
 
-"("	{ return Parser.OPAREN; }
+"("		{ return Parser.OPAREN; }
 
-")"	{ return Parser.CPAREN; }
+")"		{ return Parser.CPAREN; }
 
 "is"	{ return Parser.IS; }
 
