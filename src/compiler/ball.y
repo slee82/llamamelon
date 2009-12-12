@@ -464,8 +464,16 @@ logical_not_expression : comparison_expression
                        ;
 
 
-/* COMPARISON */
-comparison_expression : addition_expression { $$ = $1; }
+/*COMPARISON*/
+comparison_expression : addition_expression
+                      | comparison_expression "is"   addition_expression
+                      | comparison_expression "isnot" addition_expression
+                      | comparison_expression ">"    addition_expression
+                      | comparison_expression "<"    addition_expression
+                      | comparison_expression ">="   addition_expression
+                      | comparison_expression "<="   addition_expression
+                      ;
+
 ;
 
 /* ARITHMETIC */
