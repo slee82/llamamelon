@@ -7,6 +7,8 @@
 package codegen;
 
 import java.util.LinkedList;
+import lexer.Identifier;
+import lexer.Type;
 import compiler.SymbolTable;
 
 public class Program extends ParseTreeNode {
@@ -29,13 +31,34 @@ public class Program extends ParseTreeNode {
         
         // collect variable declarations here
         LinkedList<Declaration> varDeclarations = new LinkedList<Declaration>();
+        
+        /* INPUT BUILTIN STATS */
+        table.putEntry(new Identifier("W"), 
+                new BuiltinStatDef(new Identifier("TeamObj.W"), Type.teamStat));
+        table.putEntry(new Identifier("L"), 
+                new BuiltinStatDef(new Identifier("TeamObj.L"), Type.teamStat));
+        table.putEntry(new Identifier("AB"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.AB"), Type.playerStat));
+        table.putEntry(new Identifier("R"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.R"), Type.playerStat));
+        table.putEntry(new Identifier("H"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.H"), Type.playerStat));
+        table.putEntry(new Identifier("DBL"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.DBL"), Type.playerStat));
+        table.putEntry(new Identifier("TPL"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.TPL"), Type.playerStat));
+        table.putEntry(new Identifier("HR"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.HR"), Type.playerStat));
+        table.putEntry(new Identifier("BB"), 
+                new BuiltinStatDef(new Identifier("PlayerObj.BB"), Type.playerStat));
 
-        System.out.println("\tpublic static void main (String args[]) "
+        System.out.println(table.indent() + "public static void main (String args[]) "
                 + "throws Exception {");
+        
+        table.increaseIndent(1);
 
         for (Stmt each : statements) {
             Stmt cur = each;
-            System.out.print("\t\t");
             // if statement is a declaration, treat specially
             if (cur instanceof Declaration) {
                 // delay to global variable
@@ -47,13 +70,16 @@ public class Program extends ParseTreeNode {
             }
 
         }
+        
+        table.decreaseIndent(1);
 
-        System.out.println("\t}"); // end main()
+        System.out.println(table.indent() + "}"); // end main()
         
 
         /*
          * FUNCTION DEFINITIONS
          */
+        System.out.println();
         for (Object each : table.getVals()) {
             if (each instanceof FuncDef) {
                 FuncDef define = (FuncDef) each;
@@ -62,8 +88,10 @@ public class Program extends ParseTreeNode {
             }
         }
 
+        /*
+         * DECLARATIONS
+         */
         for (Declaration each : varDeclarations) {
-            System.out.print("\t");
             each.genGlobalDecl(table);
         }
         

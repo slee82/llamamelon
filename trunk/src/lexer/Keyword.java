@@ -20,9 +20,10 @@ public class Keyword extends Token {
      */
     public static final Keyword
         print = new Keyword(Tag.PRINT, "print"),
-	activate = new Keyword(Tag.ACTIVATE, "activate"),
+        activate = new Keyword(Tag.ACTIVATE, "activate"),
         function = new Keyword(Tag.FUNCTION, "function"),
-	simfunction = new Keyword(Tag.SIMFUNCTION, "simfunction"),
+        simfunction = new Keyword(Tag.SIMFUNCTION, "simfunction"),
+        stat = new Keyword(Tag.STAT, "stat"),
         end = new Keyword(Tag.END, "end"),
         ret = new Keyword(Tag.RETURN, "return"),
         returns = new Keyword(Tag.RETURNS, "returns");

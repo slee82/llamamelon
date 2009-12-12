@@ -6,10 +6,10 @@ package javabackend;
  * playerObj.java - Players class
  */
 
-public class playerObj {
+public class PlayerObj {
 
 	/* This is the batter constructor */
-	public playerObj (String name, int type, int ab, int r,
+	public PlayerObj (String name, int type, int ab, int r,
 			int h, int dbl, int tpl, int hr, int bb) {
 		if (type != BATTER) {
 			System.err.println("Incorrect Player Type Found");
@@ -27,7 +27,7 @@ public class playerObj {
 	}
 	
 	// This is the pitcher constructor
-	public playerObj (String name, int type, double ip, int h,
+	public PlayerObj (String name, int type, double ip, int h,
 			int er, int bb, int k) {
 		if (type != PITCHER) {
 			System.err.println("Incorrect Player Type Found");
@@ -35,20 +35,14 @@ public class playerObj {
 		}
 		this.name = name;
 		this.type = type;
-
-		String ipString = ""+ip;
-		String[] nums = ipString.split("\\.");
-		int decimalPart = Integer.parseInt(nums[1]);
-		int integerPart = Integer.parseInt(nums[0]);
-
-		if (decimalPart == 0)
+		if ((int)ip == ip)
 			this.ip = ip;
 		else {
-			this.ip = integerPart;
-			if (decimalPart == 1)
-				this.ip += (1.0/3.0);
-			else if (decimalPart == 2)
-				this.ip += (2.0/3.0);
+			this.ip = (int)ip;
+			if (ip - (int)ip == .1)
+				this.ip += (1/3);
+			else if (ip - (int)ip == .2)
+				this.ip += (2/3);
 			else {
 				System.err.println("Incorrect Innings Pitched Value");
 				return;

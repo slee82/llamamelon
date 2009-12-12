@@ -28,11 +28,17 @@ public class FuncDef extends Stmt {
     
     @Override
     public String code(SymbolTable table) {
+        // check if name is still available
+        if (table.hasEntry(this.name)) {
+            throw new RuntimeException("funcdef: the name " + name + 
+                    " in use for " + table.getEntry(this.name));
+        }
+        
         table.putEntry(this.name, this);
         // make the code with respect to the current program view
         // that is, only know variables and functions already declared till now
         this.global = this.makeGlobalCode(table);
-        return "/* function " + name + " moved outside main(). */";
+        return table.indent() + "/* function " + name + " moved outside main(). */";
     }
     
     public String globalCode() {
@@ -44,11 +50,13 @@ public class FuncDef extends Stmt {
          * Check return type with body list
          */
         // TODO: add code for checking return type
+
+        // make as if for main, so push back indenting one tab
+        table.decreaseIndent(1);
         
-        String begin = "\n\t" + privileges + " " + scope + " " + this.retType.getType() + " " + this.name.getID()
-            + " (" + this.plistCode() + " ){";
-        
-        String line = "\n\t\t"; // indentation
+        String begin = table.indent() + privileges + " " + scope + " " +
+            this.retType.getType() + " " + this.name.getID()
+            + " (" + this.plistCode() + " ) {\n";
         
         // create new bindings in parameter
         SymbolTable inTable = new SymbolTable(true, table);
@@ -71,10 +79,12 @@ public class FuncDef extends Stmt {
         Iterator<Stmt> bodyIter = bodylist.iterator();
         while (bodyIter.hasNext()) {
             Stmt cur = bodyIter.next();
-            begin += (line + cur.code(inTable)); // code for each statement    
+            begin += cur.code(inTable) + "\n"; // code for each statement    
         }
         
-        begin += "\n\t}";
+        begin += table.indent() + "}";
+        
+        table.increaseIndent(1);
         return begin;
     }
 
@@ -93,7 +103,7 @@ public class FuncDef extends Stmt {
             name = new Identifier("Loader.load");
             return true;
         }
-	if (name.getID().equals("sim")) {
+        if (name.getID().equals("sim")) {
             name = new Identifier("Simulator.sim");
             return true;
         }
