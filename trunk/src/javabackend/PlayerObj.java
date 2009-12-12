@@ -27,12 +27,13 @@ public class PlayerObj {
 	}
 	
 	// This is the pitcher constructor
-	public PlayerObj (String name, int type, double ip, int h,
+	public PlayerObj (String name, int type, double ipp, int h,
 			int er, int bb, int k) {
 		if (type != PITCHER) {
 			System.err.println("Incorrect Player Type Found");
 			return;
 		}
+		float ip = (float)ipp;
 		this.name = name;
 		this.type = type;
 		if ((int)ip == ip)
@@ -107,7 +108,7 @@ public class PlayerObj {
 		return bb;
 	}
 
-	public double getIp() {
+	public float getIp() {
 		if (type != PITCHER) {
 			System.err.println("Incorrect Statistic Requested");
 			return -1;
@@ -146,6 +147,57 @@ public class PlayerObj {
 		
 		return toReturn;
 	}
+	
+	public static final PlayerStat AB = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getAb();
+		}
+	};
+	public static final PlayerStat R = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getR();
+		}
+	};
+	public static final PlayerStat H = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getH();
+		}
+	};
+	public static final PlayerStat DBL = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getDbl();
+		}
+	};
+	public static final PlayerStat TPL = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getTpl();
+		}
+	};
+	public static final PlayerStat HR = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getHr();
+		}
+	};
+	public static final PlayerStat BB = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getBb();
+		}
+	};
+	public static final PlayerStat IP = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getIp();
+		}
+	};
+	public static final PlayerStat ER = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getEr();
+		}
+	};
+	public static final PlayerStat K = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getK();
+		}
+	};
 
 	private String name;
 
@@ -156,7 +208,7 @@ public class PlayerObj {
 	private int tpl;
 	private int hr;
 	private int bb;
-	private double ip;
+	private float ip;
 	private int er;
 	private int k;
 	
