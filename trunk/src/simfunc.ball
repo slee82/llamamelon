@@ -6,7 +6,7 @@ function myfun ( number p ) returns number :
 	return 10;
 end
 
-function myfun2 ( number p ) returns number :
+function myfun2 ( number p ) returns nothing :
 
 end
 
