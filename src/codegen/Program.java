@@ -27,7 +27,9 @@ public class Program extends ParseTreeNode {
      * for now, gen() prints to stdout
      */
     public void gen(SymbolTable table) {
-        System.out.println("import javabackend.*;\n\npublic class " + outname + " {\n");
+        System.out.println(
+                "import javabackend.*;\n" +
+                "\npublic class " + outname + " {\n");
         
         // collect variable declarations here
         LinkedList<Declaration> varDeclarations = new LinkedList<Declaration>();
