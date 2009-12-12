@@ -107,6 +107,10 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ")"	{ return Parser.CPAREN; }
 
+"[" { return Parser.OSQUARE; }
+
+"]" { return Parser.CSQUARE; }
+
 "is"	{ return Parser.IS; }
 
 ":"     { return Parser.COLON; }
