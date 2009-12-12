@@ -105,7 +105,7 @@ public class StatDef extends Declaration {
      * (genGlobalDecl takes care of the declarations)
      */
     public void genGlobalMain(SymbolTable table) {
-        System.out.println(table.indent() + initCode(table));
+        System.out.println(table.indent() + "private static final " + initCode(table));
     }
     
     /**
@@ -114,7 +114,7 @@ public class StatDef extends Declaration {
      * @param table
      */
     public void genGlobalDecl(SymbolTable table) {
-        System.out.println(table.indent() + getType().getType() + " " + this.name.getID() + ";");
+        System.out.println(table.indent() + getType().getType() + " final " + this.name.getID() + ";");
     }
     
     /**

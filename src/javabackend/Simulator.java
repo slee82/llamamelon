@@ -6,9 +6,6 @@ package javabackend;
  * Simulator.java - the sim() wrapper function
  */
 
-import java.util.*;
-import java.io.*;
-
 public class Simulator {
 
     public static TeamObj sim(TeamObj team1, TeamObj team2, float number){
