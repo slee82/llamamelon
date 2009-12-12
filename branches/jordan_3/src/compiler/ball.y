@@ -26,7 +26,7 @@ import codegen.*;
 %token SEMICOLON
 %token COLON
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
-
+%token PLUS, MIN, MULT, DIV, MOD
 %token COMMA
 %token OPAREN
 %token CPAREN
@@ -40,7 +40,6 @@ import codegen.*;
 %token TYPE
 %token END
 
-%left OPPLUS
 
 %%
 
@@ -408,14 +407,21 @@ comparison_expression : addition_expression { $$ = $1; }
 
 /* ARITHMETIC */
 addition_expression : multiplication_expression
-                    | addition_expression OPPLUS multiplication_expression {
-                    	ArithmeticExpr arithExpr = new ArithmeticExpr(ArithmeticExpr.Op.OPPLUS,(Expr)$1.obj, (Expr)$3.obj);
-                 		$$ = new ParserVal(arithExpr);
-                    	
-                    	}
+                    | addition_expression PLUS multiplication_expression { 
+                    	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.PLUS,(Expr)$1.obj, (Expr)$3.obj));}
+                    | addition_expression MIN multiplication_expression {  
+                    	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MIN,(Expr)$1.obj, (Expr)$3.obj));}
 ;
 
-multiplication_expression : unary_expression { $$ = $1; }
+multiplication_expression : unary_expression
+						  | multiplication_expression MULT unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MULT,(Expr)$1.obj, (Expr)$3.obj));}
+                    	  | multiplication_expression DIV unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.DIV,(Expr)$1.obj, (Expr)$3.obj));}
+                    	  | multiplication_expression MOD unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MOD,(Expr)$1.obj, (Expr)$3.obj));}
+                          ;
+						
 ;
 
 /* UNARY */

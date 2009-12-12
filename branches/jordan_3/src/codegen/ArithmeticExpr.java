@@ -1,38 +1,41 @@
 package codegen;
 
 import compiler.SymbolTable;
-
-import lexer.Identifier;
+import lexer.Type;
 
 public class ArithmeticExpr extends Expr {
 
     public enum Op {
-        OPPLUS, OPMIN, OPMULT, OPDIV, OPMOD
+        PLUS, MIN, MULT, DIV, MOD
     }
     
     public ArithmeticExpr(Op op, Expr exprL, Expr exprR) {
         this.operator = op;
         this.valueL = exprL;
-        this.valueL = exprL;
+        this.valueR = exprR;
     }
     
     @Override
     public String code(SymbolTable table) {
-    	String result = "3";
-    		result += "+";
-    		result += "4";
-    		result += ";";
+    	String result = valueL.code(table);
+    		result += " " + getOpCode() + " ";
+    		result += valueR.code(table);
     	return result;
+    }
+    
+    @Override
+    public Type getType(SymbolTable table) {
+    	return new Type("number") ;
     }
     
     private String getOpCode() {
         // TODO Auto-generated method stub
         switch(operator) {
-        case OPPLUS: return "+";
-        case OPMIN: return "-";
-        case OPMULT: return "*";
-        case OPDIV: return "/";
-        case OPMOD: return "%";
+        case PLUS: return "+";
+        case MIN: return "-";
+        case MULT: return "*";
+        case DIV: return "/";
+        case MOD: return "%";
         default:
             throw new IllegalArgumentException("assignment: unknown operator");
         }
