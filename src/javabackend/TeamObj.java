@@ -76,6 +76,17 @@ public class TeamObj {
 		
 		return toReturn;
 	}
+	
+	public static final TeamStat W = new TeamStat() {
+		public float get(TeamObj team) {
+			return team.getW();
+		}
+	};
+	public static final TeamStat L = new TeamStat() {
+		public float get(TeamObj team) {
+			return team.getL();
+		}
+	};
 
 	private String name;
 	private int w;
