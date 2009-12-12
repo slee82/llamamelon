@@ -63,7 +63,7 @@ public class Funcall extends Expr {
         if (name.equals(new Identifier("load"))) {
             this.name = new Identifier("Loader.load");
         }
-	if (name.equals(new Identifier("sim"))) {
+        if (name.equals(new Identifier("sim"))) {
             this.name = new Identifier("Simulator.sim");
         }
     }
@@ -73,7 +73,7 @@ public class Funcall extends Expr {
         if (name.equals(new Identifier("load"))) {
             return new Type("team");
         }
-	if (name.equals(new Identifier("sim"))) {
+        if (name.equals(new Identifier("sim"))) {
             return new Type("team");
         }
         return null;
