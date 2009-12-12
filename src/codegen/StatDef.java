@@ -19,12 +19,6 @@ public class StatDef extends Declaration {
         return this.ownType;
     }
 
-    @Override
-    public String code(SymbolTable table) {
-        String init = initCode(table);
-        return  "private static final " + getType() + " " + init;
-    }
-    
     private String initCode(SymbolTable table) {
         // stats can be overloaded (I suppose so, since variables can, and
         // stats are on the same level as variables, because of body_statement
@@ -89,11 +83,17 @@ public class StatDef extends Declaration {
          *     }
          * }
          */
-        return this.name.getID() + " = new " + statType.getType() + " {\n"
+        return this.name.getID() + " = new " + statType.getType() + "() {\n"
             + table.indent() + "\t" + "public float get(" + argType.getType() + " " + argName.getID() + ") {\n"
             + table.indent() + "\t\treturn " + exprCode + ";\n"
             + table.indent() + "\t}\n" + table.indent() + "}";
         
+    }
+
+    @Override
+    public String code(SymbolTable table) {
+        String init = initCode(table);
+        return  "private static final " + getType() + " " + init;
     }
     
     /**
