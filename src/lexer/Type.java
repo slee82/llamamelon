@@ -45,13 +45,19 @@ public class Type extends Token {
         if (val.equals("team"))
             return "TeamObj";
         if (val.equals("player"))
-            return "playerObj";
-        if (val.equals("stat"))
-            return "stat";
+            return "PlayerObj";
         if (val.equals("nothing"))
             return "void";
 
         return val;
     }
+    
+    public final static Type number = new Type("number");
+    public final static Type string = new Type("string");
+    public final static Type list = new Type("list");
+    public final static Type team = new Type("team");
+    public final static Type player = new Type("player");
+    public final static Type playerStat = new Type("PlayerStat");
+    public final static Type teamStat = new Type("TeamStat");
 
 }

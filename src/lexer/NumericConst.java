@@ -12,7 +12,7 @@ public class NumericConst extends Token {
 
     public NumericConst(String s) {
         super(Tag.NUMERICCONST);
-        this.val = s;
+        this.val = "((float) " + s + " )";
     }
     
     public String toString() {

@@ -34,12 +34,12 @@ import codegen.*;
 %token ACTIVATE
 %token FUNCTION
 %token SIMFUNCTION
+%token STAT
 %token RETURN
 %token RETURNS
 %token IS
 %token TYPE
 %token END
-
 
 %%
 
@@ -143,11 +143,12 @@ body_statement_list :
  */
 body_statement : 
       declaration { $$ = $1; }
+    | stat_declaration { $$ = $1; }
     | expression_statement { $$ = $1; }
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
-    | activate_statement { $$ = $1; }
+	| activate_statement { $$ = $1; }
 ;
 
 /** FUNCTION_DEFINITION **/
@@ -220,6 +221,7 @@ sim_function_definition :
         
         SimFuncDef newfun = new SimFuncDef((Identifier)$2.obj, bodylist);
         
+        table.putEntry(name, newfun);
         $$ = new ParserVal(newfun);
     }
 ;
@@ -312,6 +314,59 @@ variable_declarator :
         $$ = new ParserVal (a);
     }
 ;
+
+/*
+ * This is necessary because the compilation rules for stat declarations are
+ * different to variable declarations. In variable declarations, the expression
+ * is evaluated, but in stat declarations the expression is encapsulated into
+ * a function.
+ */
+stat_declaration : 
+    STAT IDENTIFIER EQL stat_expression SEMICOLON {
+        StatDef decl = new StatDef((Identifier)$2.obj, (StatExpr)$4.obj);
+        $$ = new ParserVal(decl);
+    }
+;
+
+/* stats don't have access to the full expression grammar, just a part of it */
+stat_expression : 
+    stat_mult_expr { 
+        $$ = new ParserVal(new StatExpr((StatMult)$1.obj)); 
+    }
+    | stat_expression PLUS stat_mult_expr {
+        $$ = new ParserVal(new StatExpr((StatExpr)$1.obj, (StatMult)$3.obj, StatExpr.Op.PLUS));
+    }
+    | stat_expression MIN stat_mult_expr {
+        $$ = new ParserVal(new StatExpr((StatExpr)$1.obj, (StatMult)$3.obj, StatExpr.Op.MIN));
+    }
+    ;
+
+stat_mult_expr : 
+    stat_atom_expr { 
+        $$ = new ParserVal(new StatMult((StatAtom)$1.obj)); 
+    }
+    | stat_mult_expr MULT stat_atom_expr {
+        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.MULT));
+    }
+    | stat_mult_expr DIV stat_atom_expr {
+        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.DIV));
+    }
+    | stat_mult_expr MOD stat_atom_expr {
+        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.MOD));
+    }
+    ;
+
+stat_atom_expr : 
+    IDENTIFIER {
+        $$ = new ParserVal(new StatAtom((Identifier)$1.obj));
+    }
+    | NUMBER {
+        $$ = new ParserVal(new StatAtom((NumericConst)$1.obj));
+    }
+    | OPAREN stat_expression CPAREN {
+        $$ = new ParserVal(new StatAtom((StatExpr)$2.obj));
+    }
+    ;
 
 /*
  * Return statements
@@ -420,8 +475,6 @@ multiplication_expression : unary_expression
                     			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.DIV,(Expr)$1.obj, (Expr)$3.obj));}
                     	  | multiplication_expression MOD unary_expression { 
                     			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MOD,(Expr)$1.obj, (Expr)$3.obj));}
-                          ;
-						
 ;
 
 /* UNARY */
@@ -464,13 +517,13 @@ argument_list :
 atom_expression : 
     STRING { 
         System.err.println("got string " + $1.obj); 
-        $$ = new ParserVal(new Expr((StringConst)($1.obj)));
+        $$ = new ParserVal(new AtomicExpr((StringConst)($1.obj)));
     }
     | IDENTIFIER {
-        $$ = new ParserVal(new Expr((Identifier)($1.obj)));
+        $$ = new ParserVal(new AtomicExpr((Identifier)($1.obj)));
     }
     | NUMBER {
-        $$ = new ParserVal(new Expr((NumericConst)($1.obj)));
+        $$ = new ParserVal(new AtomicExpr((NumericConst)($1.obj)));
     }
 ;
 
