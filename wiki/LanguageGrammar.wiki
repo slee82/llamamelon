@@ -4,7 +4,9 @@ _Refer to Appendix A13 of K&R. Also check http://java.sun.com/docs/books/jls/sec
 
 <wiki:toc>
 
-This is the yacc-compatible grammar for our language:
+This is the yacc-compatible grammar for our language.
+
+Note that this is not where we keep track of the latest grammar; it's stored inside the repository under docs. This page will be updated periodically.
 
 The grammar has the undefined terminal symbols: _identifier, string, number_.
 
@@ -38,6 +40,7 @@ body_statement : if_statement
                | iteration_statement
                | jump_statement
                | declaration
+               | stat_declaration
                | expression_statement
                | activate_statement
                | print_statement
@@ -69,17 +72,17 @@ print_statement : "print" expression ";"
 
 /**IF_STATEMENT**/
 if_statement : "if" "(" expression ")" "then:" body_statement_list "end"
-             | "if" "(" expression ")" "then:" body_statement_list else_statement "end"
-             ;
+             | "if" "(" expression ")" "then:" body_statement_list else_statement "end"
+             ;
 
 else_statement : "else:" body_statement_list
-               ;
+               ;
 
 /**ITERATION_STATEMENT**/
 iteration_statement : "do:" body_statement_list "end"
                     | "do" expression "times:" body_statement_list "end"
-                    | "foreach" identifier "in" identifier ":" body_statement_list "end"
-                    ;
+                    | "foreach" identifier "in" identifier ":" body_statement_list "end"
+                    ;
 
 /**JUMP_STATEMENT**/
 jump_statement : "stopdo" ";"
@@ -105,13 +108,38 @@ variable_declarator : identifier
                     | identifier "=" expression
                     ;
 
+/*
+ * This is necessary because the compilation rules for stat declarations are
+ * different to variable declarations. In variable declarations, the expression
+ * is evaluated, but in stat declarations the expression is encapsulated into
+ * a function.
+ */
+stat_declaration : "stat" identifier "=" stat_expression ";"
+                 ;
+
+stat_expression : stat_mult_expr
+                | stat_expression "+" stat_mult_expr
+                | stat_expression "-" stat_mult_expr
+                ;
+
+stat_mult_expr : stat_atom_expr
+               | stat_mult_expr "*" stat_atom_expr
+               | stat_mult_expr "/" stat_atom_expr
+               | stat_mult_expr "%" stat_atom_expr
+               ;
+
+stat_atom_expr : identifier
+               | number
+               | "(" stat_expression ")"
+               ;
+
 /*TYPE*/
 type : "number"
      | "string"
      | "list"
      | "team"
      | "player"
-     | "stat"
+     //| "stat"
      | "nothing"
      ;
 
@@ -207,4 +235,5 @@ variable_list : expression
               | variable_list "," expression
               ;
 %%
+
 }}}
