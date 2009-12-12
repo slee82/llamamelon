@@ -113,6 +113,16 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "is"	{ return Parser.IS; }
 
+"isnot"	{ return Parser.ISNOT; }
+
+">"		{ return Parser.GT; }
+
+"<" 	{ return Parser.LT; }
+
+">=" 	{ return Parser.GTE; }
+
+"<=" 	{ return Parser.LTE; }
+
 ":"     { return Parser.COLON; }
 
 print           { /* got a print statement, notify parser */

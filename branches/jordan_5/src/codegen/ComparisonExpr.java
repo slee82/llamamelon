@@ -4,22 +4,21 @@ import compiler.SymbolTable;
 import lexer.Type;
 
 /**
- * Logical Expressions, extend Expr
+ * Arithmetic Expressions, extend Expr
  */
-public class LogicalExpr extends Expr {
+public class ComparisonExpr extends Expr {
 
     public enum Op {
-        AND, OR, NOT
+        IS, ISNOT, GT, LT, GTE, LTE
     }
     
     /**
      * Constructor - Takes an operator, left expression and right expression
-     * If Right expression is null, the NOT op was used (!)
      * @param op
      * @param exprL
      * @param exprR
      */
-    public LogicalExpr(Op op, Expr exprL, Expr exprR) {
+    public ComparisonExpr(Op op, Expr exprL, Expr exprR) {
         this.operator = op;
         this.valueL = exprL;
         this.valueR = exprR;
@@ -27,8 +26,7 @@ public class LogicalExpr extends Expr {
     
     @Override
     public String code(SymbolTable table) {
-    	if (valueR == null)
-    		return "! " + valueL.code(table);
+    	
     	if(! valueL.getType(table).equals(valueR.getType(table))) {
     		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
     	}
@@ -50,9 +48,12 @@ public class LogicalExpr extends Expr {
     private String getOpCode() {
         // TODO Auto-generated method stub
         switch(operator) {
-        case AND: return "&&";
-        case OR: return "||";
-        case NOT: return "!";
+        case IS: return "==";
+        case ISNOT: return "!=";
+        case GT: return ">";
+        case LT: return "<";
+        case GTE: return ">=";
+        case LTE: return "<=";
         default:
             throw new IllegalArgumentException("assignment: unknown operator");
         }

@@ -25,6 +25,7 @@ import codegen.*;
 %token NUMBER
 %token SEMICOLON
 %token COLON
+%token IS, ISNOT, GT, LT, GTE, LTE
 %token AND, OR, NOT
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
 %token PLUS, MIN, MULT, DIV, MOD
@@ -451,29 +452,33 @@ expression : logical_or_expression { $$ = $1; }
 logical_or_expression : logical_and_expression
                       | logical_or_expression OR logical_and_expression { 
                     	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.OR,(Expr)$1.obj, (Expr)$3.obj));}
-                      ;
+;
 
 logical_and_expression : logical_not_expression
                        | logical_and_expression AND logical_not_expression { 
                     	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.AND,(Expr)$1.obj, (Expr)$3.obj));}
-                       ;
+;
 
 logical_not_expression : comparison_expression
                        | NOT logical_not_expression { 
                     	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.NOT,(Expr)$2.obj, null));}
-                       ;
+;
 
 
 /*COMPARISON*/
 comparison_expression : addition_expression
-                      | comparison_expression "is"   addition_expression
-                      | comparison_expression "isnot" addition_expression
-                      | comparison_expression ">"    addition_expression
-                      | comparison_expression "<"    addition_expression
-                      | comparison_expression ">="   addition_expression
-                      | comparison_expression "<="   addition_expression
-                      ;
-
+                      | comparison_expression IS   addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.IS,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression ISNOT addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.ISNOT,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression GT    addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.GT,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression LT    addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.LT,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression GTE   addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.GTE,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression LTE   addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.LTE,(Expr)$1.obj, (Expr)$3.obj));}
 ;
 
 /* ARITHMETIC */
