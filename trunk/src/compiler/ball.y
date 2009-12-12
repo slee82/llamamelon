@@ -31,6 +31,8 @@ import codegen.*;
 %token COMMA
 %token OPAREN
 %token CPAREN
+%token OSQUARE
+%token CSQUARE
 %token PRINT
 %token ACTIVATE
 %token FUNCTION
@@ -536,7 +538,20 @@ atom_expression :
     | OPAREN expression CPAREN {
     	$$ = new ParserVal(new AtomicExpr((Expr)($2.obj)));
     }
+    | list_initializer {
+        $$ = $1;
+    }
 ;
+
+list_initializer : 
+    OSQUARE argument_list CSQUARE {
+        ArrayList<Expr> args = (ArrayList<Expr>)$2.obj;
+        $$ = new ParserVal(new ListInit(args));
+    }
+    | OSQUARE CSQUARE {
+        $$ = new ParserVal(new ListInit());
+    }
+    ;
 
 %%
 
