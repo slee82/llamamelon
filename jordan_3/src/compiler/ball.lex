@@ -81,7 +81,7 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ","     { return Parser.COMMA; }
 
-"="	{ return Parser.EQL; }
+"="	{ return Parser.EQL; } 
 
 "+="    { return Parser.PLUSEQL; }
 
