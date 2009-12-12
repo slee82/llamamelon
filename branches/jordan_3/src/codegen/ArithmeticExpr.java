@@ -17,6 +17,14 @@ public class ArithmeticExpr extends Expr {
     
     @Override
     public String code(SymbolTable table) {
+    	
+    	if(! valueL.getType(table).equals(valueR.getType(table))) {
+    		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
+    	}
+    	if(!valueL.getType(table).equals(Type.number)) {
+    		throw new RuntimeException("expr: type is not number: " + valueL.getType(table) + " and " + valueR.getType(table));
+    	}
+    	
     	String result = valueL.code(table);
     		result += " " + getOpCode() + " ";
     		result += valueR.code(table);

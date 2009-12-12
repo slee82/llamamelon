@@ -76,6 +76,10 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
  *  Lexer (Syntax) Rules
  * ======================
  */
+ 
+ /*
+  * FILE NEEDS TO HAVE A BLANK LINE AT THE END!!!!!!!!  OKAY?!!!!!!!!!!!!! 
+  */
 
 ";"     { return Parser.SEMICOLON; }
 
