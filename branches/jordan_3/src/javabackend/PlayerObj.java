@@ -6,10 +6,10 @@ package javabackend;
  * playerObj.java - Players class
  */
 
-public class playerObj {
+public class PlayerObj {
 
 	/* This is the batter constructor */
-	public playerObj (String name, int type, int ab, int r,
+	public PlayerObj (String name, int type, int ab, int r,
 			int h, int dbl, int tpl, int hr, int bb) {
 		if (type != BATTER) {
 			System.err.println("Incorrect Player Type Found");
@@ -27,28 +27,23 @@ public class playerObj {
 	}
 	
 	// This is the pitcher constructor
-	public playerObj (String name, int type, double ip, int h,
+	public PlayerObj (String name, int type, double ipp, int h,
 			int er, int bb, int k) {
 		if (type != PITCHER) {
 			System.err.println("Incorrect Player Type Found");
 			return;
 		}
+		float ip = (float)ipp;
 		this.name = name;
 		this.type = type;
-
-		String ipString = ""+ip;
-		String[] nums = ipString.split("\\.");
-		int decimalPart = Integer.parseInt(nums[1]);
-		int integerPart = Integer.parseInt(nums[0]);
-
-		if (decimalPart == 0)
+		if ((int)ip == ip)
 			this.ip = ip;
 		else {
-			this.ip = integerPart;
-			if (decimalPart == 1)
-				this.ip += (1.0/3.0);
-			else if (decimalPart == 2)
-				this.ip += (2.0/3.0);
+			this.ip = (int)ip;
+			if (ip - (int)ip == .1)
+				this.ip += (1/3);
+			else if (ip - (int)ip == .2)
+				this.ip += (2/3);
 			else {
 				System.err.println("Incorrect Innings Pitched Value");
 				return;
@@ -113,7 +108,7 @@ public class playerObj {
 		return bb;
 	}
 
-	public double getIp() {
+	public float getIp() {
 		if (type != PITCHER) {
 			System.err.println("Incorrect Statistic Requested");
 			return -1;
@@ -152,6 +147,57 @@ public class playerObj {
 		
 		return toReturn;
 	}
+	
+	public static final PlayerStat AB = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getAb();
+		}
+	};
+	public static final PlayerStat R = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getR();
+		}
+	};
+	public static final PlayerStat H = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getH();
+		}
+	};
+	public static final PlayerStat DBL = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getDbl();
+		}
+	};
+	public static final PlayerStat TPL = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getTpl();
+		}
+	};
+	public static final PlayerStat HR = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getHr();
+		}
+	};
+	public static final PlayerStat BB = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getBb();
+		}
+	};
+	public static final PlayerStat IP = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getIp();
+		}
+	};
+	public static final PlayerStat ER = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getEr();
+		}
+	};
+	public static final PlayerStat K = new PlayerStat() {
+		public float get(PlayerObj player) {
+			return player.getK();
+		}
+	};
 
 	private String name;
 
@@ -162,7 +208,7 @@ public class playerObj {
 	private int tpl;
 	private int hr;
 	private int bb;
-	private double ip;
+	private float ip;
 	private int er;
 	private int k;
 	

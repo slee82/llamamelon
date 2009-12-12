@@ -81,7 +81,17 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ","     { return Parser.COMMA; }
 
-"="	{ return Parser.EQL; } 
+"="	{ return Parser.EQL; }
+
+"+" { return Parser.PLUS; }
+
+"-" { return Parser.MIN; }
+
+"*" { return Parser.MULT; }
+
+"/" { return Parser.DIV; }
+
+"%" { return Parser.MOD; }
 
 "+="    { return Parser.PLUSEQL; }
 
@@ -92,16 +102,6 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 "/="    { return Parser.DIVEQL; }
 
 "%="    { return Parser.MODEQL; }
-
-"+"    { return Parser.PLUS; }
-
-"-"    { return Parser.MIN; }
-
-"*"    { return Parser.MULT; }
-
-"/"    { return Parser.DIV; }
-
-"%"    { return Parser.MOD; }
 
 "("	{ return Parser.OPAREN; }
 
@@ -133,6 +133,12 @@ simfunction     {
                     return Parser.SIMFUNCTION;
                 }
 
+stat            {
+                    System.err.println("lexer: found 'stat' keyword.");
+                    yyparser.yylval = new ParserVal(Keyword.stat);
+                    return Parser.STAT;
+                }
+
 return          {
                     yyparser.yylval = new ParserVal(Keyword.ret);
                     return Parser.RETURN;
@@ -150,7 +156,7 @@ returns         {
 
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
                     // TODO: add symbol table addition code here
-		    System.err.println("lexer: found a String Const");
+		            System.err.println("lexer: found a String Const");
                     StringConst s = new StringConst(yytext());
                     //table.putEntry(s, null);
                     yyparser.yylval = new ParserVal(s);
