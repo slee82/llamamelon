@@ -525,6 +525,9 @@ atom_expression :
     | NUMBER {
         $$ = new ParserVal(new AtomicExpr((NumericConst)($1.obj)));
     }
+    | OPAREN expression CPAREN {
+    	$$ = new ParserVal(new AtomicExpr((Expr)($2.obj)));
+    }
 ;
 
 %%
