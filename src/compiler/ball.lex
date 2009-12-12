@@ -93,6 +93,10 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "%="    { return Parser.MODEQL; }
 
+"+"    { return Parser.OPPLUS; }
+
+
+
 "("	{ return Parser.OPAREN; }
 
 ")"	{ return Parser.CPAREN; }
