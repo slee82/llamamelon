@@ -25,6 +25,7 @@ import codegen.*;
 %token NUMBER
 %token SEMICOLON
 %token COLON
+%token AND, OR, NOT
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
 %token PLUS, MIN, MULT, DIV, MOD
 %token COMMA
@@ -449,24 +450,41 @@ expression : logical_or_expression { $$ = $1; }
 ;
 
 /* LOGICAL */
-logical_or_expression : logical_and_expression { $$ = $1; }
-;
+logical_or_expression : logical_and_expression
+                      | logical_or_expression OR logical_and_expression { 
+                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.OR,(Expr)$1.obj, (Expr)$3.obj));}
+                      ;
 
-logical_and_expression : logical_not_expression { $$ = $1; }
-;
+logical_and_expression : logical_not_expression
+                       | logical_and_expression AND logical_not_expression { 
+                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.AND,(Expr)$1.obj, (Expr)$3.obj));}
+                       ;
 
-logical_not_expression : comparison_expression { $$ = $1; }
-;
+logical_not_expression : comparison_expression
+                       | NOT logical_not_expression { 
+                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.NOT,(Expr)$2.obj, null));}
+                       ;
+
 
 /* COMPARISON */
 comparison_expression : addition_expression { $$ = $1; }
 ;
 
 /* ARITHMETIC */
-addition_expression : multiplication_expression { $$ = $1; }
+addition_expression : multiplication_expression
+                    | addition_expression PLUS multiplication_expression { 
+                    	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.PLUS,(Expr)$1.obj, (Expr)$3.obj));}
+                    | addition_expression MIN multiplication_expression {  
+                    	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MIN,(Expr)$1.obj, (Expr)$3.obj));}
 ;
 
-multiplication_expression : unary_expression { $$ = $1; }
+multiplication_expression : unary_expression
+						  | multiplication_expression MULT unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MULT,(Expr)$1.obj, (Expr)$3.obj));}
+                    	  | multiplication_expression DIV unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.DIV,(Expr)$1.obj, (Expr)$3.obj));}
+                    	  | multiplication_expression MOD unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MOD,(Expr)$1.obj, (Expr)$3.obj));}
 ;
 
 /* UNARY */
@@ -516,6 +534,9 @@ atom_expression :
     }
     | NUMBER {
         $$ = new ParserVal(new AtomicExpr((NumericConst)($1.obj)));
+    }
+    | OPAREN expression CPAREN {
+    	$$ = new ParserVal(new AtomicExpr((Expr)($2.obj)));
     }
     | list_initializer {
         $$ = $1;
