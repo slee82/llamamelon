@@ -38,7 +38,16 @@ public class AtomicExpr extends Expr {
     public AtomicExpr() {
     }
     
+    public AtomicExpr(Expr expr) {
+    	this.inside = expr;
+    	this.stringval = null;
+    	this.type = null;
+    }
+    
     public Type getType(SymbolTable table) {
+    	if (this.inside != null) {
+    		return inside.getType(table);
+    	}
         if (this.type.val.equals("identifier")) {
             Object val = table.getEntry(this.ident);
             if (val == null) {
@@ -56,6 +65,9 @@ public class AtomicExpr extends Expr {
      * @return Java code for this expression.
      */
     public String code(SymbolTable table) {
+    	if(this.inside != null) {
+    		return "(" + this.inside.code(table) + ")";
+    	}
         this.getType(table);
         return this.stringval;
     }
@@ -74,4 +86,6 @@ public class AtomicExpr extends Expr {
     public static final int IDENTIFIER = 2;
 
     public static final int NUMERICCONST = 3;
+    
+    private Expr inside = null;
 }

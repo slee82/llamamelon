@@ -461,10 +461,20 @@ comparison_expression : addition_expression { $$ = $1; }
 ;
 
 /* ARITHMETIC */
-addition_expression : multiplication_expression { $$ = $1; }
+addition_expression : multiplication_expression
+                    | addition_expression PLUS multiplication_expression { 
+                    	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.PLUS,(Expr)$1.obj, (Expr)$3.obj));}
+                    | addition_expression MIN multiplication_expression {  
+                    	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MIN,(Expr)$1.obj, (Expr)$3.obj));}
 ;
 
-multiplication_expression : unary_expression { $$ = $1; }
+multiplication_expression : unary_expression
+						  | multiplication_expression MULT unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MULT,(Expr)$1.obj, (Expr)$3.obj));}
+                    	  | multiplication_expression DIV unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.DIV,(Expr)$1.obj, (Expr)$3.obj));}
+                    	  | multiplication_expression MOD unary_expression { 
+                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MOD,(Expr)$1.obj, (Expr)$3.obj));}
 ;
 
 /* UNARY */
@@ -514,6 +524,9 @@ atom_expression :
     }
     | NUMBER {
         $$ = new ParserVal(new AtomicExpr((NumericConst)($1.obj)));
+    }
+    | OPAREN expression CPAREN {
+    	$$ = new ParserVal(new AtomicExpr((Expr)($2.obj)));
     }
 ;
 
