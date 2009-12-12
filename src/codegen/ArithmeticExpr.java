@@ -3,12 +3,21 @@ package codegen;
 import compiler.SymbolTable;
 import lexer.Type;
 
+/**
+ * Arithmetic Expressions, extend Expr
+ */
 public class ArithmeticExpr extends Expr {
 
     public enum Op {
         PLUS, MIN, MULT, DIV, MOD
     }
     
+    /**
+     * Constructor - Takes an operator, left expression and right expression
+     * @param op
+     * @param exprL
+     * @param exprR
+     */
     public ArithmeticExpr(Op op, Expr exprL, Expr exprR) {
         this.operator = op;
         this.valueL = exprL;
