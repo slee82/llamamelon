@@ -85,6 +85,12 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ","     { return Parser.COMMA; }
 
+"and"		{ return Parser.AND; }
+
+"or" 	{ return Parser.OR; }
+
+"not" 	{ return Parser.NOT; }
+
 "="		{ return Parser.EQL; }
 
 "+" 	{ return Parser.PLUS; }
