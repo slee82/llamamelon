@@ -43,16 +43,16 @@ public class AssignmentStmt extends Stmt {
         Declaration decl = (Declaration) data;
         if (!(this.operator == Op.EQL)) {
             // if operator is not plain assignment, can only support numbers
-            if (!(decl.type.equals(new Type("number")))) {
+            if (!(decl.type().equals(new Type("number")))) {
                 throw new RuntimeException("error: nonstandard assignment "
                         + "with non-number variable " + name);
             }
         }
         
-        // check expression type
-        if (!(value.getType(table).equals(decl.type))) {
-            throw new RuntimeException("error: expression type mismatch in"+
-                    " assignment of variable " + name);
+        if (!(value.getType(table).equals(decl.type()))) {
+            throw new RuntimeException("assign: expression type mismatch in"+
+                    " assignment of variable " + name + ",\n\texpected " + 
+                    decl.type() + " but got " + value.getType(table));
         }
         
         // all OK, output the assignment code
