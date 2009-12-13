@@ -55,7 +55,7 @@ public class Program extends ParseTreeNode {
                 new BuiltinStatDef(new Identifier("PlayerObj.BB"), Type.playerStat));
 
         System.out.println(table.indent() + "public static void main (String args[]) "
-                + "throws Exception {");
+                + "throws ExLogicalExprception {");
         
         table.increaseIndent(1);
 
