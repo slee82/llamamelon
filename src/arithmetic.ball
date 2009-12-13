@@ -21,11 +21,5 @@ print y;	//1
 print z;	//0
 print y + z;
 
-/********************************/
-/*	LOGIC	
 
-x and y;
-x or y;
-not x;
 
-*/
