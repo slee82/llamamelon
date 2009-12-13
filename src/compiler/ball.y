@@ -175,7 +175,7 @@ type :
  * and variables declared in the body itself. 
  */
 function_definition :
-    FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS type COLON END {
+    FUNCTION IDENTIFIER OPAREN parameter_list0 CPAREN RETURNS type COLON END {
         System.err.println("parser: function definition");
     
         Identifier name = (Identifier)$2.obj;
@@ -198,7 +198,7 @@ function_definition :
     
     	$$ = new ParserVal(newfun);
     }
-    | FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS type COLON body_statement_list END {
+    | FUNCTION IDENTIFIER OPAREN parameter_list0 CPAREN RETURNS type COLON body_statement_list END {
         System.err.println("parser: function definition");
         
         Identifier name = (Identifier)$2.obj;
@@ -221,6 +221,11 @@ function_definition :
         $$ = new ParserVal(newfun);
     }
 ;
+
+parameter_list0 :
+    { $$ = new ParserVal(new LinkedHashMap<Identifier,Type>()); }
+    | parameter_list { $$ = $1; }
+    ;
 
 /** SIM_FUNCTION_DEFINITION **/
 

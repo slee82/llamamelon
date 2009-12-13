@@ -34,8 +34,12 @@ body_statement : if_statement
                ;
 
 /**FUNCTION_DEFINITION**/
-function_definition : "function" identifier "(" parameter_list ")" "returns" type ":" body_statement_list "end"
+function_definition : "function" identifier "(" parameter_list0 ")" "returns" type ":" body_statement_list "end"
                     ;
+
+parameter_list0 :
+                | parameter_list
+                ;
 
 parameter_list : parameter
                | parameter_list "," parameter

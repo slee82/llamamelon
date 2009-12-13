@@ -16,7 +16,8 @@ public class ExprStmt extends Stmt {
     public String stmtCode(SymbolTable table) {
         if (expr == null) return ";";
         String outcode = expr.code(table).concat(";");
-        return table.indent() + outcode;
+        // "purified" expression can safely be commented
+        return table.indent() + "/*" + outcode + "*/";
     }
     
     private Expr expr;
