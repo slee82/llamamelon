@@ -35,7 +35,7 @@ public class BallList<T> extends ArrayList<T> {
     }
     
     @SuppressWarnings("unchecked")
-    public BallList append(BallList<T> right) {
+    public BallList<T> append(BallList<T> right) {
         BallList result = new BallList<T>();
         
         result.addAll(this);

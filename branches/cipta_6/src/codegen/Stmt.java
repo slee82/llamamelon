@@ -30,6 +30,6 @@ public abstract class Stmt extends ParseTreeNode implements InsertionPoint {
     
     abstract String stmtCode(SymbolTable table);
     
-    private String insert = "";
+    protected String insert = "";
 
 }

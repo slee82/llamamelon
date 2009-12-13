@@ -78,6 +78,7 @@ public class Declaration extends Stmt {
      * (genGlobalDecl takes care of the declarations)
      */
     public void genGlobalMain(SymbolTable table) {
+        table.setInsertPt(this);
         String begin = table.indent();
 
         int i;
@@ -105,7 +106,7 @@ public class Declaration extends Stmt {
             table.putEntry(id, this);
         }
         
-        System.out.println(begin);
+        System.out.println(super.insert + begin);
     }
     
     /**

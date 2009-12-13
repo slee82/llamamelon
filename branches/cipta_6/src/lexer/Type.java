@@ -37,7 +37,7 @@ public class Type extends Token {
      */
     public String getType() {
     	if (val.equals("bool"))
-            return "bool";
+            return "boolean";
     	if (val.equals("number"))
             return "float";
         if (val.equals("string"))

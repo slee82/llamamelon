@@ -26,34 +26,49 @@ public class ArithmeticExpr extends Expr {
     
     @Override
     public String code(SymbolTable table) {
-    	
-    	if(! valueL.getType(table).equals(valueR.getType(table))) {
+        String lcode = valueL.code(table);
+        String rcode = valueR.code(table);
+        Type ltype = valueL.getType(table);
+        Type rtype = valueR.getType(table);
+        
+    	if(! ltype.equals(rtype)) {
     		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
     	}
-    	if (valueL.getType(table).equals(Type.number)) {
+    	if (ltype.equals(Type.number)) {
             /* Number addition */
-            String result = valueL.code(table);
+            String result = lcode;
     		result += " " + getOpCode() + " ";
-    		result += valueR.code(table);
+    		result += rcode;
     		return result;
-        } else if (valueL.getType(table) instanceof ListType) {
+        } else if (ltype instanceof ListType) {
             /* List append */
-            String result = "(" + valueL.code(table) + ").append(";
-            result += valueR.code(table);
+            String result = "(" + lcode + ").append(";
+            result += rcode;
             return result + ")";
         } else if (valueL.getType(table).equals(Type.string)) {
-            /* List append */
-            String result = "(" + valueL.code(table) + ").concat(";
-            result += valueR.code(table);
+            /* String concat */
+            String result = "(" + lcode + ").concat(";
+            result += rcode;
             return result + ")";
         } else {
-            throw new RuntimeException("expr: type " + valueL.getType(table) + " unsuitable for addition.");
+            throw new RuntimeException("expr: type " + ltype + " unsuitable for addition.");
         }
     }
     
     @Override
     public Type getType(SymbolTable table) {
-    	return new Type("number") ;
+        Type ltype = valueL.getType(table);
+        if(! valueL.getType(table).equals(valueR.getType(table))) {
+            throw new RuntimeException("expr: type mismatch " + ltype + " and " + valueR.getType(table));
+        }
+        
+        if (ltype.equals(Type.number) || 
+                (ltype instanceof ListType) ||
+                ltype.equals(Type.string)) {
+            return ltype;
+        } else {
+            throw new RuntimeException("expr: type " + valueL.getType(table) + " unsuitable for addition.");
+        }
     }
     
     private String getOpCode() {
