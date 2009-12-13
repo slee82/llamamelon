@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import lexer.Type;
 import compiler.SymbolTable;
 
+/**
+ * Implements list declarations.
+ * 
+ * Lists in BALL is its own data type. The contents of the list must have the
+ * same type, but lists that contain different types can be put in the same
+ * list. (List contents are checked in more detail in runtime)
+ */
 public class ListInit extends AtomicExpr {
 
     public ListInit() {
@@ -16,23 +23,7 @@ public class ListInit extends AtomicExpr {
     }
     
     public String code(SymbolTable table) {
-        ListType myType = (ListType)getType(table);
-        Type t = myType.contents;
         
-        // type checking done
-        // new BallList<T>(new T[] { a, b, c })
-        String code = "new " + myType.getType() + "(new " + t.getType() + "[] {\n";
-        
-        table.increaseIndent(1);
-        for (Expr content : args) {
-            code += table.indent() + content.code(table) + " ,\n";
-        }
-        table.decreaseIndent(1);
-        return code + table.indent() + "})";
-            
-    }
-    
-    public Type getType(SymbolTable table) {
         Type t = null;
         for (Expr expr : args) {
             if (t == null) t = expr.getType(table);
@@ -44,7 +35,22 @@ public class ListInit extends AtomicExpr {
         
         if (t.equals(Type.number))
             t = new Type("Float");
-        return new ListType(t);
+        
+        // type checking done
+        // new BallList<T>(new T[] { a, b, c })
+        String code = "new " + Type.list.getType() + "(new " + t.getType() + "[] {\n";
+        
+        table.increaseIndent(1);
+        for (Expr content : args) {
+            code += table.indent() + content.code(table) + " ,\n";
+        }
+        table.decreaseIndent(1);
+        return code + table.indent() + "})";
+            
+    }
+    
+    public Type getType(SymbolTable table) {
+        return Type.list;
     }
     
     private ArrayList<Expr> args;
