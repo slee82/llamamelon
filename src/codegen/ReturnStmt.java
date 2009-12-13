@@ -30,10 +30,12 @@ public class ReturnStmt extends Stmt {
 
     @Override
     public String code(SymbolTable table) {
+        table.setInsertPt(this);
+        
         String stmt = "return ";
         stmt += expression.code(table);
         stmt += ";";
-        return table.indent() + stmt;
+        return insert + table.indent() + stmt;
     }
 
 }

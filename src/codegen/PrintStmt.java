@@ -15,10 +15,13 @@ public class PrintStmt extends Stmt {
     }
     
     public String code(SymbolTable table) {
+        table.setInsertPt(this);
+        
         String begin = table.indent() + "System.out.println(";
         begin += toprint.code(table);
         begin += (");");
-        return begin;
+        
+        return insert + begin;
     }
     
     private Expr toprint;

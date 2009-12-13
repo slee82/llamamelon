@@ -168,6 +168,11 @@ returns         {
                     return Parser.RETURNS;
                 }
 
+where           {
+                    yyparser.yylval = new ParserVal(Keyword.where);
+                    return Parser.WHERE;
+                }
+
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
                     // TODO: add symbol table addition code here
 		            System.err.println("lexer: found a String Const");

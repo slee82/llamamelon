@@ -35,6 +35,8 @@ public class Declaration extends Stmt {
     
     // generate the declaration
     public String code(SymbolTable table) {
+        table.setInsertPt(this);
+        
         String begin = table.indent() + (type.getType() + " ");
 
         int i;
@@ -65,7 +67,7 @@ public class Declaration extends Stmt {
         }
 
         begin += (";");
-        return begin;
+        return super.insert + begin;
     }
 
     /**
