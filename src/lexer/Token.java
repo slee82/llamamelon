@@ -25,7 +25,7 @@ public class Token {
         RETURN, 
         STAT, 
         ACTIVATE, 
-        WHERE
+        WHERE, SELF
     }
 
     public final Tag tag;
