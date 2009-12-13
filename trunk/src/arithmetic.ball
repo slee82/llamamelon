@@ -22,8 +22,10 @@ print z;	//0
 print y + z;
 
 /********************************/
-/*	LOGIC	*/
+/*	LOGIC	
+
 x and y;
 x or y;
 not x;
 
+*/
