@@ -10,14 +10,16 @@ x2 = [ 3, 4];
 x2 = [4, 5, 10 + 13];
 
 function meh (list x1, list x2) returns nothing:
-	x1 = x2;
-	print x2;
+	print x1 + x2;
 end
 
 meh(x1, x2);
 
-meh(x1, x3); // fail
+print "stress" + "testing";
+
 x2 = [ "p", "q", "r" ]; // succeed
 print [ [ 3, 4, 5 ], [ "a", "b" ], [ 8 ] ]; // succeed
+
+//meh(x1, x3); // fail
 //print [ 3, "a", [ 2, 4, 1 ] ]; // fail
 
