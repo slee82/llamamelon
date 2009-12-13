@@ -124,15 +124,17 @@ public class SymbolTable {
      * @return the new Identifier, not yet added to the table.
      */
     public Identifier newID() {
-        
-        varcount += (state.nextInt()) >> 24; // advance per byte
-        String token = "tok_" + String.format("%x",Math.abs(varcount++));
-        Identifier res = new Identifier(token);
-        
-        // shouldn't happen
-        if (this.hasEntry(res))
-            throw new RuntimeException("ERROR: newID() result " + res + " in table.");
-        return res;
+        int tries = 0;
+        while (tries++ < 1024) {
+            varcount += (state.nextInt()) >> 16; // advance per 2 bytes, more
+                                                    // random
+            String token = "tok_" + String.format("%x", Math.abs(varcount++));
+            Identifier res = new Identifier(token);
+
+            // shouldn't happen
+            if (!this.hasEntry(res)) return res;
+        }
+        throw new Error("can't find new token number");
     }
 
     public String indent() {

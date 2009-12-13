@@ -9,12 +9,10 @@ public class BallList<T> extends ArrayList<T> {
     @SuppressWarnings("unchecked")
     public BallList(Object[] create) {
         super((List<T>)Arrays.asList((T[])create));
-        orig = create;
     }
     
     public BallList() {
         super();
-        orig = new Object[] {};
     }
     
     public String toString() {
@@ -45,7 +43,6 @@ public class BallList<T> extends ArrayList<T> {
         return result;
     }
 
-    private Object[] orig;
     private static final long serialVersionUID = 1L;
 
 }
