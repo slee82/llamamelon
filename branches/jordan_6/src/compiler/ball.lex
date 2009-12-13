@@ -91,17 +91,29 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "not" 	{ return Parser.NOT; }
 
-"="	{ return Parser.EQL; }
+"="		{ return Parser.EQL; }
+	
+"+" 	{ return Parser.PLUS; }
 
-"+" { return Parser.PLUS; }
+"-" 	{ return Parser.MIN; }
 
-"-" { return Parser.MIN; }
+"*" 	{ return Parser.MULT; }
 
-"*" { return Parser.MULT; }
+"/" 	{ return Parser.DIV; }
 
-"/" { return Parser.DIV; }
+"%" 	{ return Parser.MOD; }
 
-"%" { return Parser.MOD; }
+"is"	{ return Parser.IS; }
+	
+"isnot" { return Parser.ISNOT; }
+
+">" 	{ return Parser.GT; }
+
+"<" 	{ return Parser.LT; }
+
+">=" 	{ return Parser.GTE; }
+
+"<=" 	{ return Parser.LTE; }
 
 "+="    { return Parser.PLUSEQL; }
 
