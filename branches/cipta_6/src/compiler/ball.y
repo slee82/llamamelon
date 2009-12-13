@@ -43,7 +43,7 @@ import codegen.*;
 %token IS
 %token TYPE
 %token END
-%token WHERE
+%token WHERE, SELF
 
 %%
 
@@ -499,7 +499,7 @@ postfix_expression :
     }
     | postfix_expression WHERE OPAREN expression CPAREN {
         // filtering
-        $$ = new ParserVal(new FilterExpr((Expr)$1.obj, (Expr)$2.obj));
+        $$ = new ParserVal(new FilterExpr((Expr)$1.obj, (Expr)$4.obj));
     }
 ;
 
@@ -548,6 +548,9 @@ atom_expression :
     }
     | list_initializer {
         $$ = $1;
+    }
+    | SELF {
+        $$ = new ParserVal(new FilterExpr.SelfKeyword());
     }
 ;
 

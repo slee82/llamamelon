@@ -17,7 +17,8 @@ public class ExprStmt extends Stmt {
         table.setInsertPt(this);
         
         if (expr == null) return ";";
-        return super.insert + table.indent() + expr.code(table).concat(";");
+        String outcode = expr.code(table).concat(";");
+        return super.insert + table.indent() + outcode;
     }
     
     private Expr expr;

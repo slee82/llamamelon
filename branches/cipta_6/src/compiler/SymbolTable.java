@@ -99,7 +99,7 @@ public class SymbolTable {
      *         specified by type can be made in the current table.
      */
     public boolean available(Identifier id) {
-        if (table.get(id) instanceof Identifier) return false;
+        if (table.containsKey(id)) return false;
         if (isTopTable) return true;
         if (nextLookup == null) return true;
         return nextLookup.available(id);
@@ -124,18 +124,10 @@ public class SymbolTable {
      * @return the new Identifier, not yet added to the table.
      */
     public Identifier newID() {
-        Identifier longest = this.getLongestKey();
-        // in case of builtins like Loader.load -> _loader_load
-        // longer than longest ID means it can't be the same
-        if (longest == null || longest.getID().length() <= 4) {
-            // too short/no previous ones, generate random
-            Random r = new Random();
-            String token = "tok_" + String.format("%x",Math.abs(r.nextInt()));
-            longest = new Identifier(token);
-        }
         
-        String newID = "_" + longest.getID().replace('.', '_').toLowerCase();
-        Identifier res = new Identifier(newID);
+        varcount += (state.nextInt()) >> 24; // advance per byte
+        String token = "tok_" + String.format("%x",Math.abs(varcount++));
+        Identifier res = new Identifier(token);
         
         // shouldn't happen
         if (this.hasEntry(res))
@@ -165,26 +157,6 @@ public class SymbolTable {
         decreaseIndent(i-1);
     }
 
-    /**
-     * Useful when creating a new identifier.
-     * @return the identifier with the longest name, or possibly null
-     */
-    private Identifier getLongestKey() {
-        Identifier curLongest = null;
-        for (Identifier id : this.table.keySet()) {
-            if (curLongest == null ||
-                    id.getID().length() > curLongest.getID().length()) {
-                curLongest = id;
-            }
-        }
-        
-        if (this.nextLookup == null) return curLongest;
-        
-        Identifier upID = this.nextLookup.getLongestKey();
-        if (upID.getID().length() > curLongest.getID().length()) return upID;
-        return curLongest;
-    }
-
     private HashMap<Identifier, Object> table;
 
     // cannot change the chain
@@ -198,5 +170,8 @@ public class SymbolTable {
     private String indent;
 
     public final boolean isTopTable;
+    
+    private static Random state = new Random(new java.util.Date().getTime());
+    private static long varcount = new Random().nextInt(); // so we don't run out soon
 
 }

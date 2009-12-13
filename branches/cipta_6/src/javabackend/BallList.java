@@ -12,6 +12,11 @@ public class BallList<T> extends ArrayList<T> {
         orig = create;
     }
     
+    public BallList() {
+        super();
+        orig = new Object[] {};
+    }
+    
     public String toString() {
         String begin = "[ ";
         boolean first = true;
@@ -33,8 +38,9 @@ public class BallList<T> extends ArrayList<T> {
     
     @SuppressWarnings("unchecked")
     public BallList append(BallList<T> right) {
-        BallList result = new BallList<T>(Arrays.copyOf(this.orig, this.orig.length));
+        BallList result = new BallList<T>();
         
+        result.addAll(this);
         result.addAll(right);
         return result;
     }

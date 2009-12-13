@@ -7,6 +7,7 @@ package codegen;
  */
 
 import lexer.*;
+
 import java.util.ArrayList;
 
 import compiler.SymbolTable;
@@ -129,7 +130,7 @@ public class Declaration extends Stmt {
             
             // check if all identifiers are entered correctly in the table
             if (!((table.getEntry(id)) == this)) {
-                throw new RuntimeException("declaration: init: identifier " + id + " mismatched.");
+                throw new RuntimeException("declaration: init: redefining identifier " + id + ".");
             }
 
             if (i > 0) // dont put a comma at the beginning

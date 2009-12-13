@@ -27,5 +27,6 @@ public class Keyword extends Token {
         end = new Keyword(Tag.END, "end"),
         ret = new Keyword(Tag.RETURN, "return"),
         returns = new Keyword(Tag.RETURNS, "returns"),
-        where = new Keyword(Tag.WHERE, "where");
+        where = new Keyword(Tag.WHERE, "where"),
+        self = new Keyword(Tag.SELF, "self");
 }

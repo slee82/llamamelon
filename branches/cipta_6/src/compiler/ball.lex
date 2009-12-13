@@ -169,8 +169,14 @@ returns         {
                 }
 
 where           {
+                    System.err.println("lexer: 'where' keyword");
                     yyparser.yylval = new ParserVal(Keyword.where);
                     return Parser.WHERE;
+                }
+
+self            {
+                    yyparser.yylval = new ParserVal(Keyword.self);
+                    return Parser.SELF;
                 }
 
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */

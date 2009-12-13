@@ -36,7 +36,7 @@ public class ArithmeticExpr extends Expr {
     		result += " " + getOpCode() + " ";
     		result += valueR.code(table);
     		return result;
-        } else if (valueL.getType(table).equals(Type.list)) {
+        } else if (valueL.getType(table) instanceof ListType) {
             /* List append */
             String result = "(" + valueL.code(table) + ").append(";
             result += valueR.code(table);
@@ -47,7 +47,7 @@ public class ArithmeticExpr extends Expr {
             result += valueR.code(table);
             return result + ")";
         } else {
-            throw new RuntimeException("expr: type " + valueL.getType(table) + " unsuitable for assignment.");
+            throw new RuntimeException("expr: type " + valueL.getType(table) + " unsuitable for addition.");
         }
     }
     
