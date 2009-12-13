@@ -27,10 +27,6 @@ public class Funcall extends Expr {
         /*
          * Check function return types, etc
          */
-        Type built = checkBuiltIn();
-        if (built != null)
-            return built;
-
         Object def = table.getEntry(name);
         if (!(def instanceof FuncDef)) {
             throw new RuntimeException("funcall: identifier " + name
@@ -50,9 +46,17 @@ public class Funcall extends Expr {
      */
     public String code(SymbolTable table) {
         InsertionPoint insert = table.getIP();
-        Type retType = getType(table);
-        changeBuiltIn();
-        String begin = (name.getID() + "(");
+        
+        Object def = table.getEntry(name);
+        if (!(def instanceof FuncDef)) {
+            throw new RuntimeException("funcall: identifier " + name
+                    + " invalid, either nonexistent or not a function");
+        }
+        FuncDef define = (FuncDef) def;        
+        Type retType = define.retType;
+        Identifier realname = define.name;
+        
+        String begin = (realname.getID() + "(");
         Identifier tempID = table.newID();
 
         if (args != null) { // print out all the args
@@ -70,26 +74,6 @@ public class Funcall extends Expr {
                 + " = " + begin + ";\n");
 
         return tempID.getID();
-    }
-
-    private void changeBuiltIn() {
-        if (name.equals(new Identifier("load"))) {
-            this.name = new Identifier("Loader.load");
-        }
-        if (name.equals(new Identifier("sim"))) {
-            this.name = new Identifier("Simulator.sim");
-        }
-    }
-
-    // Set the correct name for built-in functions
-    public Type checkBuiltIn() {
-        if (name.equals(new Identifier("load"))) {
-            return new Type("team");
-        }
-        if (name.equals(new Identifier("sim"))) {
-            return new Type("team");
-        }
-        return null;
     }
 
     private ArrayList<Expr> args = null;

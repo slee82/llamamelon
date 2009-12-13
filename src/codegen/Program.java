@@ -53,6 +53,14 @@ public class Program extends ParseTreeNode {
                 new BuiltinStatDef(new Identifier("PlayerObj.HR"), Type.playerStat));
         table.putEntry(new Identifier("BB"), 
                 new BuiltinStatDef(new Identifier("PlayerObj.BB"), Type.playerStat));
+        
+        /* INPUT BUILTIN FUNCTIONS */
+        table.putEntry(new Identifier("load"),
+                new BuiltinFuncDef(new Identifier("Loader.load"), Type.team,
+                        new Type[] { Type.string }));
+        table.putEntry(new Identifier("sim"),
+                new BuiltinFuncDef(new Identifier("Simulator.sim"), Type.team,
+                        new Type[] { Type.team, Type.team, Type.number }));
 
         System.out.println(table.indent() + "public static void main (String args[]) "
                 + "throws Exception {");
@@ -83,7 +91,7 @@ public class Program extends ParseTreeNode {
          */
         System.out.println();
         for (Object each : table.getVals()) {
-            if (each instanceof FuncDef) {
+            if (each instanceof FuncDef && !(each instanceof BuiltinFuncDef)) {
                 FuncDef define = (FuncDef) each;
                 // retreive delayed code
                 System.out.println(define.globalCode() + "\n");

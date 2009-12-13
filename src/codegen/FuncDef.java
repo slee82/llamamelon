@@ -17,10 +17,6 @@ public class FuncDef extends Stmt {
         this.retType = retType;
         this.paramlist = paramlist;
         this.bodylist = bodylist;
-
-        if (checkBuiltIn()) {
-            throw new RuntimeException("error: function name is used as builtin.");
-        }
     }
 
     public FuncDef() {
@@ -95,19 +91,6 @@ public class FuncDef extends Stmt {
         }
 
         return res.substring(1);
-    }
-    
-    // Set the correct name for built-in functions
-    public boolean checkBuiltIn() {
-        if (name.getID().equals("load")) {
-            name = new Identifier("Loader.load");
-            return true;
-        }
-        if (name.getID().equals("sim")) {
-            name = new Identifier("Simulator.sim");
-            return true;
-        }
-        return false;
     }
     
     protected String global = null;
