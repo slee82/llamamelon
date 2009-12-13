@@ -44,7 +44,7 @@ public class LogicalExpr extends Expr {
     
     @Override
     public Type getType(SymbolTable table) {
-    	return new Type("number") ;
+    	return Type.bool ;
     }
     
     private String getOpCode() {
