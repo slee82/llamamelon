@@ -56,7 +56,7 @@ public class AtomicExpr extends Expr {
                 throw new RuntimeException("expr: identifier " + ident 
                         + " is a function.");
             } else if (val instanceof Declaration)
-                return ((Declaration)val).type;
+                return ((Declaration)val).type();
         }
         return new Type(this.type.val);
     }

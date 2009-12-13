@@ -18,7 +18,21 @@ public class Declaration extends Stmt {
         this.type = type; // extract the Strings
         idexpPairs = identifiers;
     }
+    
+    /**
+     * Initializes declaration type with the type specified by exprType (the
+     * type of the expression following the declaration).
+     */
+    public void initDeclType(Type exprType) {
 
+        if (!(exprType.equals(this.type))) {
+            throw new RuntimeException("declaration: expression type " + 
+                    exprType + " does not match type; expected " 
+                    + this.type);
+        }
+
+    }
+    
     // generate the declaration
     public String code(SymbolTable table) {
         String begin = table.indent() + (type.getType() + " ");
@@ -41,13 +55,8 @@ public class Declaration extends Stmt {
             if (ar[1] != null) {
                 
                 Expr x = (Expr) ar[1];
-                // check if the expression returns the correct type
-                if (!(x.getType(table).equals(this.type))) {
-                    throw new RuntimeException("declaration: expression type " + 
-                            x.getType(table) + " does not match type; expected " 
-                            + this.type);
-                }
-                
+                initDeclType(x.getType(table));
+
                 begin += (" = ");
                 begin += x.code(table);
             }
@@ -85,11 +94,7 @@ public class Declaration extends Stmt {
                 begin += (id.getID());
                 
                 Expr x = (Expr) ar[1];
-                if (!(x.getType(table).equals(this.type))) {
-                    throw new RuntimeException("declaration: expression type " + 
-                            x.getType(table) + " does not match type; expected " 
-                            + this.type);
-                }
+                initDeclType(x.getType(table));
                 
                 begin += " = ";
                 begin += x.code(table);
@@ -130,8 +135,12 @@ public class Declaration extends Stmt {
         begin += (";");
         System.out.println(begin);
     }
+    
+    public Type type() {
+        return type;
+    }
 
-    public final Type type;
+    private Type type;
 
     private ArrayList<Object[]> idexpPairs;
 

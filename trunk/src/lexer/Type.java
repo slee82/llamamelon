@@ -41,7 +41,7 @@ public class Type extends Token {
         if (val.equals("string"))
             return "String";
         if (val.equals("list"))
-            return "ArrayList";
+            return "BallList";
         if (val.equals("team"))
             return "TeamObj";
         if (val.equals("player"))
