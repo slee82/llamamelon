@@ -50,8 +50,6 @@ public class ListInit extends AtomicExpr {
             }
         }
         
-        if (t.equals(Type.number))
-            t = new Type("Float");
         return new ListType(t);
     }
     

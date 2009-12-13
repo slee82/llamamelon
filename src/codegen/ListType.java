@@ -15,6 +15,10 @@ public class ListType extends Type {
     }
     
     public String getType() {
+        if (contents.equals(Type.number)) {
+            // have to use the Float object.
+            return "BallList<Float>";
+        }
         return "BallList<" + contents.getType() + ">";
     }
     
