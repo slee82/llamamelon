@@ -2,12 +2,13 @@ package javabackend;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class BallList extends ArrayList {
+public class BallList<T> extends ArrayList<T> {
 
     @SuppressWarnings("unchecked")
     public BallList(Object[] create) {
-        super(Arrays.asList(create));
+        super((List<T>)Arrays.asList((T[])create));
         orig = create;
     }
     
@@ -31,16 +32,9 @@ public class BallList extends ArrayList {
     }
     
     @SuppressWarnings("unchecked")
-    public BallList append(BallList right) {
-        BallList result = new BallList(Arrays.copyOf(this.orig, this.orig.length));
-        if (this.size() > 0 && right.size() > 0) {
-            // align types
-            Object ol = this.get(0);
-            Object or = right.get(0);
-            if (!(ol.getClass().equals(or.getClass()))) {
-                throw new RuntimeException("run: type of lists do not match.");
-            }
-        }
+    public BallList append(BallList<T> right) {
+        BallList result = new BallList<T>(Arrays.copyOf(this.orig, this.orig.length));
+        
         result.addAll(right);
         return result;
     }

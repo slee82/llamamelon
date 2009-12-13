@@ -24,6 +24,10 @@ public class Declaration extends Stmt {
      * type of the expression following the declaration).
      */
     public void initDeclType(Type exprType) {
+        
+        if (exprType instanceof ListType && type.equals(Type.list)) {
+            type = exprType;
+        }
 
         if (!(exprType.equals(this.type))) {
             throw new RuntimeException("declaration: expression type " + 
@@ -142,7 +146,7 @@ public class Declaration extends Stmt {
         return type;
     }
 
-    private Type type;
+    Type type;
 
     private ArrayList<Object[]> idexpPairs;
 
