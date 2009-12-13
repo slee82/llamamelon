@@ -52,6 +52,7 @@ public class FilterExpr extends Expr {
     public String code(SymbolTable table) {
         InsertionPoint insert = table.getIP();
         
+        String leftcode = list.code(table);
         getType(table);
         Type lt = list.getType(table);
         
@@ -77,13 +78,14 @@ public class FilterExpr extends Expr {
         
         // note that this makes using '++' and '--' impossible.
         
-        insert.insert(table.indent() + lt.getType() + " " + oldlist.getID() + " = " + list.code(table) + ";\n");
+        insert.insert(table.indent() + lt.getType() + " " + oldlist.getID() + " = " + leftcode + ";\n");
         insert.insert(table.indent() + lt.getType() + " " + newlist.getID() + " = new " + lt.getType() + "();\n");
         insert.insert(table.indent() + "for (" + cont.getType() + " " + each.getID() + " : " + oldlist.getID() + ") {\n");
         
         SymbolTable inTable = new SymbolTable(true, table);
         inTable.putEntry(inRef, each);
         inTable.putEntry(inTyp, cont);
+        inTable.setInsertPt(insert);
         insert.insert(
                 inTable.indent() + "if (" + filter.code(inTable) + ")\n" +
                     inTable.indent() + "\t" + newlist.getID() + ".add(" + each.getID() + ");\n");

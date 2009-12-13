@@ -127,7 +127,11 @@ type : "number"
      | "player"
      //| "stat"
      | "nothing"
+     | list_type
      ;
+
+list_type : "list" "of" type
+          ;
 
 
 /**EXPRESSION_STATEMENT**/
