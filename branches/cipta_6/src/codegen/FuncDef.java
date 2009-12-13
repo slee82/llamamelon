@@ -86,11 +86,15 @@ public class FuncDef extends Stmt {
 
     private String plistCode() {
         String res = "";
+        
+        boolean first = true;
         for (Identifier id : paramlist.keySet()) {
-            res += ", " + paramlist.get(id).getType() + " " + id.getID();
+            if (first) first = false;
+            else res += " , ";
+            res += paramlist.get(id).getType() + " " + id.getID();
         }
 
-        return res.substring(1);
+        return " " + res;
     }
     
     protected String global = null;

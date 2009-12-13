@@ -31,6 +31,20 @@ public class ArithmeticExpr extends Expr {
         Type ltype = valueL.getType(table);
         Type rtype = valueR.getType(table);
         
+        /* STRING CONCATENATION */
+        if (ltype.equals(Type.string)) {
+            // convert r to string
+            if (rtype.equals(Type.number))
+                return lcode + ".concat(Float.toString(" + rcode + "))";
+            return lcode + ".concat((" + rcode + ").toString())";
+        }
+        if (rtype.equals(Type.string)) {
+            // convert r to string
+            if (ltype.equals(Type.number))
+                return "Float.toString(" + lcode + ").concat(" + rcode + ")";
+            return lcode + ".toString().concat(" + rcode + ")";
+        }
+        
     	if(! ltype.equals(rtype)) {
     		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
     	}
@@ -45,11 +59,6 @@ public class ArithmeticExpr extends Expr {
             String result = "(" + lcode + ").append(";
             result += rcode;
             return result + ")";
-        } else if (valueL.getType(table).equals(Type.string)) {
-            /* String concat */
-            String result = "(" + lcode + ").concat(";
-            result += rcode;
-            return result + ")";
         } else {
             throw new RuntimeException("expr: type " + ltype + " unsuitable for addition.");
         }
@@ -58,7 +67,13 @@ public class ArithmeticExpr extends Expr {
     @Override
     public Type getType(SymbolTable table) {
         Type ltype = valueL.getType(table);
-        if(! valueL.getType(table).equals(valueR.getType(table))) {
+        Type rtype = valueR.getType(table);
+        
+        if (ltype.equals(Type.string) || rtype.equals(Type.string)) {
+            return Type.string;
+        }
+        
+        if(! ltype.equals(rtype)) {
             throw new RuntimeException("expr: type mismatch " + ltype + " and " + valueR.getType(table));
         }
         
