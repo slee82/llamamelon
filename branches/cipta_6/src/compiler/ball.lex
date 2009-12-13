@@ -63,7 +63,7 @@ StringConst	        = \"([^\"\\]|\\.)*\"
 NumericConst		= 0 | [0-9]*[.]?[0-9]+
 
 /* Types */
-Type			= number|string|list|team|player|stat|nothing
+Primitive			= number|string|team|player|stat|nothing
 
 
 /* Identifiers */
@@ -124,6 +124,10 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 "is"	{ return Parser.IS; }
 
 ":"     { return Parser.COLON; }
+
+list            { return Parser.LIST; }
+
+of              { return Parser.OF; }
 
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
@@ -196,12 +200,12 @@ self            {
                     return Parser.NUMBER; // TODO: couple return with table reference
                 }
 
-{Type}		{   /* got a type, notify parser */
-		        Type t = new Type(yytext());
-		        yyparser.yylval = new ParserVal(t);
-		        System.err.println("lexer: found type " + t);
-		        return Parser.TYPE;
-		    }
+{Primitive}		{   /* got a type, notify parser */
+		            Type t = new Type(yytext());
+		            yyparser.yylval = new ParserVal(t);
+		            System.err.println("lexer: found type " + t);
+		            return Parser.PRIMITIVE;
+		        }
 
 {Identifier}	{   /* got an identifier, notify parser */
 		    Identifier i = new Identifier(yytext());

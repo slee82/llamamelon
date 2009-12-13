@@ -41,9 +41,10 @@ import codegen.*;
 %token RETURN
 %token RETURNS
 %token IS
-%token TYPE
+%token PRIMITIVE
 %token END
 %token WHERE, SELF
+%token LIST, OF
 
 %%
 
@@ -157,13 +158,21 @@ body_statement :
 
 /** FUNCTION_DEFINITION **/
 
+type :
+    PRIMITIVE { 
+        $$ = $1; 
+    }
+    | LIST OF type { 
+        $$ = new ParserVal(new ListType((Type)$3.obj));
+    }
+
 /*
  * In BALL, function definitions can only happen in the top level. Naturally,
  * the only variables they'll get access to is global variables, parameters,
  * and variables declared in the body itself. 
  */
 function_definition :
-    FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON END {
+    FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS type COLON END {
         System.err.println("parser: function definition");
     
         Identifier name = (Identifier)$2.obj;
@@ -186,7 +195,7 @@ function_definition :
     
     	$$ = new ParserVal(newfun);
     }
-    | FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS TYPE COLON body_statement_list END {
+    | FUNCTION IDENTIFIER OPAREN parameter_list CPAREN RETURNS type COLON body_statement_list END {
         System.err.println("parser: function definition");
         
         Identifier name = (Identifier)$2.obj;
@@ -268,7 +277,7 @@ parameter_list :
 ;
 
 parameter : 
-    TYPE IDENTIFIER {
+    type IDENTIFIER {
         // returns the Type and Identifier objects as a pair
         Object[] param = new Object[2];
         param[0] = (Object)$1.obj;
@@ -286,7 +295,7 @@ print_statement :
 
 /**DECLARATION**/
 declaration : 
-    TYPE variable_declarators SEMICOLON {
+    type variable_declarators SEMICOLON {
 		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList<Object[]>)$2.obj));
 	}
 ;

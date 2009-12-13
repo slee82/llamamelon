@@ -26,10 +26,6 @@ public class Declaration extends Stmt {
      */
     public void initDeclType(Type exprType) {
         
-        if (exprType instanceof ListType && type.equals(Type.list)) {
-            type = exprType;
-        }
-
         if (!(exprType.equals(this.type))) {
             throw new RuntimeException("declaration: expression type " + 
                     exprType + " does not match type; expected " 
@@ -43,7 +39,7 @@ public class Declaration extends Stmt {
         table.setInsertPt(this);
         
         String begin = table.indent() + (type.getType() + " ");
-
+        
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string
             // to id1, id2, ...
