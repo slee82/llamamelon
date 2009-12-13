@@ -1,5 +1,5 @@
-list x1 = [ 1, 2, 3, 4, 5 ];
-list x2 = [ 6, 7, 8, 9, 10 ];
+list of number x1 = [ 1, 2, 3, 4, 5 ];
+list of number x2 = [ 6, 7, 8, 9, 10 ];
 
 print x2 where (self) where (self);
 
