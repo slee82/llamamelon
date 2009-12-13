@@ -30,14 +30,25 @@ public class ArithmeticExpr extends Expr {
     	if(! valueL.getType(table).equals(valueR.getType(table))) {
     		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
     	}
-    	if(!valueL.getType(table).equals(Type.number)) {
-    		throw new RuntimeException("expr: type is not number: " + valueL.getType(table) + " and " + valueR.getType(table));
-    	}
-    	
-    	String result = valueL.code(table);
+    	if (valueL.getType(table).equals(Type.number)) {
+            /* Number addition */
+            String result = valueL.code(table);
     		result += " " + getOpCode() + " ";
     		result += valueR.code(table);
-    	return result;
+    		return result;
+        } else if (valueL.getType(table).equals(Type.list)) {
+            /* List append */
+            String result = "(" + valueL.code(table) + ").append(";
+            result += valueR.code(table);
+            return result + ")";
+        } else if (valueL.getType(table).equals(Type.string)) {
+            /* List append */
+            String result = "(" + valueL.code(table) + ").concat(";
+            result += valueR.code(table);
+            return result + ")";
+        } else {
+            throw new RuntimeException("expr: type " + valueL.getType(table) + " unsuitable for assignment.");
+        }
     }
     
     @Override
