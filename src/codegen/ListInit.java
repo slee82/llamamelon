@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import lexer.Type;
 import compiler.SymbolTable;
 
+/**
+ * Implements list declarations.
+ * 
+ * Lists in BALL is its own data type. The contents of the list must have the
+ * same type.
+ */
 public class ListInit extends AtomicExpr {
 
     public ListInit() {

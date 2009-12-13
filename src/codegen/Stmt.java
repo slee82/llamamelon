@@ -20,7 +20,7 @@ public abstract class Stmt extends ParseTreeNode implements InsertionPoint {
     }
     
     /**
-     * Will most likely get overwritten 
+     * Don't touch this
      */
     public String code(SymbolTable table) {
         table.setInsertPt(this);

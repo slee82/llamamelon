@@ -6,10 +6,10 @@ import lexer.Type;
 /**
  * Logical Expressions, extend Expr
  */
-public class LogicalExpr extends Expr {
+public class ComparisonExpr extends Expr {
 
     public enum Op {
-        AND, OR, NOT
+        IS, ISNOT, GT, LT, GTE, LTE
     }
     
     /**
@@ -19,7 +19,7 @@ public class LogicalExpr extends Expr {
      * @param exprL
      * @param exprR
      */
-    public LogicalExpr(Op op, Expr exprL, Expr exprR) {
+    public ComparisonExpr(Op op, Expr exprL, Expr exprR) {
         this.operator = op;
         this.valueL = exprL;
         this.valueR = exprR;
@@ -50,9 +50,12 @@ public class LogicalExpr extends Expr {
     private String getOpCode() {
         // TODO Auto-generated method stub
         switch(operator) {
-        case AND: return "&&";
-        case OR: return "||";
-        case NOT: return "!";
+        case IS: return "==";
+        case ISNOT: return "!=";
+        case GT: return ">";
+        case LT: return "<";
+        case GTE: return ">=";
+        case LTE: return "<=";
         default:
             throw new IllegalArgumentException("assignment: unknown operator");
         }

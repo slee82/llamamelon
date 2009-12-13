@@ -36,7 +36,9 @@ public class Type extends Token {
      * @return the corresponding Java type of this type token.
      */
     public String getType() {
-        if (val.equals("number"))
+    	if (val.equals("bool"))
+            return "bool";
+    	if (val.equals("number"))
             return "float";
         if (val.equals("string"))
             return "String";
@@ -52,6 +54,7 @@ public class Type extends Token {
         return val;
     }
     
+    public final static Type bool = new Type("bool");
     public final static Type number = new Type("number");
     public final static Type string = new Type("string");
     public final static Type list = new Type("list");
@@ -59,6 +62,5 @@ public class Type extends Token {
     public final static Type player = new Type("player");
     public final static Type playerStat = new Type("PlayerStat");
     public final static Type teamStat = new Type("TeamStat");
-    public final static Type bool = new Type("bool");
 
 }
