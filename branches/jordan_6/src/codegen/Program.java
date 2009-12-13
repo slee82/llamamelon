@@ -55,14 +55,20 @@ public class Program extends ParseTreeNode {
                 new BuiltinStatDef(new Identifier("PlayerObj.BB"), Type.playerStat));
 
         System.out.println(table.indent() + "public static void main (String args[]) "
-                + "throws ExLogicalExprception {");
+                + "throws Exception {");
         
         table.increaseIndent(1);
 
         for (Stmt each : statements) {
             Stmt cur = each;
+            
+            //comments out statement-line that are expressions
+            if (cur instanceof ExprStmt) {
+            	System.out.print("//");
+            	cur.gen(table);
+            }
             // if statement is a declaration, treat specially
-            if (cur instanceof Declaration) {
+            else if (cur instanceof Declaration) {
                 // delay to global variable
                 Declaration d_cur = (Declaration)cur;
                 varDeclarations.add(d_cur);
