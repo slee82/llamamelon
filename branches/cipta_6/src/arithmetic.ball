@@ -8,6 +8,12 @@ x = (z + 1) * 100; //x=100
 
 y = z % 5 + 1;			//y=1
 
+1+2;
+x+y;
+
+team dodgers = load("Dodgers.team");
+print dodgers;
+
 // SHOULD BREAK
 /*
 	team dodgers = load("Dodgers.team");
@@ -20,6 +26,13 @@ print x;	//100
 print y;	//1
 print z;	//0
 print y + z;
+
+(x is y);
+x isnot y;
+x > y;
+x < y;
+x >= y;
+x <= y;
 
 /********************************/
 /*	LOGIC	*/

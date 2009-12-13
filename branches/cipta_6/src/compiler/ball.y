@@ -28,6 +28,8 @@ import codegen.*;
 %token AND, OR, NOT
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
 %token PLUS, MIN, MULT, DIV, MOD
+%token AND, OR, NOT
+%token IS, ISNOT, GT, LT, GTE, LTE
 %token COMMA
 %token OPAREN
 %token CPAREN
@@ -479,6 +481,18 @@ logical_not_expression : comparison_expression
 
 /* COMPARISON */
 comparison_expression : addition_expression { $$ = $1; }
+                      | comparison_expression IS   addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.IS,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression ISNOT addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.ISNOT,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression GT    addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.GT,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression LT    addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.LT,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression GTE   addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.GTE,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression LTE   addition_expression { 
+                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.LTE,(Expr)$1.obj, (Expr)$3.obj));}
 ;
 
 /* ARITHMETIC */
