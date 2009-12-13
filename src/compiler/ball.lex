@@ -129,6 +129,8 @@ list            { return Parser.LIST; }
 
 of              { return Parser.OF; }
 
+from            { return Parser.FROM; }
+
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);

@@ -27,7 +27,7 @@ public class FuncDef extends Stmt {
     }
     
     @Override
-    public String code(SymbolTable table) {
+    public String stmtCode(SymbolTable table) {
         // check if name is still available
         if (table.hasEntry(this.name)) {
             throw new RuntimeException("funcdef: the name " + name + 

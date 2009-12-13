@@ -24,9 +24,12 @@ public abstract class Stmt extends ParseTreeNode implements InsertionPoint {
      */
     public String code(SymbolTable table) {
         table.setInsertPt(this);
-        return insert + code(table);
+        String stmt = stmtCode(table);
+        return insert + stmt;
     }
     
-    String insert = "";
+    abstract String stmtCode(SymbolTable table);
+    
+    private String insert = "";
 
 }

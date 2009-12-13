@@ -13,12 +13,10 @@ public class ExprStmt extends Stmt {
     }
 
     @Override
-    public String code(SymbolTable table) {
-        table.setInsertPt(this);
-        
+    public String stmtCode(SymbolTable table) {
         if (expr == null) return ";";
         String outcode = expr.code(table).concat(";");
-        return super.insert + table.indent() + outcode;
+        return table.indent() + outcode;
     }
     
     private Expr expr;

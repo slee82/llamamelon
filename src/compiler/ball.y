@@ -45,6 +45,7 @@ import codegen.*;
 %token END
 %token WHERE, SELF
 %token LIST, OF
+%token FROM
 
 %%
 
@@ -498,7 +499,13 @@ multiplication_expression : unary_expression
 ;
 
 /* UNARY */
-unary_expression : postfix_expression { $$ = $1; }
+unary_expression : 
+    postfix_expression { $$ = $1; }
+    | primary_expression FROM unary_expression {
+        // fetching
+//        MatchExpr match = new MatchExpr((Expr)$1.obj, (Expr)$3.obj);
+//        $$ = new ParserVal(match);
+    }
 ;
 
 /* POSTFIX */

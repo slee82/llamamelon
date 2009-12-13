@@ -15,9 +15,7 @@ public class ActivateStmt extends Stmt {
         this.name = theName;
     }
     
-    public String code(SymbolTable table) {
-        table.setInsertPt(this);
-        
+    public String stmtCode(SymbolTable table) {
         Object def = table.getEntry(name);
         if (!(def instanceof SimFuncDef)) {
             throw new RuntimeException("activate: identifier " + name
@@ -27,7 +25,7 @@ public class ActivateStmt extends Stmt {
         String begin = "Simulator.theSimFunction = ";
         begin += name.getID();
         begin += (";");
-        return super.insert + begin;
+        return begin;
     }
     
     private Identifier name;
