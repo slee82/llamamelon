@@ -29,9 +29,7 @@ public class AssignmentStmt extends Stmt {
      * @see codegen.ParseTreeNode#code(compiler.SymbolTable)
      */
     @Override
-    public String code(SymbolTable table) {
-        table.setInsertPt(this);
-        
+    public String stmtCode(SymbolTable table) {
         /*
          * 1. check name 
          * 2. check operator vs type 
@@ -66,7 +64,7 @@ public class AssignmentStmt extends Stmt {
         String result = name.getID() + " " + getOpCode() +
             " " + value.code(table) + ";";
         
-        return super.insert + table.indent() + result;
+        return table.indent() + result;
     }
 
     private String getOpCode() {

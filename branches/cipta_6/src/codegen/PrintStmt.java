@@ -14,14 +14,12 @@ public class PrintStmt extends Stmt {
         this.toprint = expr;
     }
     
-    public String code(SymbolTable table) {
-        table.setInsertPt(this);
-        
+    public String stmtCode(SymbolTable table) {
         String begin = table.indent() + "System.out.println(";
         begin += toprint.code(table);
         begin += (");");
         
-        return insert + begin;
+        return begin;
     }
     
     private Expr toprint;
