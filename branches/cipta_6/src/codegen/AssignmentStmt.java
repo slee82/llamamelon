@@ -30,6 +30,8 @@ public class AssignmentStmt extends Stmt {
      */
     @Override
     public String code(SymbolTable table) {
+        table.setInsertPt(this);
+        
         /*
          * 1. check name 
          * 2. check operator vs type 
@@ -58,7 +60,8 @@ public class AssignmentStmt extends Stmt {
         // all OK, output the assignment code
         String result = name.getID() + " " + getOpCode() +
             " " + value.code(table) + ";";
-        return table.indent() + result;
+        
+        return super.insert + table.indent() + result;
     }
 
     private String getOpCode() {

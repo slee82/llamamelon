@@ -43,6 +43,7 @@ import codegen.*;
 %token IS
 %token TYPE
 %token END
+%token WHERE
 
 %%
 
@@ -492,7 +493,14 @@ unary_expression : postfix_expression { $$ = $1; }
 ;
 
 /* POSTFIX */
-postfix_expression : primary_expression { $$ = $1; }
+postfix_expression : 
+    primary_expression { 
+        $$ = $1; 
+    }
+    | postfix_expression WHERE OPAREN expression CPAREN {
+        // filtering
+        $$ = new ParserVal(new FilterExpr((Expr)$1.obj, (Expr)$2.obj));
+    }
 ;
 
 /* PRIMARY */

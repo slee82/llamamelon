@@ -10,6 +10,8 @@ import lexer.*;
 import java.util.HashMap;
 import java.util.Random;
 
+import codegen.InsertionPoint;
+
 /**
  * Symbol table manages identifiers. Each instance corresponds to names present
  * in either the top level (global vars), each function, or a block. Lookup is
@@ -45,6 +47,7 @@ public class SymbolTable {
         // indentation
         this.hops = nextLookup == null ? 0 : nextLookup.hops + 1;
         this.indent = nextLookup == null ? "\t" : nextLookup.indent + "\t";
+        this.latest = null;
     }
 
     public SymbolTable(boolean isTop) {
@@ -105,6 +108,15 @@ public class SymbolTable {
     public int size() {
         return table.size();
     }
+    
+    public void setInsertPt(InsertionPoint ip) {
+        if (ip == null) {
+            throw new NullPointerException("null insertion point");
+        }
+        this.latest = ip;
+    }
+    
+    public InsertionPoint getIP() { return latest; }
 
     /**
      * Creates a new identifier that is unique throughout the symbol table.
@@ -180,6 +192,8 @@ public class SymbolTable {
     
     // how many hops until the base, used for java indentation.
     public final int hops;
+    
+    private InsertionPoint latest;
     
     private String indent;
 

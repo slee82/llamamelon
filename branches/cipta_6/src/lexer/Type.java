@@ -59,5 +59,6 @@ public class Type extends Token {
     public final static Type player = new Type("player");
     public final static Type playerStat = new Type("PlayerStat");
     public final static Type teamStat = new Type("TeamStat");
+    public final static Type bool = new Type("bool");
 
 }
