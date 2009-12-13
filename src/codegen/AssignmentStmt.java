@@ -51,6 +51,11 @@ public class AssignmentStmt extends Stmt {
             }
         }
         
+        Type valType = value.getType(table);
+        
+        if (valType instanceof ListType && (decl.type.equals(Type.list) || decl.type() instanceof ListType))
+            decl.type = valType;
+        
         if (!(value.getType(table).equals(decl.type()))) {
             throw new RuntimeException("assign: expression type mismatch in"+
                     " assignment of variable " + name + ",\n\texpected " + 
