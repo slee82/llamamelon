@@ -15,8 +15,8 @@ public class ActivateStmt extends Stmt {
         this.name = theName;
     }
     
-    public String code(SymbolTable table) {
-	Object def = table.getEntry(name);
+    public String stmtCode(SymbolTable table) {
+        Object def = table.getEntry(name);
         if (!(def instanceof SimFuncDef)) {
             throw new RuntimeException("activate: identifier " + name
                     + " invalid, either nonexistent or not a simfunction");

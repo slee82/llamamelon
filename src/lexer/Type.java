@@ -37,13 +37,13 @@ public class Type extends Token {
      */
     public String getType() {
     	if (val.equals("bool"))
-            return "bool";
+            return "boolean";
     	if (val.equals("number"))
             return "float";
         if (val.equals("string"))
             return "String";
         if (val.equals("list"))
-            return "BallList";
+            throw new RuntimeException("warning: depcrecated");
         if (val.equals("team"))
             return "TeamObj";
         if (val.equals("player"))
@@ -62,5 +62,6 @@ public class Type extends Token {
     public final static Type player = new Type("player");
     public final static Type playerStat = new Type("PlayerStat");
     public final static Type teamStat = new Type("TeamStat");
+    public static final Type nothing = new Type("nothing");
 
 }

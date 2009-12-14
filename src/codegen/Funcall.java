@@ -22,64 +22,67 @@ public class Funcall extends Expr {
     public Funcall(Identifier name) {
         this.name = name;
     }
-    
+
     public Type getType(SymbolTable table) {
         /*
          * Check function return types, etc
          */
-        Type built = checkBuiltIn();
-        if (built != null) return built;
+        Object def = table.getEntry(name);
+        if (!(def instanceof FuncDef)) {
+            throw new RuntimeException("funcall: identifier " + name
+                    + " invalid, either nonexistent or not a function");
+        }
+        FuncDef define = (FuncDef) def;
+        return define.retType;
+
+    }
+
+    /*
+     * Create the code for the function call.
+     * 
+     * Remember, the expressions have no side effects, which means the call
+     * itself has to be moved back to its own statement and assignment, because
+     * the function might change some variables up.
+     */
+    public String code(SymbolTable table) {
+        InsertionPoint insert = table.getIP();
         
         Object def = table.getEntry(name);
         if (!(def instanceof FuncDef)) {
             throw new RuntimeException("funcall: identifier " + name
                     + " invalid, either nonexistent or not a function");
         }
-        FuncDef define = (FuncDef)def;
-        return define.retType;
+        FuncDef define = (FuncDef) def;        
+        Type retType = define.retType;
+        Identifier realname = define.name;
+        
+        String begin = (realname.getID() + "(");
+        Identifier tempID = table.newID();
 
-    }
-
-    /* Generate the code */
-    public String code(SymbolTable table) {
-        getType(table);
-            
-        changeBuiltIn();
-        String begin = (name.getID() + "(");
         if (args != null) { // print out all the args
             int i;
             for (i = 0; i < args.size(); i++) {
                 if (i > 0)
                     begin += (","); // comma separated
                 begin += args.get(i).code(table); // call gen() of each
-                                                    // argument
+                // argument
             }
         }
         begin += (")");
-        return begin;
-    }
+        
+        if (retType.equals(Type.nothing)) {
+            // only used in expression statements
+            insert.insert(table.indent() + begin + ";\n");
+            return "";
+        }
+        insert.insert(table.indent() + retType.getType() + " " + tempID.getID()
+                + " = " + begin + ";\n");
 
-    private void changeBuiltIn() {
-        if (name.equals(new Identifier("load"))) {
-            this.name = new Identifier("Loader.load");
-        }
-        if (name.equals(new Identifier("sim"))) {
-            this.name = new Identifier("Simulator.sim");
-        }
-    }
-
-    // Set the correct name for built-in functions
-    public Type checkBuiltIn() {
-        if (name.equals(new Identifier("load"))) {
-            return new Type("team");
-        }
-        if (name.equals(new Identifier("sim"))) {
-            return new Type("team");
-        }
-        return null;
+        return tempID.getID();
     }
 
     private ArrayList<Expr> args = null;
+
     private Identifier name;
 
 }

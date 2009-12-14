@@ -29,7 +29,7 @@ public class AssignmentStmt extends Stmt {
      * @see codegen.ParseTreeNode#code(compiler.SymbolTable)
      */
     @Override
-    public String code(SymbolTable table) {
+    public String stmtCode(SymbolTable table) {
         /*
          * 1. check name 
          * 2. check operator vs type 
@@ -49,6 +49,11 @@ public class AssignmentStmt extends Stmt {
             }
         }
         
+        Type valType = value.getType(table);
+        
+        if (valType instanceof ListType && (decl.type.equals(Type.list) || decl.type() instanceof ListType))
+            decl.type = valType;
+        
         if (!(value.getType(table).equals(decl.type()))) {
             throw new RuntimeException("assign: expression type mismatch in"+
                     " assignment of variable " + name + ",\n\texpected " + 
@@ -58,6 +63,7 @@ public class AssignmentStmt extends Stmt {
         // all OK, output the assignment code
         String result = name.getID() + " " + getOpCode() +
             " " + value.code(table) + ";";
+        
         return table.indent() + result;
     }
 

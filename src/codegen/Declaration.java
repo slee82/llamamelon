@@ -7,6 +7,7 @@ package codegen;
  */
 
 import lexer.*;
+
 import java.util.ArrayList;
 
 import compiler.SymbolTable;
@@ -24,7 +25,7 @@ public class Declaration extends Stmt {
      * type of the expression following the declaration).
      */
     public void initDeclType(Type exprType) {
-
+        
         if (!(exprType.equals(this.type))) {
             throw new RuntimeException("declaration: expression type " + 
                     exprType + " does not match type; expected " 
@@ -34,9 +35,9 @@ public class Declaration extends Stmt {
     }
     
     // generate the declaration
-    public String code(SymbolTable table) {
+    public String stmtCode(SymbolTable table) {
         String begin = table.indent() + (type.getType() + " ");
-
+        
         int i;
         for (i = 0; i < idexpPairs.size(); i++) { // set the identifier string
             // to id1, id2, ...
@@ -77,6 +78,7 @@ public class Declaration extends Stmt {
      * (genGlobalDecl takes care of the declarations)
      */
     public void genGlobalMain(SymbolTable table) {
+        table.setInsertPt(this);
         String begin = table.indent();
 
         int i;
@@ -104,7 +106,7 @@ public class Declaration extends Stmt {
             table.putEntry(id, this);
         }
         
-        System.out.println(begin);
+        System.out.println(super.insert + begin);
     }
     
     /**
@@ -123,7 +125,7 @@ public class Declaration extends Stmt {
             
             // check if all identifiers are entered correctly in the table
             if (!((table.getEntry(id)) == this)) {
-                throw new RuntimeException("declaration: init: identifier " + id + " mismatched.");
+                throw new RuntimeException("declaration: init: redefining identifier " + id + ".");
             }
 
             if (i > 0) // dont put a comma at the beginning
@@ -140,7 +142,7 @@ public class Declaration extends Stmt {
         return type;
     }
 
-    private Type type;
+    Type type;
 
     private ArrayList<Object[]> idexpPairs;
 

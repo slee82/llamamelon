@@ -8,6 +8,22 @@ x = (z + 1) * 100; //x=100
 
 y = z % 5 + 1;			//y=1
 
+1+2;
+x+y;
+
+function f1 () returns number:
+    x = 13;
+    return 15;
+end
+
+function f2() returns number:
+    y = x * 5 % 6;
+    return 2 + 4;
+end
+
+team dodgers = load("Dodgers.team");
+print dodgers;
+
 // SHOULD BREAK
 /*
 	team dodgers = load("Dodgers.team");
@@ -16,16 +32,25 @@ y = z % 5 + 1;			//y=1
 	wild = dodgers + dodgers;
 */
 
-print x;	//100
-print y;	//1
-print z;	//0
-print y + z;
+print "x = " + x;	//100
+print "y = " + y;	//1
+print "z = " + z;	//0
+print "y + z = " + (y + z);
+
+(x is y);
+x isnot y;
+x > y;
+x < y;
+x >= y;
+x <= y;
 
 /********************************/
-/*	LOGIC	
+/*	LOGIC	*/
+x > 3 and y < 2;
+x is 0 or y is 0 or (z+3) < 10;
+not x > 3;
 
-x and y;
-x or y;
-not x;
-
-*/
+f1() + 3;
+print "f2() = " + f2();
+print "x = " + x;
+print "y = " + y;

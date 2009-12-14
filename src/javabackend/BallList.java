@@ -2,13 +2,17 @@ package javabackend;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class BallList extends ArrayList {
+public class BallList<T> extends ArrayList<T> {
 
     @SuppressWarnings("unchecked")
     public BallList(Object[] create) {
-        super(Arrays.asList(create));
-        orig = create;
+        super((List<T>)Arrays.asList((T[])create));
+    }
+    
+    public BallList() {
+        super();
     }
     
     public String toString() {
@@ -31,21 +35,14 @@ public class BallList extends ArrayList {
     }
     
     @SuppressWarnings("unchecked")
-    public BallList append(BallList right) {
-        BallList result = new BallList(Arrays.copyOf(this.orig, this.orig.length));
-        if (this.size() > 0 && right.size() > 0) {
-            // align types
-            Object ol = this.get(0);
-            Object or = right.get(0);
-            if (!(ol.getClass().equals(or.getClass()))) {
-                throw new RuntimeException("run: type of lists do not match.");
-            }
-        }
+    public BallList<T> append(BallList<T> right) {
+        BallList result = new BallList<T>();
+        
+        result.addAll(this);
         result.addAll(right);
         return result;
     }
 
-    private Object[] orig;
     private static final long serialVersionUID = 1L;
 
 }

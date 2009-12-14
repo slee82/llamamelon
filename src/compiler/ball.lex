@@ -63,7 +63,7 @@ StringConst	        = \"([^\"\\]|\\.)*\"
 NumericConst		= 0 | [0-9]*[.]?[0-9]+
 
 /* Types */
-Type			= number|string|list|team|player|stat|nothing
+Primitive			= number|string|team|player|stat|nothing
 
 
 /* Identifiers */
@@ -103,6 +103,18 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "%" { return Parser.MOD; }
 
+"is"	{ return Parser.IS; }
+	
+"isnot" { return Parser.ISNOT; }
+
+">" 	{ return Parser.GT; }
+
+"<" 	{ return Parser.LT; }
+
+">=" 	{ return Parser.GTE; }
+
+"<=" 	{ return Parser.LTE; }
+
 "+="    { return Parser.PLUSEQL; }
 
 "-="    { return Parser.MINEQL; }
@@ -124,6 +136,12 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 "is"	{ return Parser.IS; }
 
 ":"     { return Parser.COLON; }
+
+list            { return Parser.LIST; }
+
+of              { return Parser.OF; }
+
+from            { return Parser.FROM; }
 
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
@@ -168,6 +186,17 @@ returns         {
                     return Parser.RETURNS;
                 }
 
+where           {
+                    System.err.println("lexer: 'where' keyword");
+                    yyparser.yylval = new ParserVal(Keyword.where);
+                    return Parser.WHERE;
+                }
+
+self            {
+                    yyparser.yylval = new ParserVal(Keyword.self);
+                    return Parser.SELF;
+                }
+
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
                     // TODO: add symbol table addition code here
 		            System.err.println("lexer: found a String Const");
@@ -185,12 +214,12 @@ returns         {
                     return Parser.NUMBER; // TODO: couple return with table reference
                 }
 
-{Type}		{   /* got a type, notify parser */
-		        Type t = new Type(yytext());
-		        yyparser.yylval = new ParserVal(t);
-		        System.err.println("lexer: found type " + t);
-		        return Parser.TYPE;
-		    }
+{Primitive}		{   /* got a type, notify parser */
+		            Type t = new Type(yytext());
+		            yyparser.yylval = new ParserVal(t);
+		            System.err.println("lexer: found type " + t);
+		            return Parser.PRIMITIVE;
+		        }
 
 {Identifier}	{   /* got an identifier, notify parser */
 		    Identifier i = new Identifier(yytext());
