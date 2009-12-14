@@ -13,9 +13,11 @@ public class ExprStmt extends Stmt {
     }
 
     @Override
-    public String code(SymbolTable table) {
+    public String stmtCode(SymbolTable table) {
         if (expr == null) return ";";
-        return table.indent() + expr.code(table).concat(";");
+        String outcode = expr.code(table).concat(";");
+        // "purified" expression can safely be commented
+        return table.indent() + "/*" + outcode + "*/";
     }
     
     private Expr expr;

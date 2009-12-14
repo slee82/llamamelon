@@ -17,6 +17,10 @@ simfunction mySimFunction is:
 	return team1;
 end
 
+activate mySimFunction;
+
 print myfun(33);
+
+sim(Dodgers, Astros, 2); // should still print Dodgers twice
 
 print 5;

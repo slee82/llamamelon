@@ -18,7 +18,14 @@ public class Token {
         STRINGCONST, 
         TYPE, 
         NUMERICCONST, 
-        FUNCTION, SIMFUNCTION, RETURNS, END, RETURN, STAT, ACTIVATE
+        FUNCTION, 
+        SIMFUNCTION, 
+        RETURNS, 
+        END, 
+        RETURN, 
+        STAT, 
+        ACTIVATE, 
+        WHERE, SELF
     }
 
     public final Tag tag;

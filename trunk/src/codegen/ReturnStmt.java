@@ -29,7 +29,8 @@ public class ReturnStmt extends Stmt {
     }
 
     @Override
-    public String code(SymbolTable table) {
+    public String stmtCode(SymbolTable table) {
+        
         String stmt = "return ";
         stmt += expression.code(table);
         stmt += ";";

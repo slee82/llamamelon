@@ -17,17 +17,13 @@ public class FuncDef extends Stmt {
         this.retType = retType;
         this.paramlist = paramlist;
         this.bodylist = bodylist;
-
-        if (checkBuiltIn()) {
-            throw new RuntimeException("error: function name is used as builtin.");
-        }
     }
 
     public FuncDef() {
     }
     
     @Override
-    public String code(SymbolTable table) {
+    public String stmtCode(SymbolTable table) {
         // check if name is still available
         if (table.hasEntry(this.name)) {
             throw new RuntimeException("funcdef: the name " + name + 
@@ -90,24 +86,15 @@ public class FuncDef extends Stmt {
 
     private String plistCode() {
         String res = "";
+        
+        boolean first = true;
         for (Identifier id : paramlist.keySet()) {
-            res += ", " + paramlist.get(id).getType() + " " + id.getID();
+            if (first) first = false;
+            else res += " , ";
+            res += paramlist.get(id).getType() + " " + id.getID();
         }
 
-        return res.substring(1);
-    }
-    
-    // Set the correct name for built-in functions
-    public boolean checkBuiltIn() {
-        if (name.getID().equals("load")) {
-            name = new Identifier("Loader.load");
-            return true;
-        }
-        if (name.getID().equals("sim")) {
-            name = new Identifier("Simulator.sim");
-            return true;
-        }
-        return false;
+        return " " + res;
     }
     
     protected String global = null;

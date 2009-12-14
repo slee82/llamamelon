@@ -26,34 +26,64 @@ public class ArithmeticExpr extends Expr {
     
     @Override
     public String code(SymbolTable table) {
-    	
-    	if(! valueL.getType(table).equals(valueR.getType(table))) {
+        String lcode = valueL.code(table);
+        String rcode = valueR.code(table);
+        Type ltype = valueL.getType(table);
+        Type rtype = valueR.getType(table);
+        
+        /* STRING CONCATENATION */
+        if (ltype.equals(Type.string)) {
+            // convert r to string
+            if (rtype.equals(Type.number))
+                return lcode + ".concat(Float.toString(" + rcode + "))";
+            return lcode + ".concat((" + rcode + ").toString())";
+        }
+        if (rtype.equals(Type.string)) {
+            // convert r to string
+            if (ltype.equals(Type.number))
+                return "Float.toString(" + lcode + ").concat(" + rcode + ")";
+            return lcode + ".toString().concat(" + rcode + ")";
+        }
+        
+    	if(! ltype.equals(rtype)) {
     		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
     	}
-    	if (valueL.getType(table).equals(Type.number)) {
+    	if (ltype.equals(Type.number)) {
             /* Number addition */
-            String result = valueL.code(table);
+            String result = lcode;
     		result += " " + getOpCode() + " ";
-    		result += valueR.code(table);
+    		result += rcode;
     		return result;
-        } else if (valueL.getType(table).equals(Type.list)) {
+        } else if (ltype instanceof ListType) {
             /* List append */
-            String result = "(" + valueL.code(table) + ").append(";
-            result += valueR.code(table);
-            return result + ")";
-        } else if (valueL.getType(table).equals(Type.string)) {
-            /* List append */
-            String result = "(" + valueL.code(table) + ").concat(";
-            result += valueR.code(table);
+            String result = "(" + lcode + ").append(";
+            result += rcode;
             return result + ")";
         } else {
-            throw new RuntimeException("expr: type " + valueL.getType(table) + " unsuitable for assignment.");
+            throw new RuntimeException("expr: type " + ltype + " unsuitable for addition.");
         }
     }
     
     @Override
     public Type getType(SymbolTable table) {
-    	return new Type("number") ;
+        Type ltype = valueL.getType(table);
+        Type rtype = valueR.getType(table);
+        
+        if (ltype.equals(Type.string) || rtype.equals(Type.string)) {
+            return Type.string;
+        }
+        
+        if(! ltype.equals(rtype)) {
+            throw new RuntimeException("expr: type mismatch " + ltype + " and " + valueR.getType(table));
+        }
+        
+        if (ltype.equals(Type.number) || 
+                (ltype instanceof ListType) ||
+                ltype.equals(Type.string)) {
+            return ltype;
+        } else {
+            throw new RuntimeException("expr: type " + valueL.getType(table) + " unsuitable for addition.");
+        }
     }
     
     private String getOpCode() {

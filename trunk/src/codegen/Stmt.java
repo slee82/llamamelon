@@ -6,6 +6,30 @@
 
 package codegen;
 
-public abstract class Stmt extends ParseTreeNode {
+import compiler.SymbolTable;
+
+public abstract class Stmt extends ParseTreeNode implements InsertionPoint {
+    
+    /**
+     * By default, inserts done after a previous insert are APPENDED to the
+     * insert chain (meaning the latest insert is closest to the original
+     * statement)
+     */
+    public void insert(String code) {
+        insert += code;
+    }
+    
+    /**
+     * Don't touch this
+     */
+    public String code(SymbolTable table) {
+        table.setInsertPt(this);
+        String stmt = stmtCode(table);
+        return insert + stmt;
+    }
+    
+    abstract String stmtCode(SymbolTable table);
+    
+    protected String insert = "";
 
 }
