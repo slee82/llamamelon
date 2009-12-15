@@ -47,7 +47,7 @@ import codegen.*;
 %token END
 %token WHERE, SELF
 %token LIST, OF
-%token FROM
+%token FROM, ANY
 
 %%
 
@@ -516,6 +516,11 @@ unary_expression :
     | primary_expression FROM unary_expression {
         //fetching
         MatchExpr match = new MatchExpr((Expr)$1.obj, (Expr)$3.obj);
+        $$ = new ParserVal(match);
+    }
+    | ANY unary_expression {
+        // random fetching
+        MatchExpr match = new MatchExpr((Expr)$2.obj);
         $$ = new ParserVal(match);
     }
 ;

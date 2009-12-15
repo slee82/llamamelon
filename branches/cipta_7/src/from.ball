@@ -10,11 +10,14 @@ team ast1 = load("astros.team");
 
 list of team lotsadodgers = [ dod1, dod2, dod3, ast1, dod1, ast1 ];
 
-print "a" from y;
-print 3 from x;
+print "a" from y; // "a"
+print 3 from x; // 3
 
 // future work: optimize to eliminate common subexpressions
-print x where (self > 6);
-print 3 from x where (self > 6);
-print dod3 from lotsadodgers;
-print dod4 from lotsadodgers;
+print x where (self > 6); // [ 7, 8, 9, 10 ]
+print 3 from x where (self > 6); // 0
+
+print any x where (self > 6); // ?? (random float)
+print dod4 from lotsadodgers; // null
+print any lotsadodgers; // any
+

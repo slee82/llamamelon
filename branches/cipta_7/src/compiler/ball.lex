@@ -137,6 +137,8 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ":"     { return Parser.COLON; }
 
+any             { return Parser.ANY; }
+
 list            { return Parser.LIST; }
 
 of              { return Parser.OF; }
