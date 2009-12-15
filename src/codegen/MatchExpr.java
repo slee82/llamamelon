@@ -1,3 +1,9 @@
+/*
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * MatchExpr.java - nodes representing 'from' and 'any' expressions
+ */
+
 package codegen;
 
 import lexer.Identifier;
@@ -11,17 +17,23 @@ public class MatchExpr extends Expr {
         this.arg = arg;
         this.list = list;
     }
-
-    @Override
-    public Type getType(SymbolTable table) {
-        // TODO Auto-generated method stub
-        return null;
+    
+    public MatchExpr(Expr arg) {
+        this.arg = null;
+        this.list = arg;
     }
 
     @Override
+    public Type getType(SymbolTable table) {
+        Type listType = list.getType(table);
+        if (!(listType instanceof ListType))
+            throw new RuntimeException("match: right hand must be a list");
+        return ((ListType)listType).contents;
+    }
+
     /**
      * In the spec, the order in which from operands are defined is implementation
-     * dependent, here it's matcher first, then the list.
+     * dependent, here it's list first, then the matcher.
      * 
      * The argument is evaluated only once and it is matched against every
      * element, stopping at the first match and returning that.
@@ -29,16 +41,24 @@ public class MatchExpr extends Expr {
      * If none of the elements match, from returns a "null" or 0, depending on
      * data type.
      */
+    @Override
     public String code(SymbolTable table) {
-        InsertionPoint insert = table.getIP();
         
-        String argcode = arg.code(table); // evaluated only once
-        String listcode = list.code(table);
+        InsertionPoint insert = table.getIP();
         
         Type listType = list.getType(table);
         if (!(listType instanceof ListType))
             throw new RuntimeException("match: right hand must be a list");
         Type contents = ((ListType)listType).contents;
+        
+        String listcode = list.code(table);
+        
+        // 'any' expr
+        if (arg == null) {
+            return listcode + ".get(Tools.randomInt(0, " + listcode + ".size()))";
+        }
+        
+        String argcode = arg.code(table); // evaluated only once
         
         /*
          * <retType> <rettok> = <0/null>
