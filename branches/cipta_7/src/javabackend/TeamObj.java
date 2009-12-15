@@ -1,26 +1,33 @@
-package javabackend;
-
 /*
  * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
  * Team llamamelon - BALL language
- * TeamObj.java - Team Class
+ * TeamObj.java - Runtime Team Class
  */
 
-import java.util.ArrayList;
+package javabackend;
 
-
+/**
+ * Java representation of BALL 'teams'
+ */
 public class TeamObj implements BallDataType {
     
+    /**
+     * Name, wins, losses. Used by loader.
+     */
+    public TeamObj(String name,int w, int l) {
+        this.name = name;
+        this.w = w;
+        this.l = l;
+    }
+        
+    /* reference manual says reference equality */
     public boolean match(Object other) {
         return this == other; // reference equality
     }
 
-	public TeamObj(String name,int w, int l) {
-		this.name = name;
-		this.w = w;
-		this.l = l;
-	}
-	
+    /**
+     * Add player to the correct list.
+     */
 	public void addPlayer(PlayerObj p) {
 		if (p.getType() == PlayerObj.BATTER)
 			batters.add(p);
@@ -28,37 +35,48 @@ public class TeamObj implements BallDataType {
 			pitchers.add(p);
 	}
 	
-	public void setBatters(ArrayList<PlayerObj> a) {
+    /** Mutator for setting the batter list */
+	public void setBatters(BallList<PlayerObj> a) {
 		batters = a;
 	}
 	
-	public void setPitchers(ArrayList<PlayerObj> a) {
+    /** Mutator for setting the pitcher list */
+	public void setPitchers(BallList<PlayerObj> a) {
 		pitchers = a;
 	}
+    
+    /* METHODS IN THIS REGION DOUBLE AS ATTRIBUTES IN THE BALL PROGRAM */
 	
-	public ArrayList<PlayerObj> getBatters() {
+    /** Accessor for batters */
+	public BallList<PlayerObj> getBatters() {
 		return batters;
 	}
-	
-	public ArrayList<PlayerObj> getPitchers() {
+    
+    /** Accessor for pitchers */
+	public BallList<PlayerObj> getPitchers() {
 		return pitchers;
 	}
 	
-	public ArrayList<PlayerObj> getPlayers() {
-		ArrayList<PlayerObj> players = new ArrayList<PlayerObj>();
+    /** Accessor for all players, both batters and pitchers */
+	public BallList<PlayerObj> getPlayers() {
+		BallList<PlayerObj> players = new BallList<PlayerObj>();
 		players.addAll(batters);
 		players.addAll(pitchers);
 		return players;
-		
 	}
 	
+    /** Accessor for name of the team */
 	public String getName() {
 		return name;
 	}
+    
+    /* METHODS IN THIS REGION ARE THE BASES FOR STATS IN THE BALL PROGRAM */
+    
 	public int getW() {
 		return w;
 	}
-	public int getL() {
+	
+    public int getL() {
 		return l;
 	}
 	
@@ -80,13 +98,16 @@ public class TeamObj implements BallDataType {
 		
 		return toReturn;
 	}
+    
+    /* TEAM STATS */
 	
 	public static final TeamStat W = new TeamStat() {
 		public float get(TeamObj team) {
 			return team.getW();
 		}
 	};
-	public static final TeamStat L = new TeamStat() {
+	
+    public static final TeamStat L = new TeamStat() {
 		public float get(TeamObj team) {
 			return team.getL();
 		}
@@ -95,6 +116,6 @@ public class TeamObj implements BallDataType {
 	private String name;
 	private int w;
 	private int l;
-	private ArrayList<PlayerObj> batters;
-	private ArrayList<PlayerObj> pitchers;
+	private BallList<PlayerObj> batters;
+	private BallList<PlayerObj> pitchers;
 }

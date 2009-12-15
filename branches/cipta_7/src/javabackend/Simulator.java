@@ -1,25 +1,22 @@
-package javabackend;
-
 /*
  * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
  * Team llamamelon - BALL language
  * Simulator.java - the sim() wrapper function
  */
 
-import java.util.*;
-import java.io.*;
+package javabackend;
 
 public class Simulator {
 	
-    /*Main function just for testing. (TODO: Delete)*/
+    /** Main function just for testing. (TODO: Delete)*/
     public static void main(String args[]){
-	theSimFunction = new SimFunction(){
-			public TeamObj doSim(TeamObj team1, TeamObj team2){
-				return team1;
-			}
-		};
+        theSimFunction = new SimFunction() {
+            public TeamObj doSim(TeamObj team1, TeamObj team2){
+                return team1;
+            }
+        };
 
-	System.out.println(sim(Loader.load("dodgers.team"), Loader.load("astros.team"), 6));
+        System.out.println(sim(Loader.load("dodgers.team"), Loader.load("astros.team"), 6));
     }
 
     /* sim() function
