@@ -25,7 +25,7 @@ public class ActivateStmt extends Stmt {
         String begin = "Simulator.theSimFunction = ";
         begin += name.getID();
         begin += (";");
-        return begin;
+        return table.indent() + begin;
     }
     
     private Identifier name;
