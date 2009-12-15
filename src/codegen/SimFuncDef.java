@@ -1,3 +1,9 @@
+/*
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * SimFuncDef.java - Parse tree node representing simfunction definitions
+ */
+
 package codegen;
 
 import java.util.ArrayList;
@@ -5,15 +11,23 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
-import javabackend.TeamObj;
-
 import compiler.SymbolTable;
 
 import lexer.Identifier;
 import lexer.Type;
 
+/**
+ * a simfunction is a special kind of function that takes two teams called
+ * 'team1' and 'team2' and returns a team. It's a convenient shorthand to
+ * declare that this function is to be used as a simulation function. It can
+ * also be "plugged in" to BALL's internal simulation logic so that the
+ * builtin function sim() uses this.
+ */
 public class SimFuncDef extends FuncDef {
 
+    /**
+     * A simfunction needs only a name and a list of statements (what it does).
+     */
     public SimFuncDef(Identifier name, LinkedList<Stmt> bodylist) {
 
         /*
@@ -37,6 +51,10 @@ public class SimFuncDef extends FuncDef {
 
     }
 
+    /* 
+     * as with functions, simfunction definitions can be used only on statements
+     * succeeding them. 
+     */
     @Override
     public String stmtCode(SymbolTable table) {
         if (table.hasEntry(this.simName)) {
@@ -50,6 +68,9 @@ public class SimFuncDef extends FuncDef {
         return table.indent() + "/* simfunction " + simName + " moved outside main(). */";
     }
 
+    /*
+     * Actual function that writes what the simfunction does in Java.
+     */
     @Override
     protected String makeGlobalCode(SymbolTable table) {
         table.decreaseIndent(1);
@@ -78,7 +99,6 @@ public class SimFuncDef extends FuncDef {
             inTable.putEntry(param, newdec);
         }
 
-        
         Iterator<Stmt> bodyIter = bodylist.iterator();
         while (bodyIter.hasNext()) {
             Stmt cur = bodyIter.next();
@@ -92,6 +112,6 @@ public class SimFuncDef extends FuncDef {
         return begin;
     }
 
-    Identifier simName;
+    final Identifier simName;
 
 }
