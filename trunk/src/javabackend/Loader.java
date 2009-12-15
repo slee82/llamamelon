@@ -1,10 +1,11 @@
-package javabackend;
-
 /*
  * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
  * Team llamamelon - BALL language
  * Loader.java - CSV File Loader
  */
+
+
+package javabackend;
 
 import java.util.*;
 import java.io.*;
@@ -15,18 +16,20 @@ public class Loader {
         System.out.println(load(args[0]));
     }
 	
-	//==============LOAD=============
-	//read the csv file line by line.
-	//Return a fully populated team
-	//===============================
+    /*
+     * ==============LOAD============= 
+     * read the csv file line by line. 
+     * Return a fully populated team 
+     * ===============================
+     */
 	public static TeamObj load(String fileName){
 		
-		//Set initial variables
+		// Set initial variables
 		String teamName = "Unnamed Team";
 		int teamWins = 0;
 		int teamLosses = 0;
-		ArrayList<PlayerObj> batters = new ArrayList<PlayerObj>();		//will contain extracted batters
-		ArrayList<PlayerObj> pitchers = new ArrayList<PlayerObj>();		//will contain extracted pitchers
+		BallList<PlayerObj> batters = new BallList<PlayerObj>();		//will contain extracted batters
+		BallList<PlayerObj> pitchers = new BallList<PlayerObj>();		//will contain extracted pitchers
 		
 		String line; //hold the current line
 		try {
@@ -141,7 +144,7 @@ public class Loader {
 	//read a new line until end of this goup of players.
 	//for each line create a player and add to the returned list.
 	//===========================================================
-	public static ArrayList<PlayerObj> readBatters(BufferedReader in, String aLine) throws IOException {
+	public static BallList<PlayerObj> readBatters(BufferedReader in, String aLine) throws IOException {
 		
 		in.mark(5000);
 		String line = aLine;
@@ -150,7 +153,7 @@ public class Loader {
 		else	//header check
 			System.err.println("Warning: Headers not provided for Batters. Unclean CSV.");
 	
-		ArrayList<PlayerObj> batters = new ArrayList<PlayerObj>();
+		BallList<PlayerObj> batters = new BallList<PlayerObj>();
 		String batterName = "Unnamed Batter";
 		int AB = 0;
 		int R = 0;
@@ -207,7 +210,7 @@ public class Loader {
 	//read a new line until end of this goup of players.
 	//for each line create a player and add to the returned list.
 	//===========================================================
-	public static ArrayList<PlayerObj> readPitchers(BufferedReader in, String aLine) throws IOException {
+	public static BallList<PlayerObj> readPitchers(BufferedReader in, String aLine) throws IOException {
 		
 		in.mark(5000);
 		String line = aLine;
@@ -216,7 +219,7 @@ public class Loader {
 		else		//header check
 			System.err.println("Warning: Headers not provided for Pitchers. Unclean CSV.");
 		
-		ArrayList<PlayerObj> pitchers = new ArrayList<PlayerObj>();
+		BallList<PlayerObj> pitchers = new BallList<PlayerObj>();
 		String pitcherName = "Unnamed Pitcher";
 		double IP = 0;
 		int H = 0;

@@ -61,6 +61,12 @@ public class Program extends ParseTreeNode {
         table.putEntry(new Identifier("sim"),
                 new BuiltinFuncDef(new Identifier("Simulator.sim"), Type.team,
                         new Type[] { Type.team, Type.team, Type.number }));
+        table.putEntry(new Identifier("isBatter"),
+                new BuiltinFuncDef(new Identifier("PlayerObj.isBatter"), Type.bool,
+                        new Type[] { Type.player }));
+        table.putEntry(new Identifier("isPitcher"),
+                new BuiltinFuncDef(new Identifier("PlayerObj.isPitcher"), Type.bool,
+                        new Type[] { Type.player }));
 
         System.out.println(table.indent() + "public static void main (String args[]) "
                 + "throws Exception {");

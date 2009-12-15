@@ -49,6 +49,10 @@ public class FilterExpr extends Expr {
     }
 
     @Override
+    /**
+     * 1. the expression returning the list is evaluated first
+     * 2. checked left to right, so order is preserved when filtering (guaranteed)
+     */
     public String code(SymbolTable table) {
         InsertionPoint insert = table.getIP();
         
@@ -68,19 +72,20 @@ public class FilterExpr extends Expr {
         table.putEntry(newlist, newlist);
         Identifier each = table.newID();
         table.putEntry(each, each);
-        // BallList<...> oldlist = < expr code >
-        // BallList<...> newlist = new BallList();
-        // for (T each : BallList) {
-        //     if (< where code, with 'self' replaced with 'each'>)
-        //         newlist.addEnd(each);
-        // }
-        // <original expr, with newlist
+        /*
+         * BallList<...> newlist = new BallList();
+         * for (T each : <listcode>) {
+         *     if (< where code, with 'self' replaced with 'each'>)
+         *         newlist.addEnd(each);
+         * }
+         * <original expr, with newlist
+         */
         
         // note that this makes using '++' and '--' impossible.
         
-        insert.insert(table.indent() + lt.getType() + " " + oldlist.getID() + " = " + leftcode + ";\n");
+        //insert.insert(table.indent() + lt.getType() + " " + oldlist.getID() + " = " + leftcode + ";\n");
         insert.insert(table.indent() + lt.getType() + " " + newlist.getID() + " = new " + lt.getType() + "();\n");
-        insert.insert(table.indent() + "for (" + cont.getType() + " " + each.getID() + " : " + oldlist.getID() + ") {\n");
+        insert.insert(table.indent() + "for (" + cont.getType() + " " + each.getID() + " : " + leftcode + ") {\n");
         
         SymbolTable inTable = new SymbolTable(true, table);
         inTable.putEntry(inRef, each);
