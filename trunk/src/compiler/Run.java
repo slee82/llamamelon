@@ -200,6 +200,17 @@ public class Run {
             System.err.println(e.getLocalizedMessage());
             System.exit(5);
         }
+        
+        // delete the class files
+        
+        File curdir = new File(javaFile.getParent());
+        String[] children = curdir.list();
+        for (String fname : children) {
+            if (fname.startsWith(classname)) {
+                File todel = new File(fname);
+                todel.deleteOnExit();
+            }
+        }
 
 
     }

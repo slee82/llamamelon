@@ -81,19 +81,19 @@ public class StatDef extends Declaration {
          *     public float get(<TeamObj|PlayerObj> <argname>) {
          *         return <expr>;
          *     }
-         * }
+         * };
          */
         return this.name.getID() + " = new " + statType.getType() + "() {\n"
             + table.indent() + "\t" + "public float get(" + argType.getType() + " " + argName.getID() + ") {\n"
             + table.indent() + "\t\treturn " + exprCode + ";\n"
-            + table.indent() + "\t}\n" + table.indent() + "}";
+            + table.indent() + "\t}\n" + table.indent() + "};";
         
     }
 
     @Override
     public String code(SymbolTable table) {
         String init = initCode(table);
-        return  "private static final " + getType() + " " + init;
+        return  "final " + getType() + " " + init;
     }
     
     /**
@@ -114,7 +114,7 @@ public class StatDef extends Declaration {
      * @param table
      */
     public void genGlobalDecl(SymbolTable table) {
-        System.out.println(table.indent() + "private final " + getType().getType() + " " + this.name.getID() + ";");
+        System.out.println(table.indent() + "private static " + getType().getType() + " " + this.name.getID() + ";");
     }
     
     /**
