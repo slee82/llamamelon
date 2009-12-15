@@ -1,0 +1,2 @@
+team ast = load("astros.team");
+print ast's W;

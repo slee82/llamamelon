@@ -137,6 +137,12 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ":"     { return Parser.COLON; }
 
+"'s"	{ /* got an apostrophe-s, notify parser */
+			System.err.println("lexer: found ''s'");
+			return Parser.APOSTROPHEESS; 
+			
+		}
+
 any             { return Parser.ANY; }
 
 list            { return Parser.LIST; }
