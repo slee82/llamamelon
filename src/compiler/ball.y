@@ -47,7 +47,7 @@ import codegen.*;
 %token END
 %token WHERE, SELF
 %token LIST, OF
-%token FROM
+%token FROM, ANY
 
 %%
 
@@ -181,13 +181,7 @@ function_definition :
         Identifier name = (Identifier)$2.obj;
     
         /*
-         * Special caution here on the hash implementation used for parameter
-         * list.
-         * 
-         * In BALL, the parameter list of the function behaves like Java. That
-         * is, the parameters' order is also important in distinguishing a
-         * function. Therefore, the LinkedHashMap class is used instead of the
-         * plain HashMap which may not preserve order.
+         * no function body
          */
         LinkedHashMap<Identifier,Type> paramlist = (LinkedHashMap<Identifier,Type>)$4.obj;
         Type retType = (Type)$7.obj;
@@ -520,9 +514,14 @@ multiplication_expression : unary_expression
 unary_expression : 
     postfix_expression { $$ = $1; }
     | primary_expression FROM unary_expression {
-        // fetching
-//        MatchExpr match = new MatchExpr((Expr)$1.obj, (Expr)$3.obj);
-//        $$ = new ParserVal(match);
+        //fetching
+        MatchExpr match = new MatchExpr((Expr)$1.obj, (Expr)$3.obj);
+        $$ = new ParserVal(match);
+    }
+    | ANY unary_expression {
+        // random fetching
+        MatchExpr match = new MatchExpr((Expr)$2.obj);
+        $$ = new ParserVal(match);
     }
 ;
 

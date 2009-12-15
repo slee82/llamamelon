@@ -1,7 +1,7 @@
 /*
  * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
  * Team llamamelon - BALL language
- * Type.java - Lexer token for Types
+ * Type.java - Information about primitive types
  */
 
 package lexer;
@@ -13,9 +13,8 @@ public class Type extends Token {
     /**
      * Creates a new type token.
      * 
-     * @param s
-     *            what type is written in the source program, which means it
-     *            includes stuff like player, team and list
+     * @param s what type is written in the source program, which means it
+     *          includes stuff like player, team and list
      */
     public Type(String s) {
         super(Tag.TYPE);
