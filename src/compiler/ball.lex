@@ -233,5 +233,5 @@ self            {
 		    return Parser.IDENTIFIER;
 		}
 
-{Comment} 		{ /* ignore */ }
+{Comment} 		{ System.err.println("lexer: found comment"); }
 {WhiteSpace}	{ /* ignore */ }
