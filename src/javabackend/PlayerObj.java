@@ -6,7 +6,11 @@ package javabackend;
  * playerObj.java - Players class
  */
 
-public class PlayerObj {
+public class PlayerObj implements BallDataType {
+    
+    public boolean match(Object other) {
+        return this == other; // reference equality
+    }
 
 	/* This is the batter constructor */
 	public PlayerObj (String name, int type, int ab, int r,

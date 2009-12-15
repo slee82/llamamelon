@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BallList<T> extends ArrayList<T> {
+public class BallList<T> extends ArrayList<T> implements BallDataType {
 
     @SuppressWarnings("unchecked")
     public BallList(Object[] create) {
@@ -43,6 +43,10 @@ public class BallList<T> extends ArrayList<T> {
         return result;
     }
 
+    public boolean match(Object other) {
+        return this == other; // reference equality
+    }
+    
     private static final long serialVersionUID = 1L;
 
 }

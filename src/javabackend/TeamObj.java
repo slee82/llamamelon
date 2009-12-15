@@ -9,7 +9,11 @@ package javabackend;
 import java.util.ArrayList;
 
 
-public class TeamObj {
+public class TeamObj implements BallDataType {
+    
+    public boolean match(Object other) {
+        return this == other; // reference equality
+    }
 
 	public TeamObj(String name,int w, int l) {
 		this.name = name;
