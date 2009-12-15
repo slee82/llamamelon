@@ -49,6 +49,10 @@ public class FilterExpr extends Expr {
     }
 
     @Override
+    /**
+     * 1. the expression returning the list is evaluated first
+     * 2. checked left to right, so order is preserved when filtering (guaranteed)
+     */
     public String code(SymbolTable table) {
         InsertionPoint insert = table.getIP();
         

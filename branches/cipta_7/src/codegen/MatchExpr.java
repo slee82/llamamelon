@@ -1,7 +1,6 @@
 package codegen;
 
 import lexer.Identifier;
-import lexer.NumericConst;
 import lexer.Type;
 
 import compiler.SymbolTable;

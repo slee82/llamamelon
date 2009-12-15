@@ -181,13 +181,7 @@ function_definition :
         Identifier name = (Identifier)$2.obj;
     
         /*
-         * Special caution here on the hash implementation used for parameter
-         * list.
-         * 
-         * In BALL, the parameter list of the function behaves like Java. That
-         * is, the parameters' order is also important in distinguishing a
-         * function. Therefore, the LinkedHashMap class is used instead of the
-         * plain HashMap which may not preserve order.
+         * no function body
          */
         LinkedHashMap<Identifier,Type> paramlist = (LinkedHashMap<Identifier,Type>)$4.obj;
         Type retType = (Type)$7.obj;
