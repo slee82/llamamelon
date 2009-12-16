@@ -112,6 +112,26 @@ public class TeamObj implements BallDataType {
 			return team.getL();
 		}
 	};
+	
+	/* TEAM LISTS */
+	
+	public static final TeamList PLAYERS = new TeamList() {
+		public BallList get(TeamObj team) {
+			return team.getPlayers();
+		}
+	};
+	
+	public static final TeamList PITCHERS = new TeamList() {
+		public BallList get(TeamObj team) {
+			return team.getPitchers();
+		}
+	};
+	
+	public static final TeamList BATTERS = new TeamList() {
+		public BallList get(TeamObj team) {
+			return team.getBatters();
+		}
+	};
 
 	private String name;
 	private int w;

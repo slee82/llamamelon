@@ -53,6 +53,24 @@ public class Program extends ParseTreeNode {
                 new BuiltinStatDef(new Identifier("PlayerObj.HR"), Type.playerStat));
         table.putEntry(new Identifier("BB"), 
                 new BuiltinStatDef(new Identifier("PlayerObj.BB"), Type.playerStat));
+        table.putEntry(new Identifier("ER"),
+        		new BuiltinStatDef(new Identifier("PlayerObj.ER"), Type.playerStat));
+        table.putEntry(new Identifier("IP"),
+        		new BuiltinStatDef(new Identifier("PlayerObj.IP"), Type.playerStat));
+        table.putEntry(new Identifier("K"),
+        		new BuiltinStatDef(new Identifier("PlayerObj.K"), Type.playerStat));
+        
+        /* INPUT BUILTIN LIST-STATS */
+        table.putEntry(new Identifier("PLAYERS"),
+        		new BuiltinStatListDef(new Identifier("TeamObj.PLAYERS"), Type.list));
+        table.putEntry(new Identifier("PITCHERS"),
+        		new BuiltinStatListDef(new Identifier("TeamObj.PITCHERS"), Type.list));
+        table.putEntry(new Identifier("BATTERS"),
+        		new BuiltinStatListDef(new Identifier("TeamObj.BATTERS"), Type.list));
+        
+        /* INPUT BUILTIN STRING ATTRIBUTES */
+        table.putEntry(new Identifier("name"),
+        		new BuiltinAttributeDef(new Identifier("PlayerObj.name"), Type.string));
         
         /* INPUT BUILTIN FUNCTIONS */
         table.putEntry(new Identifier("load"),
