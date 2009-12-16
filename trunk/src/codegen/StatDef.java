@@ -157,6 +157,11 @@ public class StatDef extends Declaration {
     public static Identifier getArgName(SymbolTable table) {
         return (Identifier) table.getEntry(argname);
     }
+    
+    
+    public Identifier getName() {
+    	return name;
+    }
 
     public final Identifier name;
 
