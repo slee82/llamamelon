@@ -84,7 +84,7 @@ public class ApostrExpr extends Expr {
     		
     		if (atttype.equals(Type.list)) {
     			if (attribute.getID().equals("PLAYERS") || attribute.getID().equals("PITCHERS") || attribute.getID().equals("BATTERS")) {
-    				return Type.list;
+    				return new ListType(Type.player); 
     			}
     			else
     				throw new RuntimeException("Expr: list " + attribute.getID() + " unsuitable for attribute retrieval");
