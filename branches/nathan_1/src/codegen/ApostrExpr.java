@@ -79,11 +79,11 @@ public class ApostrExpr extends Expr {
     		Type objtype = objexpr.getType(table);
 
     		if (atttype.equals(Type.teamStat)) {
-    			return Type.teamStat;
+    			return Type.number;
     		}
 
     		if (atttype.equals(Type.playerStat)) {
-    			return Type.playerStat;
+    			return Type.number;
     		}
 
     		if (atttype.equals(Type.string)) {
