@@ -1,11 +1,32 @@
-number x;
+number x, y;
 
 x = 1;
 
-print x++; 	//should print 1
+print x++; 	//should print 1 
 
-print ++x;	//should print 3
+print ++x;	//should print 3 
 
 print x--; 	//should print 3
 
 print --x;	//should print 1
+
+
+y = x++ + ++x;	//this is the killllller
+
+print y; 	//should print 4 - AND IT DOES -PURENEEDS
+print x;	//should print 3 - AND IT DOES -PURENEEDS
+
+++x;
+x++;
+print x;	//should print 5
+
+/* THE FOLLOWING SHOULD BREAK */
+/*
+	stat mystat = W;
+	x = mystat++;
+*/
+
+list of number x1 = [ 4, 5, 6, 7 , 8 , 9];
+
+x1++;
+

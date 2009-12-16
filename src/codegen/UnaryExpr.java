@@ -36,10 +36,7 @@ public class UnaryExpr extends Expr {
         Identifier tempID = table.newID();
         
         /* MUST BE OF TYPE NUMBER */
-        if (!type.equals(Type.number)) {
-        	throw new RuntimeException("expr: type mismatch " + value.getType(table) + " is not of type 'number'");
-        }
-        else if (type.equals(Type.number)) {
+        if (type.equals(Type.number)) {
         	//prefix
         	if (getFix()) {
         		
