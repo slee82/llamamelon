@@ -11,13 +11,13 @@ import java.math.*;
 public class PlayerObj implements BallDataType {
 
     /* This is the batter constructor */
-    public PlayerObj (String name, int type, int ab, int r,
+    public PlayerObj (String Name, int type, int ab, int r,
             int h, int dbl, int tpl, int hr, int bb) {
         if (type != BATTER) {
             System.err.println("Incorrect Player Type Found");
             return;
         }
-        this.name = name;
+        this.Name = Name;
         this.type = type;
         this.ab = ab;
         this.r = r;
@@ -29,7 +29,7 @@ public class PlayerObj implements BallDataType {
     }
 
     // This is the pitcher constructor
-    public PlayerObj (String name, int type, double ipp, int h,
+    public PlayerObj (String Name, int type, double ipp, int h,
             int er, int bb, int k) {
         if (type != PITCHER) {
             System.err.println("Incorrect Player Type Found");
@@ -37,7 +37,7 @@ public class PlayerObj implements BallDataType {
         }
         float ip = (float)ipp;
         float temp = (float)(ipp - Math.floor(ipp));
-        this.name = name;
+        this.Name = Name;
         this.type = type;
         if (temp == 0)
             this.ip = ip;
@@ -58,11 +58,11 @@ public class PlayerObj implements BallDataType {
         this.k = k;
     }
     
-    //  reference equality, or name lookup
+    //  reference equality, or Name lookup
     public boolean match(Object other) {
         if (other instanceof String) {
-            String name = (String)other;
-            return name.equals(this.name);
+            String Name = (String)other;
+            return Name.equals(this.Name);
         }
         return this == other; // reference equality
     }
@@ -152,16 +152,16 @@ public class PlayerObj implements BallDataType {
      */
     
     public String getName() {
-        return name;
+        return Name;
     }
 
     public String toString(){
         String toReturn = "";
 
         if(type == BATTER){	//Create concatenation depending on player type
-            toReturn = name+","+ab+","+r+","+h+","+dbl+","+tpl+","+hr+","+bb;
+            toReturn = Name+","+ab+","+r+","+h+","+dbl+","+tpl+","+hr+","+bb;
         }else {
-            toReturn += name+","+ip+","+h+","+er+","+bb+","+k;
+            toReturn += Name+","+ip+","+h+","+er+","+bb+","+k;
         }
 
         return toReturn;
@@ -176,6 +176,12 @@ public class PlayerObj implements BallDataType {
     public static boolean isPitcher(PlayerObj player) {
         return player.getType() == PlayerObj.PITCHER;
     }
+    
+    public static final Attribute name = new Attribute() {
+    	public String get(PlayerObj player) {
+    		return player.getName();
+    	}
+    };
 
     public static final PlayerStat AB = new PlayerStat() {
         public float get(PlayerObj player) {
@@ -228,7 +234,7 @@ public class PlayerObj implements BallDataType {
         }
     };
 
-    private String name;
+    private String Name;
 
     private int type;
 

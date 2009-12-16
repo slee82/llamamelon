@@ -16,4 +16,5 @@ stat ERA = 9*(ER/IP);
 print wandy's IP;
 print wandy's ERA;
 
-//print lance's name;
+print lance's name;
+print wandy's name;
