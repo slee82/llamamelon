@@ -5,5 +5,15 @@ print ast's L;
 
 list of player astbat = ast's BATTERS;
 player lance = "Lance Berkman" from astbat;
-print "Lance Berkman's hits:";
-print lance's H;
+print "Lance Berkman's average:";
+stat AVG = H/AB;
+print lance's AVG;
+
+list of player astpit = ast's PITCHERS;
+player wandy = "Wandy Rodriguez" from astpit;
+print "Wandy Rodriguez's earned run average:";
+stat ERA = 9*(ER/IP);
+print wandy's IP;
+print wandy's ERA;
+
+//print lance's name;
