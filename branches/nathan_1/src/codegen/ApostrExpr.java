@@ -36,14 +36,14 @@ public class ApostrExpr extends Expr {
     			if (!objtype.equals(Type.team)) {
     				throw new RuntimeException("Expr: type mismatch " + objtype + " and " + atttype);
     			}
-    			return "TeamObj." + attcode + ".get(" + objcode + ")";		//TeamObj.statname.get(teamname);
+    			return attFromTable.getName().getID() + ".get(" + objcode + ")";		//TeamObj.statname.get(teamname);
     		}
     		/* The requested attribute is a playerStat */
     		if (atttype.equals(Type.playerStat)) {
     			if (!objtype.equals(Type.player)) {
     				throw new RuntimeException("objexpr: type mismatch " + objtype + " and " + atttype);
     			}
-    			return "PlayerObj." + attcode + ".get(" + objcode + ")";	//PlayerObj.statname.get(playername);
+    			return attFromTable.getName().getID() + ".get(" + objcode + ")";	//PlayerObj.statname.get(playername);
     		}
     		/* The requested attribute is a list */
     		if (atttype.equals(Type.list)) {

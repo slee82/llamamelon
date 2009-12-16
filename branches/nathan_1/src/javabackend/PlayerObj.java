@@ -6,6 +6,8 @@
 
 package javabackend;
 
+import java.math.*;
+
 public class PlayerObj implements BallDataType {
 
     /* This is the batter constructor */
@@ -34,15 +36,16 @@ public class PlayerObj implements BallDataType {
             return;
         }
         float ip = (float)ipp;
+        float temp = (float)(ipp - Math.floor(ipp));
         this.name = name;
         this.type = type;
-        if ((int)ip == ip)
+        if (temp == 0)
             this.ip = ip;
         else {
-            this.ip = (int)ip;
-            if (ip - (int)ip == .1)
+            this.ip = (float)Math.floor(ipp);
+            if (temp == .1f)
                 this.ip += (1/3);
-            else if (ip - (int)ip == .2)
+            else if (temp == .2f)
                 this.ip += (2/3);
             else {
                 System.err.println("Incorrect Innings Pitched Value " + ip);
