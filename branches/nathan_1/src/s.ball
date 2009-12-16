@@ -1,6 +1,6 @@
-team dodgers = load("dodgers.team");
-print "dodgers's wins and losses:";
-print dodgers's W;
-print dodgers's L;
+team ast = load("astros.team");
+print "astros's wins and losses:";
+print ast's W;
+print ast's L;
 
-player manny = "Manny Ramirez" from dodgers;
+print ast's BATTERS;
