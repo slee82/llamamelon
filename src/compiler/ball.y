@@ -531,9 +531,9 @@ postfix_expression :
     primary_expression { 
         $$ = $1; 
     }
-    | postfix_expression APOSTROPHEESS atom_expression {
+    | postfix_expression APOSTROPHEESS IDENTIFIER {
     	// attribute/stats call
-    	$$ = new ParserVal(new ApostrExpr((Expr)$1.obj, (Expr)$3.obj));
+    	$$ = new ParserVal(new ApostrExpr((Expr)$1.obj, (Identifier)$3.obj));
     }
     | postfix_expression WHERE OPAREN expression CPAREN {
         // filtering

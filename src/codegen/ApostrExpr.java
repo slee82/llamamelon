@@ -13,62 +13,78 @@ public class ApostrExpr extends Expr {
      * @param expr
      * @param ident
      */
-    public ApostrExpr(Expr objexpr, Expr attexpr) {
+    public ApostrExpr(Expr objexpr, Identifier attribute) {
         this.objexpr = objexpr;
-        this.attexpr = attexpr;
+        this.attribute = attribute;
     }
     
     @Override
     public String code(SymbolTable table) {
-    	Type atttype = attexpr.getType(table);
-    	Type objtype = objexpr.getType(table);
-    	String attcode = attexpr.code(table);
-    	String objcode = objexpr.code(table);
+    	//Type atttype = attribute.getType(table);
+    	if (!table.hasEntry(attribute))
+    		throw new RuntimeException("Identifier: attribute "+ attribute.getID() + " not found in SymbolTable");
     	
-    	/* The requested attribute is a teamStat */
-    	if (atttype.equals(Type.teamStat)) {
-    		if (!objtype.equals(Type.team)) {
-    			throw new RuntimeException("objexpr: type mismatch " + objtype + " and " + atttype);
+    	if (table.getEntry(attribute) instanceof StatDef) {
+    		StatDef attFromTable = (StatDef)table.getEntry(attribute);
+    		Type objtype = objexpr.getType(table);
+    		Type atttype = attFromTable.getType();
+    		String attcode = attribute.getID();
+    		String objcode = objexpr.code(table);
+
+    		/* The requested attribute is a teamStat */
+    		if (atttype.equals(Type.teamStat)) {
+    			if (!objtype.equals(Type.team)) {
+    				throw new RuntimeException("Expr: type mismatch " + objtype + " and " + atttype);
+    			}
+    			return "TeamObj." + attcode + ".get(" + objcode + ")";		//TeamObj.statname.get(teamname);
     		}
-    		return "TeamObj." + attcode + ".get(" + objcode + ");";		//TeamObj.statname.get(teamname);
-    	}
-    	/* The requested attribute is a playerStat */
-    	if (atttype.equals(Type.playerStat)) {
-    		if (!objtype.equals(Type.player)) {
-    			throw new RuntimeException("objexpr: type mismatch " + objtype + " and " + atttype);
+    		/* The requested attribute is a playerStat */
+    		if (atttype.equals(Type.playerStat)) {
+    			if (!objtype.equals(Type.player)) {
+    				throw new RuntimeException("objexpr: type mismatch " + objtype + " and " + atttype);
+    			}
+    			return "PlayerObj." + attcode + ".get(" + objcode + ")";	//PlayerObj.statname.get(playername);
     		}
-    		return "PlayerObj." + attcode + ".get(" + objcode + ");";	//PlayerObj.statname.get(playername);
+        	else 
+        		throw new RuntimeException("Expr: type" + atttype + "unsuitable for attribute retrieval");
     	}
     	else 
-    		throw new RuntimeException("Expr: type" + atttype + "unsuitable for attribute retrieval");
+    		throw new RuntimeException("Identifier: attribute "+ attribute.getID() + " not a StatDef instance");
     }
     
     @Override
     public Type getType(SymbolTable table) {
-        Type atttype = attexpr.getType(table);
-        Type objtype = objexpr.getType(table);
-        
-        if (atttype.equals(Type.teamStat)) {
-            return Type.teamStat;
-        }
-        
-        if (atttype.equals(Type.playerStat)) {
-        	return Type.playerStat;
-        }
-        
-        if (atttype.equals(Type.string)) {
-        	return Type.string;
-        }
-        
-        if ((atttype.equals(Type.teamStat)) && (!objtype.equals(Type.team))) {
-            throw new RuntimeException("objexpr: type mismatch " + objtype + " and " + atttype);
-        }
-        
-        if ((atttype.equals(Type.playerStat)) && (!objtype.equals(Type.player))) {
-        	throw new RuntimeException("objexpr: type mismatch" + objtype + " and " + atttype);
-        }
-        else 
-    		throw new RuntimeException("Expr: type" + atttype + "unsuitable for attribute retrieval");
+    	if (!table.hasEntry(attribute))
+    		throw new RuntimeException("Identifier: attribute "+ attribute.getID() + " not found in SymbolTable");
+    	if (table.getEntry(attribute) instanceof StatDef) {
+    		StatDef attFromTable = (StatDef)table.getEntry(attribute);
+    		Type atttype = attFromTable.getType();
+    		Type objtype = objexpr.getType(table);
+
+    		if (atttype.equals(Type.teamStat)) {
+    			return Type.teamStat;
+    		}
+
+    		if (atttype.equals(Type.playerStat)) {
+    			return Type.playerStat;
+    		}
+
+    		if (atttype.equals(Type.string)) {
+    			return Type.string;
+    		}
+
+    		if ((atttype.equals(Type.teamStat)) && (!objtype.equals(Type.team))) {
+    			throw new RuntimeException("objexpr: type mismatch " + objtype + " and " + atttype);
+    		}
+
+    		if ((atttype.equals(Type.playerStat)) && (!objtype.equals(Type.player))) {
+    			throw new RuntimeException("objexpr: type mismatch" + objtype + " and " + atttype);
+    		}
+    		else 
+    			throw new RuntimeException("Expr: type" + atttype + "unsuitable for attribute retrieval");
+    	}
+    	else 
+    		throw new RuntimeException("Identifier: attribute "+ attribute.getID() + " not a StatDef instance");
     }
     
     /*
@@ -114,7 +130,7 @@ public class ApostrExpr extends Expr {
     
     */
     Expr objexpr;
-    Expr attexpr;
+    Identifier attribute;
 }
     
     
