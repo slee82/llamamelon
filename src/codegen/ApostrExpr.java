@@ -45,6 +45,15 @@ public class ApostrExpr extends Expr {
     			}
     			return "PlayerObj." + attcode + ".get(" + objcode + ")";	//PlayerObj.statname.get(playername);
     		}
+    		/* The requested attribute is a list */
+    		if (atttype.equals(Type.list)) {
+    			/* The requested list is of players, batters, or pitchers */
+    			if (attcode.equals("PLAYERS") || attcode.equals("PITCHERS") || attcode.equals("BATTERS")) {
+    				return "TeamObj." + attcode + ".get(" + objcode + ")";	//TeamObj.listname.get(teamname);
+    			}
+    			else
+    				throw new RuntimeException("Expr: list " + attcode + "unsuitable for attribute retrieval");
+    		}
         	else 
         		throw new RuntimeException("Expr: type" + atttype + "unsuitable for attribute retrieval");
     	}

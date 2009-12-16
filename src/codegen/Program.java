@@ -54,6 +54,14 @@ public class Program extends ParseTreeNode {
         table.putEntry(new Identifier("BB"), 
                 new BuiltinStatDef(new Identifier("PlayerObj.BB"), Type.playerStat));
         
+        /* INPUT BUILTIN LIST-STATS */
+        table.putEntry(new Identifier("PLAYERS"),
+        		new BuiltinStatListDef(new Identifier("TeamObj.PLAYERS"), Type.list));
+        table.putEntry(new Identifier("PITCHERS"),
+        		new BuiltinStatListDef(new Identifier("TeamObj.PITCHERS"), Type.list));
+        table.putEntry(new Identifier("BATTERS"),
+        		new BuiltinStatListDef(new Identifier("TeamObj.BATTERS"), Type.list));
+        
         /* INPUT BUILTIN FUNCTIONS */
         table.putEntry(new Identifier("load"),
                 new BuiltinFuncDef(new Identifier("Loader.load"), Type.team,
