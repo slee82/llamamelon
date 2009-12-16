@@ -3,4 +3,4 @@ print "astros's wins and losses:";
 print ast's W;
 print ast's L;
 
-print ast's BATTERS;
+player lance = "Lance Berkman" from ast's BATTERS;
