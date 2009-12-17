@@ -28,7 +28,7 @@ import codegen.*;
 %token AND, OR, NOT
 %token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
 %token PLUS, MIN, MULT, DIV, MOD
-%token AND, OR, NOT
+%token PPLUS, MMIN
 %token IS, ISNOT, GT, LT, GTE, LTE
 %token COMMA
 %token OPAREN
@@ -42,7 +42,6 @@ import codegen.*;
 %token STAT
 %token RETURN
 %token RETURNS
-%token IS
 %token PRIMITIVE
 %token END
 %token WHERE, SELF
@@ -514,6 +513,12 @@ multiplication_expression : unary_expression
 /* UNARY */
 unary_expression : 
     postfix_expression { $$ = $1; }
+    | PPLUS unary_expression {
+    	$$ = new ParserVal(new UnaryExpr(UnaryExpr.Op.PPLUS, (Expr)$2.obj, UnaryExpr.Fix.PRE));
+    }
+    | MMIN unary_expression {
+    	$$ = new ParserVal(new UnaryExpr(UnaryExpr.Op.MMIN, (Expr)$2.obj, UnaryExpr.Fix.PRE));
+    }
     | primary_expression FROM unary_expression {
         //fetching
         MatchExpr match = new MatchExpr((Expr)$1.obj, (Expr)$3.obj);
@@ -538,6 +543,12 @@ postfix_expression :
     | postfix_expression WHERE OPAREN expression CPAREN {
         // filtering
         $$ = new ParserVal(new FilterExpr((Expr)$1.obj, (Expr)$4.obj));
+    }
+    | postfix_expression PPLUS {
+    	$$ = new ParserVal(new UnaryExpr(UnaryExpr.Op.PPLUS, (Expr)$1.obj, UnaryExpr.Fix.POST));
+    }
+    | postfix_expression MMIN {
+    	$$ = new ParserVal(new UnaryExpr(UnaryExpr.Op.MMIN, (Expr)$1.obj, UnaryExpr.Fix.POST));
     }
 ;
 
