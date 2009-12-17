@@ -103,6 +103,10 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "%" { return Parser.MOD; }
 
+"++" { return Parser.PPLUS; }
+
+"--" { return Parser.MMIN; }
+
 "is"	{ return Parser.IS; }
 	
 "isnot" { return Parser.ISNOT; }
