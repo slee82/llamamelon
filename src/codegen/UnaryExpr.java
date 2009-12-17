@@ -61,7 +61,7 @@ public class UnaryExpr extends Expr {
         	}
         	
         } else {
-            throw new RuntimeException("expr: type " + type + " unsuitable for addition.");
+            throw new RuntimeException("expr: type " + type + " unsuitable for unary operation " + getOpCode());
         }
     }
     
@@ -72,7 +72,7 @@ public class UnaryExpr extends Expr {
         if (type.equals(Type.number)) {
             return Type.number;
         } else {
-            throw new RuntimeException("expr: type " + value.getType(table) + " unsuitable for unary operation.");
+            throw new RuntimeException("expr: type " + value.getType(table) + " unsuitable for unary operation " + getOpCode());
         }
     }
     
