@@ -36,30 +36,16 @@ public class UnaryExpr extends Expr {
         Identifier tempID = table.newID();
         
         /* MUST BE OF TYPE NUMBER */
-        if (type.equals(Type.number)) {
+        if (type !=null && type.equals(Type.number)) {
         	//prefix
         	if (getFix()) {
-        		
         		insert.insert(table.indent() + "float " + tempID.getID() + " = " + getOpCode() + code + ";\n");
         		return tempID.getID();
-        		
-        		/*
-        		String result = getOpCode();
-        		result += code;
-        		return result;
-        		*/
         	}
         	else {
-        		
         		insert.insert(table.indent() + "float " + tempID.getID() + " = " + code + getOpCode() + ";\n");
         		return tempID.getID();
-        		/*
-        		String result = code;
-        		result += getOpCode();
-        		return result;
-        		*/
         	}
-        	
         } else {
             throw new RuntimeException("expr: type " + type + " unsuitable for unary operation " + getOpCode());
         }
