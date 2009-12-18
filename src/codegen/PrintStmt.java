@@ -21,12 +21,17 @@ public class PrintStmt extends Stmt {
         // if expr is of type number float fix it 
         if (thisType.equals(Type.number)){
         	begin = table.indent() + "System.out.println(Tools.fixFloat(";
+        	begin += toprint.code(table);
+        	begin += "));";
         }
         // else continue normally
-        else { begin = table.indent() + "System.out.println("; }
+        else { 
+        	begin = table.indent() + "System.out.println("; 
+        	begin += toprint.code(table);
+            begin += (");");
+        }
     	
-        begin += toprint.code(table);
-        begin += (");");       
+               
         
         return begin;
     }
