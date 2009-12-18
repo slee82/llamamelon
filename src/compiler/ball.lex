@@ -155,6 +155,19 @@ of              { return Parser.OF; }
 
 from            { return Parser.FROM; }
 
+do           	{ /* got a do statement, notify parser */
+                    System.err.println("lexer: found 'do'");
+                    yyparser.yylval =  new ParserVal(Keyword.mydo);
+                    return Parser.DO; // TODO: couple return with table reference
+                } 
+            
+					
+times			{ /* got a times statement, notify parser */
+					System.err.println("lexer: found 'times'");
+					yyparser.yylval = new ParserVal(Keyword.times);
+					return Parser.TIMES;
+				}
+
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);

@@ -48,6 +48,7 @@ import codegen.*;
 %token LIST, OF
 %token FROM, ANY
 %token APOSTROPHEESS
+%token DO, TIMES
 
 %%
 
@@ -157,6 +158,7 @@ body_statement :
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
 	| activate_statement { $$ = $1; }
+	| iteration_statement { $$ = $1; }
 ;
 
 /** FUNCTION_DEFINITION **/
@@ -419,6 +421,14 @@ assignment_statement :
         $$ = new ParserVal(node);
     }
 ;
+
+/**ITERATION_STATEMENT**/
+iteration_statement :
+	DO expression TIMES COLON body_statement_list END {
+		LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$5.obj;
+		IterationStmt stmt = new IterationStmt((Expr)$2.obj, bodylist);
+        $$ = new ParserVal(stmt);
+	}
 
 /* operators of assignment */
 assignment_operator : 
