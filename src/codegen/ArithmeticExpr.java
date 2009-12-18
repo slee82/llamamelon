@@ -36,14 +36,14 @@ public class ArithmeticExpr extends Expr {
             // convert r to string
             if (rtype.equals(Type.number))
                 //fixFloat
-            	//return lcode + ".concat(Float.toString(" + rcode + "))";
             	return lcode + ".concat(Tools.fixFloat(" + rcode + "))";
             return lcode + ".concat((" + rcode + ").toString())";
         }
         if (rtype.equals(Type.string)) {
             // convert r to string
             if (ltype.equals(Type.number))
-                return "Tools.fixFloat(" + lcode + ").concat(" + rcode + ")";
+                //fixFloat here too
+            	return "Tools.fixFloat(" + lcode + ").concat(" + rcode + ")";
             return lcode + ".toString().concat(" + rcode + ")";
         }
         
