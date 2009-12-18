@@ -167,6 +167,18 @@ times			{ /* got a times statement, notify parser */
 					yyparser.yylval = new ParserVal(Keyword.times);
 					return Parser.TIMES;
 				}
+				
+foreach			{ /* got a foreach loop */
+					System.err.println("lexer found a foreach");
+					yyparser.yylval = new ParserVal(Keyword.foreach);
+					return Parser.FOREACH;
+				}
+				
+in				{ /* got an in statement */
+					System.err.println("lexer found an 'in'");
+					yyparser.yylval = new ParserVal(Keyword.in);
+					return Parser.IN;
+				}
 
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
