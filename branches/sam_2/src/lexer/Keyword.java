@@ -30,5 +30,7 @@ public class Keyword extends Token {
         where = new Keyword(Tag.WHERE, "where"),
         self = new Keyword(Tag.SELF, "self"),
     	mydo = new Keyword(Tag.DO, "do"),
-    	times = new Keyword(Tag.TIMES, "times");
+    	times = new Keyword(Tag.TIMES, "times"),
+    	in = new Keyword(Tag.IN, "in"),
+    	foreach = new Keyword(Tag.FOREACH, "foreach");
 }
