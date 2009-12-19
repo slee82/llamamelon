@@ -35,13 +35,15 @@ public class ArithmeticExpr extends Expr {
         if (ltype.equals(Type.string)) {
             // convert r to string
             if (rtype.equals(Type.number))
-                return lcode + ".concat(Float.toString(" + rcode + "))";
+                //fixFloat
+            	return lcode + ".concat(Tools.fixFloat(" + rcode + "))";
             return lcode + ".concat((" + rcode + ").toString())";
         }
         if (rtype.equals(Type.string)) {
             // convert r to string
             if (ltype.equals(Type.number))
-                return "Float.toString(" + lcode + ").concat(" + rcode + ")";
+                //fixFloat here too
+            	return "Tools.fixFloat(" + lcode + ").concat(" + rcode + ")";
             return lcode + ".toString().concat(" + rcode + ")";
         }
         
