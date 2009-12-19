@@ -666,7 +666,8 @@ private int yylex () {
 
 /* error reporting */
 public void yyerror (String error) {
-	System.err.println ("Error: " + error);
+	System.err.println (outname + ".ball Line " + (lexer.getLine()+1) + ": "
+		+ error + " before '" + lexer.yytext() + "'");
 }
 
 /* lexer is created in the constructor */
