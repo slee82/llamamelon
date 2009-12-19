@@ -45,9 +45,9 @@ public class Program extends ParseTreeNode {
                 new BuiltinStatDef(new Identifier("PlayerObj.R"), Type.playerStat));
         table.putEntry(new Identifier("H"), 
                 new BuiltinStatDef(new Identifier("PlayerObj.H"), Type.playerStat));
-        table.putEntry(new Identifier("DBL"), 
+        table.putEntry(new Identifier("2B"), 
                 new BuiltinStatDef(new Identifier("PlayerObj.DBL"), Type.playerStat));
-        table.putEntry(new Identifier("TPL"), 
+        table.putEntry(new Identifier("3B"), 
                 new BuiltinStatDef(new Identifier("PlayerObj.TPL"), Type.playerStat));
         table.putEntry(new Identifier("HR"), 
                 new BuiltinStatDef(new Identifier("PlayerObj.HR"), Type.playerStat));
