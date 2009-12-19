@@ -87,6 +87,21 @@ public class Program extends ParseTreeNode {
         table.putEntry(new Identifier("isPitcher"),
                 new BuiltinFuncDef(new Identifier("PlayerObj.isPitcher"), Type.bool,
                         new Type[] { Type.player }));
+        table.putEntry(new Identifier("topPlayers"),
+                new BuiltinFuncDef(new Identifier("Tools.topPlayers"), new ListType(Type.player),
+                        new Type[] { Type.number, new ListType(Type.player), Type.playerStat }));
+        table.putEntry(new Identifier("topTeams"),
+                new BuiltinFuncDef(new Identifier("Tools.topTeams"), new ListType(Type.team),
+                        new Type[] { Type.number, new ListType(Type.team), Type.teamStat }));
+        table.putEntry(new Identifier("rand"),
+                new BuiltinFuncDef(new Identifier("Tools.randomFloat"), new ListType(Type.number),
+                        new Type[] { Type.number, Type.number }));
+        table.putEntry(new Identifier("min"),
+                new BuiltinFuncDef(new Identifier("Tools.min"), new ListType(Type.number),
+                        new Type[] { Type.number, Type.number }));
+        table.putEntry(new Identifier("max"),
+                new BuiltinFuncDef(new Identifier("Tools.max"), new ListType(Type.number),
+                        new Type[] { Type.number, Type.number }));
 
         System.out.println(table.indent() + "public static void main (String args[]) "
                 + "throws Exception {");

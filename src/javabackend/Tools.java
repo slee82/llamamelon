@@ -9,7 +9,6 @@ package javabackend;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
-import java.util.LinkedList;
 import java.lang.Math;
 
 public class Tools {
@@ -19,6 +18,7 @@ public class Tools {
         return myRand.nextInt(max-min) + min;
     }
     
+    // rand(number x, number y)
     public static float randomFloat(float min, float max) {
     	if (min > max) return randomFloat(max, min);
     	return myRand.nextFloat() * (max - min) + min;
@@ -39,56 +39,56 @@ public class Tools {
     	return str;
     }
     
+    // max(number x, number y)
     public static float max(float low, float high){
     	return Math.max(low,high);
     }
     
+    // min(number x, number y)
     public static float min(float low, float high){
     	return Math.min(low,high);
     }
+    
+    // topTeams(number x, list of team y, teamStat z)
+    public static BallList<TeamObj> topTeams(float num, BallList<TeamObj> list, TeamStat stat) {
+    	BallList<TeamObj> copy = new BallList<TeamObj>();
+    	for (TeamObj ent : list) copy.add(ent);
+    	
+    	final TeamStat st = (TeamStat)stat;
+    	Collections.sort(copy, new Comparator<TeamObj>() {
+    		public int compare(TeamObj t0, TeamObj t1) {
+    			float t0stat = st.get(t0);
+    			float t1stat = st.get(t1);
+    			// sort bigger stats in front
+    			if (t0stat < t1stat) return 1;
+    			if (t0stat == t1stat) return 0;
+    			return -1;
+    		}
+    	});
+    	return (BallList<TeamObj>) new BallList<TeamObj>(copy.subList(0, (int)num));
+    }
 
-    public static <T> BallList<T> top(float num, BallList<T> list, Object stat) {
-        if (list.size() == 0) return list;
-        T entry = list.get(0);
-        BallList<T> copy = new BallList<T>();
-        for (T ent : list) copy.add(ent);
-               if (entry instanceof PlayerObj) {
-            if (!(stat instanceof PlayerStat)) {
-                final PlayerStat st = (PlayerStat)stat;
-                Collections.sort(copy, new Comparator<T>() {
-                    public int compare(T arg0, T arg1) {
-                        PlayerObj p0 = (PlayerObj)arg0;
-                        PlayerObj p1 = (PlayerObj)arg1;
-                        float p0stat = st.get(p0);
-                        float p1stat = st.get(p1);
-                        if (p0stat < p1stat) return -1;
-                        if (p0stat == p1stat) return 0;
-                        return 1;
-                    }
-                });
-                return (BallList<T>) copy.subList(0, (int)num);
-            }
-                   } else if (entry instanceof TeamObj) {
-            if (!(stat instanceof TeamStat)) {
-                final TeamStat st = (TeamStat)stat;
-                Collections.sort(copy, new Comparator<T>() {
-                    public int compare(T arg0, T arg1) {
-                        TeamObj t0 = (TeamObj)arg0;
-                        TeamObj t1 = (TeamObj)arg1;
-                        float t0stat = st.get(t0);
-                        float t1stat = st.get(t1);
-                        if (t0stat < t1stat) return -1;
-                        if (t0stat == t1stat) return 0;
-                        return 1;
-                    }
-                });
-                return (BallList<T>) copy.subList(0, (int)num);
-                           }
-        }
-        throw new IllegalArgumentException("arguments can't be 'top'-ed");
+    // topTeams(number x, list of player y, playerStat z)
+    public static BallList<PlayerObj> topPlayers(float num, BallList<PlayerObj> list, PlayerStat stat) {
+    	BallList<PlayerObj> copy = new BallList<PlayerObj>();
+    	for (PlayerObj ent : list) copy.add(ent);
+    	
+    	final PlayerStat st = (PlayerStat)stat;
+    	Collections.sort(copy, new Comparator<PlayerObj>() {
+    		public int compare(PlayerObj p0, PlayerObj p1) {
+    			float p0stat = st.get(p0);
+    			float p1stat = st.get(p1);
+    			// sort smaller stats in front
+    			if (p0stat < p1stat) return 1;
+    			if (p0stat == p1stat) return 0;
+    			return -1;
+    		}
+    	});
+    			
+    	return (BallList<PlayerObj>) new BallList<PlayerObj>(copy.subList(0, (int)num));
+
     }
     
     private static final Random myRand = new Random(new java.util.Date().getTime());
-    private static final Random myRandFloat = new Random(new java.util.Date().getTime());
 
 }

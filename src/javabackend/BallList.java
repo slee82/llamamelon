@@ -8,6 +8,7 @@ package javabackend;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,7 +36,11 @@ public class BallList<T> extends ArrayList<T> implements BallDataType {
         super();
     }
     
-    /** prints like a python string */
+    public BallList(Collection<T> name) {
+		super(name);
+	}
+
+	/** prints like a python string */
     public String toString() {
         String begin = "[ ";
         boolean first = true;

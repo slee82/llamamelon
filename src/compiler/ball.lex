@@ -252,7 +252,7 @@ where           {
                     return Parser.WHERE;
                 }
 
-self            {
+item            {
                     yyparser.yylval = new ParserVal(Keyword.self);
                     return Parser.SELF;
                 }
