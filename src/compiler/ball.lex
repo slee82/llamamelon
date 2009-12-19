@@ -165,7 +165,8 @@ then		{
                     return Parser.THEN;
 		}
 
-else		{
+else		{/* got an else statement, notify parser */
+		    System.err.println("lexer: found 'else'");
 		    yyparser.yylval = new ParserVal(Keyword.elseKwd);
                     return Parser.ELSE;
 		}
