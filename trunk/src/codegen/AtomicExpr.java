@@ -68,7 +68,13 @@ public class AtomicExpr extends Expr {
     	if(this.inside != null) {
     		return "(" + this.inside.code(table) + ")";
     	}
-        this.getType(table);
+        if (this.type.val.equals("identifier")) {
+            Object val = table.getEntry(this.ident);
+            if (val instanceof StatDef) {
+            	StatDef decl = (StatDef)val;
+            	return decl.name.getID();
+            }
+        }
         return this.stringval;
     }
 
