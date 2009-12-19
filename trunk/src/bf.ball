@@ -1,0 +1,4 @@
+team ast = load("astros.team");
+ist of player astpit = ast's PITCHERS;
+player wandy = "Wandy Rodriguez" from astpit;
+print wandy's name+" batters faced: "+wandy's BF;
