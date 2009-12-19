@@ -30,7 +30,7 @@ public class PlayerObj implements BallDataType {
 
     // This is the pitcher constructor
     public PlayerObj (String Name, int type, double ipp, int h,
-            int er, int bb, int k) {
+            int er, int bb, int k, int bf) {
         if (type != PITCHER) {
             System.err.println("Incorrect Player Type Found");
             return;
@@ -56,6 +56,7 @@ public class PlayerObj implements BallDataType {
         this.er = er;
         this.bb = bb;
         this.k = k;
+        this.bf = bf;
     }
     
     //  reference equality, or Name lookup
