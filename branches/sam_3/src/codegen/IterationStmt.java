@@ -1,6 +1,3 @@
-/**
- * 
- */
 package codegen;
 
 import lexer.Identifier;
@@ -8,6 +5,10 @@ import lexer.Type;
 import compiler.SymbolTable;
 import java.util.LinkedList;
 import java.util.Iterator;
+
+/*
+ * Iteration Statements extends Stmt
+ */
 
 /**
  * @sam
@@ -35,6 +36,7 @@ public class IterationStmt extends Stmt {
     @Override
     public String stmtCode(SymbolTable table) {
     	
+    	// Infinite do loop
     	if (expr == null && element == null && collection == null) {
     		String loopCode = "while (true) { \n";
     		
@@ -49,9 +51,9 @@ public class IterationStmt extends Stmt {
     		return table.indent() + loopCode;
     	}
     	
+    	// do x times loop
     	if (expr != null) {
-  
-    		
+   		
     		if(! expr.getType(table).equals(Type.number)) {
         		throw new RuntimeException("Incorrect expression type '"+expr.code(table)+"' needs to be a number");
     		}
@@ -72,8 +74,8 @@ public class IterationStmt extends Stmt {
         
     		return table.indent() + loopCode;
     	}
-    	//System.out.println(element.getID());
-    	//System.out.println(collection.code(table));
+    	
+    	// for each loop
     	if (element != null && collection != null)
     	{
  
