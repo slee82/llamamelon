@@ -49,7 +49,7 @@ import codegen.*;
 %token FROM, ANY
 %token APOSTROPHEESS
 %token IF, THEN, ELSE
-%token DO, TIMES, FOREACH, IN
+%token DO, TIMES, FOREACH, IN, STOPDO
 
 %%
 
@@ -418,6 +418,10 @@ jump_statement :
         ReturnStmt newret = new ReturnStmt((Expr)$2.obj);
         $$ = new ParserVal(newret);
     }
+    | STOPDO SEMICOLON {
+    	StopdoStmt stop = new StopdoStmt();
+    	$$ = new ParserVal(stop);
+    }
 ;
 
 /**ASSIGNMENT_STATEMENT**/ 
@@ -452,9 +456,9 @@ iteration_statement :
 		IterationStmt stmt = new IterationStmt((Expr)$2.obj, bodylist);
         $$ = new ParserVal(stmt);
 	}
-	| FOREACH IDENTIFIER IN IDENTIFIER COLON body_statement_list END {
+	| FOREACH IDENTIFIER IN expression COLON body_statement_list END {
 		LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$6.obj;
-		IterationStmt stmt = new IterationStmt((Identifier)$2.obj, (Identifier)$4.obj, bodylist);
+		IterationStmt stmt = new IterationStmt((Identifier)$2.obj, (Expr)$4.obj, bodylist);
 		$$ = new ParserVal(stmt);
 	}
 

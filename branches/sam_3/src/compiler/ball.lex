@@ -191,6 +191,12 @@ times			{ /* got a times statement, notify parser */
 					return Parser.TIMES;
 				}
 				
+stopdo			{ /* got a stopdo statement, notify parser */
+					System.err.println("lexer: found 'stopdo'");
+					yyparser.yylval = new ParserVal(Keyword.stopdo);
+					return Parser.STOPDO;
+				}
+
 foreach			{ /* got a foreach loop */
 					System.err.println("lexer found a foreach");
 					yyparser.yylval = new ParserVal(Keyword.foreach);
