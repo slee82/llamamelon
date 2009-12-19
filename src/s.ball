@@ -12,7 +12,8 @@ print lance's AVG;
 
 list of player astpit = ast's PITCHERS;
 player wandy = "Wandy Rodriguez" from astpit;
-print wandy's name+" earned run average: "+wandy's ERA;
+print wandy's name+" earned run average: "+wandy's IP;
+print wandy's ERA + " Wandy sucks!";
 
 print wandy's IP;
 
