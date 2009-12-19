@@ -227,7 +227,6 @@ public class Loader {
 		int BB = 0;
 		int K = 0;
 		int BF = 0;
-		
 		while(line != null){
 			if (line.lastIndexOf("Type:") > -1 || line.lastIndexOf("Header:") > -1) {
 				in.reset();
@@ -251,7 +250,7 @@ public class Loader {
 				ER = Integer.parseInt(strtok.nextToken().trim());
 				BB = Integer.parseInt(strtok.nextToken().trim());
 				K = Integer.parseInt(strtok.nextToken().trim());
-				BF = Integer.parseInt(strtok.nextToken().trim());
+				BF = Integer.parseInt(strtok.nextToken()).trim());
 			}
 			catch (NoSuchElementException e) {	//in case there are less stats than required
 				System.err.println("Warning: The pitcher " + pitcherName + " Has (a) missing stat(s), using 0 as defaults.");
