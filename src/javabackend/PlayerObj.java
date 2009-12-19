@@ -77,7 +77,7 @@ public class PlayerObj implements BallDataType {
 
     public int getAb() {
         if (type != BATTER) {
-            System.err.println("Incorrect Statistic Requested");
+            System.err.println("Incorrect Statistic: AB is only applicable to batters");
             return -1;
         }
         return ab;
@@ -85,7 +85,7 @@ public class PlayerObj implements BallDataType {
 
     public int getR() {
         if (type != BATTER) {
-            System.err.println("Incorrect Statistic Requested");
+            System.err.println("Incorrect Statistic: R is only applicable to batters");
             return -1;
         }
         return r;
@@ -97,7 +97,7 @@ public class PlayerObj implements BallDataType {
 
     public int getDbl() {
         if (type != BATTER) {
-            System.err.println("Incorrect Statistic Requested");
+            System.err.println("Incorrect Statistic: Dbl is only applicable to batters");
             return -1;
         }
         return dbl;
@@ -105,7 +105,7 @@ public class PlayerObj implements BallDataType {
 
     public int getTpl() {
         if (type != BATTER) {
-            System.err.println("Incorrect Statistic Requested");
+            System.err.println("Incorrect Statistic: Tpl is only applicable to batters");
             return -1;
         }
         return tpl;
@@ -113,7 +113,7 @@ public class PlayerObj implements BallDataType {
 
     public int getHr() {
         if (type != BATTER) {
-            System.err.println("Incorrect Statistic Requested");
+            System.err.println("Incorrect Statistic: HR is only applicable to batters");
             return -1;
         }
         return hr;
@@ -125,7 +125,7 @@ public class PlayerObj implements BallDataType {
 
     public float getIp() {
         if (type != PITCHER) {
-            System.err.println("Incorrect Statistic Requested");
+            System.err.println("Incorrect Statistic: IP is only applicable to pitchers");
             return -1;
         }
         return ip;
@@ -133,7 +133,7 @@ public class PlayerObj implements BallDataType {
 
     public int getEr() {
         if (type != PITCHER) {
-            System.err.println("Incorrect Statistic Requested");
+            System.err.println("Incorrect Statistic: ER is only applicable to pitchers");
             return -1;
         }
         return er;
@@ -141,10 +141,18 @@ public class PlayerObj implements BallDataType {
 
     public int getK() {
         if (type != PITCHER) {
-            System.err.println("Incorrect Statistic Requested");
+            System.err.println("Incorrect Statistic: K is only applicable to pitchers");
             return -1;
         }
         return k;
+    }
+    
+    public int getBf() {
+    	if (type != PITCHER) {
+    		System.err.println("Incorrect Statistic: BF is only applicable to pitchers");
+    		return -1;
+    	}
+    	return bf;
     }
 
     /*
@@ -233,6 +241,11 @@ public class PlayerObj implements BallDataType {
             return player.getK();
         }
     };
+    public static final PlayerStat BF = new PlayerStat() {
+    	public float get(PlayerObj player) {
+    		return player.getBf();
+    	}
+    }
 
     private String Name;
 
@@ -248,6 +261,7 @@ public class PlayerObj implements BallDataType {
     private float ip;
     private int er;
     private int k;
+    private int bf;
 
     public final static int PITCHER = 1;
     public final static int BATTER = 2;
