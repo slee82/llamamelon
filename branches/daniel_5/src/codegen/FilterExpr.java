@@ -25,7 +25,7 @@ public class FilterExpr extends Expr {
         Type lt = list.getType(table);
         
         if (!(lt instanceof ListType)) {
-            throw new RuntimeException("filter: left hand expression must evaluate to a list.");
+            throwErr("filter: left hand expression must evaluate to a list.", list.code(table) + " where (" + filter.code(table) + ")");
         }
         ListType ltype = (ListType)lt;
         return ltype;
@@ -35,7 +35,7 @@ public class FilterExpr extends Expr {
         public Type getType(SymbolTable table) {
             if (table.hasEntry(inTyp))
                 return (Type)table.getEntry(inTyp);
-            throw new RuntimeException("self: keyword placed not on a 'where' search");
+            throw throwErr("self: keyword placed not on a 'where' search", "self");
         }
 
         /**
@@ -44,7 +44,7 @@ public class FilterExpr extends Expr {
         public String code(SymbolTable table) {
             if (table.hasEntry(inRef))
                 return ((Identifier)table.getEntry(inRef)).getID();
-            throw new RuntimeException("self: keyword placed not on a 'where' search");
+            throw throwErr("self: keyword placed not on a 'where' search", "self");
         }
     }
 
@@ -61,7 +61,7 @@ public class FilterExpr extends Expr {
         Type lt = list.getType(table);
         
         if (!(lt instanceof ListType)) {
-            throw new RuntimeException("filter: left hand expression must evaluate to a list.");
+            throwErr("filter: left hand expression must evaluate to a list.", list.code(table) + " where (" + filter.code(table) + ")");
         }
         ListType ltype = (ListType)getType(table);
         Type cont = ltype.contents;
