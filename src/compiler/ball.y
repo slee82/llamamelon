@@ -49,6 +49,7 @@ import codegen.*;
 %token FROM, ANY
 %token APOSTROPHEESS
 %token IF, THEN, ELSE
+%token DO, TIMES, FOREACH, IN
 
 %%
 
@@ -158,8 +159,8 @@ body_statement :
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
-    | activate_statement { $$ = $1; }
-    
+	| activate_statement { $$ = $1; }
+	| iteration_statement { $$ = $1; }
 ;
 
 /** FUNCTION_DEFINITION **/
@@ -439,6 +440,24 @@ assignment_statement :
     }
 ;
 
+/**ITERATION_STATEMENT**/
+iteration_statement :
+	DO COLON body_statement_list END {
+		LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$3.obj;
+		IterationStmt stmt = new IterationStmt(bodylist);
+		$$ = new ParserVal(stmt);
+	}
+	| DO expression TIMES COLON body_statement_list END {
+		LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$5.obj;
+		IterationStmt stmt = new IterationStmt((Expr)$2.obj, bodylist);
+        $$ = new ParserVal(stmt);
+	}
+	| FOREACH IDENTIFIER IN IDENTIFIER COLON body_statement_list END {
+		LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$6.obj;
+		IterationStmt stmt = new IterationStmt((Identifier)$2.obj, (Identifier)$4.obj, bodylist);
+		$$ = new ParserVal(stmt);
+	}
+
 /* operators of assignment */
 assignment_operator : 
     EQL { $$ = new ParserVal(AssignmentStmt.Op.EQL); }
@@ -666,8 +685,7 @@ private int yylex () {
 
 /* error reporting */
 public void yyerror (String error) {
-	System.err.println (outname + ".ball Line " + (lexer.getLine()+1) + ": "
-		+ error + " before '" + lexer.yytext() + "'");
+	System.err.println ("Error: " + error);
 }
 
 /* lexer is created in the constructor */

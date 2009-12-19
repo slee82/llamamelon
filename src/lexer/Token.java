@@ -26,7 +26,8 @@ public class Token {
         STAT, 
         ACTIVATE, 
         WHERE, SELF,
-	IF, THEN, ELSE;
+        DO, TIMES, FOREACH, IN,
+        IF, THEN, ELSE
     }
 
     public final Tag tag;

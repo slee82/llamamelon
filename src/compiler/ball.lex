@@ -178,6 +178,31 @@ else		{/* got an else statement, notify parser */
                     return Parser.ELSE;
 		}
 
+do           	{ /* got a do statement, notify parser */
+                    System.err.println("lexer: found 'do'");
+                    yyparser.yylval =  new ParserVal(Keyword.mydo);
+                    return Parser.DO; // TODO: couple return with table reference
+                } 
+            
+					
+times			{ /* got a times statement, notify parser */
+					System.err.println("lexer: found 'times'");
+					yyparser.yylval = new ParserVal(Keyword.times);
+					return Parser.TIMES;
+				}
+				
+foreach			{ /* got a foreach loop */
+					System.err.println("lexer found a foreach");
+					yyparser.yylval = new ParserVal(Keyword.foreach);
+					return Parser.FOREACH;
+				}
+				
+in				{ /* got an in statement */
+					System.err.println("lexer found an 'in'");
+					yyparser.yylval = new ParserVal(Keyword.in);
+					return Parser.IN;
+				}
+
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);
