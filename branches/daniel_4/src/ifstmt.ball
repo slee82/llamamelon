@@ -1,0 +1,6 @@
+if(1>2)then:
+	print "hi";
+else:
+	print "bye";
+end
+

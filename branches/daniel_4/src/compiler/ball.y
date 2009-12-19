@@ -302,10 +302,14 @@ if_statement : IF OPAREN expression CPAREN THEN COLON body_statement_list END {
 			LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$7.obj;
 			$$ = new ParserVal(new IfStmt((Expr)$3.obj, bodylist));
 	     }
-             | IF OPAREN expression CPEREN THEN COLON body_statement_list else_statement END
+             | IF OPAREN expression CPAREN THEN COLON body_statement_list else_statement END{
+			LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$7.obj;
+			LinkedList<Stmt> elselist = (LinkedList<Stmt>)$8.obj;
+			$$ = new ParserVal(new IfStmt((Expr)$3.obj, bodylist, elselist));
+	     }
              ;
 
-else_statement : ELSE COLON body_statement_list
+else_statement : ELSE COLON body_statement_list { $$ = $3; }
                ;
 
 
