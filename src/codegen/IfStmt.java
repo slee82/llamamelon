@@ -29,34 +29,37 @@ public class IfStmt extends Stmt {
     @Override
     public String stmtCode(SymbolTable table) {
         String begin = table.indent() + "if (" + expr.code(table) + ") {\n";
-        
-	/* increase the indent before printing
-         * the contents of the if statement */
-	table.increaseIndent(1);
+
+	/* declarations made in if statements
+	 * should not be accessible anywhere outside */
+	SymbolTable bodyTable = new SymbolTable(true, table);
 
 	/* Iterate through the body statements */
         Iterator<Stmt> bodyIter = bodylist.iterator();
         while (bodyIter.hasNext()) {
             Stmt cur = bodyIter.next();
-            begin += cur.code(table) + "\n"; // code for each statement    
+            begin += cur.code(bodyTable) + "\n"; // code for each statement    
         }
-       	table.decreaseIndent(1);
 
         begin += table.indent() + "}";
 
+	/**** CASE WITH AN ELSE STATEMENT ****/
 	if(elselist != null){
 	    begin += " else {\n";
-	    table.increaseIndent(1);
 	    
+	    /* declarations made in else statements
+	     * should not be accessible anywhere outside */
+	    SymbolTable elseTable = new SymbolTable(true, table);
+
 	    /* Iterate through the else body statements */
             Iterator<Stmt> elseIter = elselist.iterator();
             while (elseIter.hasNext()) {
                 Stmt cur = elseIter.next();
-                begin += cur.code(table) + "\n"; // code for each statement    
+                begin += cur.code(elseTable) + "\n"; // code for each statement    
             }
-       	    table.decreaseIndent(1);
    	    begin += table.indent() + "}";
 	}
+	/**** END ELSE CASE ****/
 
         return begin;
     }
