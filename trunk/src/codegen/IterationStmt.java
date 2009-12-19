@@ -78,7 +78,7 @@ public class IterationStmt extends Stmt {
     	// for each loop
     	if (element != null && collection != null)
     	{
- 
+    		// get list type
     		Type collectionType = collection.getType(table);
     		
     		if (!(collectionType instanceof ListType)) {
@@ -86,11 +86,14 @@ public class IterationStmt extends Stmt {
     		}
     		ListType cType = (ListType) collectionType;
     		
+    		if (!table.available(element))
+    			throw new RuntimeException("duplicate variable " + element);
+
+    		SymbolTable inTable = new SymbolTable(false, table);
+    		inTable.putEntry(element, new Declaration(cType.contents, element, null));
     		
     		String loopCode = "for ( " + cType.contents.getType() + " "+ element.getID()+" : "+collection.code(table)+" ) {\n";
     		
-    		
-    		SymbolTable inTable = new SymbolTable(true, table);
     		Iterator<Stmt> bodyIter = bodylist.iterator();
     		while (bodyIter.hasNext()) {
     			Stmt cur = bodyIter.next();
