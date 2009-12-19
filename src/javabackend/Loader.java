@@ -226,6 +226,7 @@ public class Loader {
 		int ER = 0;		//initializing everything.
 		int BB = 0;
 		int K = 0;
+		int BF = 0;
 		
 		while(line != null){
 			if (line.lastIndexOf("Type:") > -1 || line.lastIndexOf("Header:") > -1) {
@@ -240,6 +241,7 @@ public class Loader {
 				ER = 0;
 				BB = 0;
 				K = 0;
+				BF = 0;
 				
 				//StrTok the comma separated player stats
 				StringTokenizer strtok = new StringTokenizer(line, ",");
@@ -249,6 +251,7 @@ public class Loader {
 				ER = Integer.parseInt(strtok.nextToken().trim());
 				BB = Integer.parseInt(strtok.nextToken().trim());
 				K = Integer.parseInt(strtok.nextToken().trim());
+				BF = Integer.parseInt(strtok.nextToken().trim());
 			}
 			catch (NoSuchElementException e) {	//in case there are less stats than required
 				System.err.println("Warning: The pitcher " + pitcherName + " Has (a) missing stat(s), using 0 as defaults.");
@@ -258,7 +261,7 @@ public class Loader {
 			}
 			
 			//Add this new player
-			pitchers.add(new PlayerObj(pitcherName, PlayerObj.PITCHER, IP, H, ER, BB, K));
+			pitchers.add(new PlayerObj(pitcherName, PlayerObj.PITCHER, IP, H, ER, BB, K, BF));
 			line = percolateThrough(in);
 		}
 		return pitchers;
