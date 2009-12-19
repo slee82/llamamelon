@@ -1,0 +1,18 @@
+list of number l1 = [ 1, 2, 3 ];
+
+
+//print "";
+//print l1;
+
+
+
+do 4 times: 
+print l1;
+print "haha"; 
+print 5;
+end
+
+
+do:
+print "you suck";
+end
