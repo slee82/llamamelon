@@ -298,7 +298,10 @@ print_statement :
 ;
 
 /**IF_STATEMENT**/
-if_statement : IF OPAREN expression CPAREN THEN COLON body_statement_list END
+if_statement : IF OPAREN expression CPAREN THEN COLON body_statement_list END {
+			LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$7.obj;
+			$$ = new ParserVal(new IfStmt((Expr)$3.obj, bodylist));
+	     }
              | IF OPAREN expression CPEREN THEN COLON body_statement_list else_statement END
              ;
 
