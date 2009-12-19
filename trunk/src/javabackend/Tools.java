@@ -17,11 +17,11 @@ public class Tools {
     
     public static String fixFloat(float input) {
     	String str ="";
-    	if (input > 1.0 && input != Math.floor(input)) {
+    	if (input > 1.0 && input != (float)Math.floor((float)input)) {
     		str = String.format("%.2f",input);
     	}
     	
-    	else if (input == Math.floor(input))
+    	else if (input == (float)Math.floor((float)input))
     	{ str = String.format("%.0f",input); }
     	
     	else if (input < 1.0){ 
