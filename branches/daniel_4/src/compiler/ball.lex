@@ -143,15 +143,8 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "'s"	{ /* got an apostrophe-s, notify parser */
 			System.err.println("lexer: found ''s'");
-			return Parser.APOSTROPHEESS; 
-			
-		}
-
-ifKwd		{ return Parser.IF; }
-
-then		{ return Parser.THEN; }
-
-elseKwd		{ return Parser.ELSE; }
+			return Parser.APOSTROPHEESS;			
+	}
 
 any             { return Parser.ANY; }
 
@@ -161,13 +154,29 @@ of              { return Parser.OF; }
 
 from            { return Parser.FROM; }
 
+if		{ /* got an if statement, notify parser */
+		    System.err.println("lexer: found 'if'");
+		    yyparser.yylval = new ParserVal(Keyword.ifKwd);
+                    return Parser.IF;
+		}
+
+then		{
+		    yyparser.yylval = new ParserVal(Keyword.then);
+                    return Parser.THEN;
+		}
+
+else		{
+		    yyparser.yylval = new ParserVal(Keyword.elseKwd);
+                    return Parser.ELSE;
+		}
+
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);
                     return Parser.PRINT; // TODO: couple return with table reference
                 }
 
-activate           { /* got anactivation statement, notify parser */
+activate        { /* got anactivation statement, notify parser */
                     System.err.println("lexer: found 'activate'");
                     yyparser.yylval =  new ParserVal(Keyword.activate);
                     return Parser.ACTIVATE;
