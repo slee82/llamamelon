@@ -59,6 +59,8 @@ public class Program extends ParseTreeNode {
         		new BuiltinStatDef(new Identifier("PlayerObj.IP"), Type.playerStat));
         table.putEntry(new Identifier("K"),
         		new BuiltinStatDef(new Identifier("PlayerObj.K"), Type.playerStat));
+        table.putEntry(new Identifier("BF"),
+        		new BuiltinStatDef(new Identifier("PlayerObj.BF"), Type.playerStat));
         
         /* INPUT BUILTIN LIST-STATS */
         table.putEntry(new Identifier("PLAYERS"),
