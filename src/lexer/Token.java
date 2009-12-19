@@ -26,7 +26,7 @@ public class Token {
         STAT, 
         ACTIVATE, 
         WHERE, SELF,
-        DO, TIMES, FOREACH, IN,
+        DO, TIMES, FOREACH, IN, STOPDO,
         IF, THEN, ELSE
     }
 
