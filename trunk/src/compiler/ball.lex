@@ -85,7 +85,7 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ","     { return Parser.COMMA; }
 
-"and"		{ return Parser.AND; }
+"and"	{ return Parser.AND; }
 
 "or" 	{ return Parser.OR; }
 
@@ -93,19 +93,19 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "="	{ return Parser.EQL; }
 
-"+" { return Parser.PLUS; }
+"+" 	{ return Parser.PLUS; }
 
-"-" { return Parser.MIN; }
+"-" 	{ return Parser.MIN; }
 
-"*" { return Parser.MULT; }
+"*" 	{ return Parser.MULT; }
 
-"/" { return Parser.DIV; }
+"/" 	{ return Parser.DIV; }
 
-"%" { return Parser.MOD; }
+"%" 	{ return Parser.MOD; }
 
-"++" { return Parser.PPLUS; }
+"++" 	{ return Parser.PPLUS; }
 
-"--" { return Parser.MMIN; }
+"--" 	{ return Parser.MMIN; }
 
 "is"	{ return Parser.IS; }
 	
@@ -133,9 +133,9 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ")"	{ return Parser.CPAREN; }
 
-"[" { return Parser.OSQUARE; }
+"[" 	{ return Parser.OSQUARE; }
 
-"]" { return Parser.CSQUARE; }
+"]" 	{ return Parser.CSQUARE; }
 
 "is"	{ return Parser.IS; }
 
@@ -143,9 +143,8 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "'s"	{ /* got an apostrophe-s, notify parser */
 			System.err.println("lexer: found ''s'");
-			return Parser.APOSTROPHEESS; 
-			
-		}
+			return Parser.APOSTROPHEESS;			
+	}
 
 any             { return Parser.ANY; }
 
@@ -155,13 +154,30 @@ of              { return Parser.OF; }
 
 from            { return Parser.FROM; }
 
+if		{ /* got an if statement, notify parser */
+		    System.err.println("lexer: found 'if'");
+		    yyparser.yylval = new ParserVal(Keyword.ifKwd);
+                    return Parser.IF;
+		}
+
+then		{
+		    yyparser.yylval = new ParserVal(Keyword.then);
+                    return Parser.THEN;
+		}
+
+else		{/* got an else statement, notify parser */
+		    System.err.println("lexer: found 'else'");
+		    yyparser.yylval = new ParserVal(Keyword.elseKwd);
+                    return Parser.ELSE;
+		}
+
 print           { /* got a print statement, notify parser */
                     System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);
                     return Parser.PRINT; // TODO: couple return with table reference
                 }
 
-activate           { /* got anactivation statement, notify parser */
+activate        { /* got anactivation statement, notify parser */
                     System.err.println("lexer: found 'activate'");
                     yyparser.yylval =  new ParserVal(Keyword.activate);
                     return Parser.ACTIVATE;
@@ -245,3 +261,4 @@ self            {
 
 {Comment} 		{ System.err.println("lexer: found comment"); }
 {WhiteSpace}	{ /* ignore */ }
+
