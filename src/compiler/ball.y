@@ -48,6 +48,7 @@ import codegen.*;
 %token LIST, OF
 %token FROM, ANY
 %token APOSTROPHEESS
+%token IF, THEN, ELSE
 
 %%
 
@@ -153,10 +154,12 @@ body_statement :
       declaration { $$ = $1; }
     | stat_declaration { $$ = $1; }
     | expression_statement { $$ = $1; }
+    | if_statement { $$ = $1; }
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
-	| activate_statement { $$ = $1; }
+    | activate_statement { $$ = $1; }
+    
 ;
 
 /** FUNCTION_DEFINITION **/
@@ -293,6 +296,15 @@ print_statement :
         $$ = new ParserVal(new PrintStmt((Expr)$2.obj));
     }
 ;
+
+/**IF_STATEMENT**/
+if_statement : IF OPAREN expression CPAREN THEN COLON body_statement_list END
+             | IF OPAREN expression CPEREN THEN COLON body_statement_list else_statement END
+             ;
+
+else_statement : ELSE COLON body_statement_list
+               ;
+
 
 /**DECLARATION**/
 declaration : 
