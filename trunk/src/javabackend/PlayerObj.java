@@ -245,7 +245,7 @@ public class PlayerObj implements BallDataType {
     	public float get(PlayerObj player) {
     		return player.getBf();
     	}
-    }
+    };
 
     private String Name;
 
