@@ -12,6 +12,8 @@ import codegen.*;
 
 %byaccj
 %public
+%line
+%column
 
 /* 
  * =========================================================
@@ -35,6 +37,11 @@ import codegen.*;
         this.yyparser = yyparser;
         this.table = table;
     }
+
+    public int getLine() {
+	return yyline;
+    }
+	
 
 %} // close escape section
 
