@@ -14,6 +14,14 @@ import compiler.SymbolTable;
 
 public class Declaration extends Stmt {
 
+	// Constructor: quick for single definitions
+	public Declaration(Type type, Identifier name, Expr ex) {
+		this.type = type;
+		this.idexpPairs = new ArrayList<Object[]>();
+		Object[] entry = new Object[] { name, ex };
+		idexpPairs.add(entry);
+	}
+
     // Constructor: Get Type and Identifiers
     public Declaration(Type type, ArrayList<Object[]> identifiers) {
         this.type = type; // extract the Strings

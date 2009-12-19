@@ -11,21 +11,21 @@ x = rand(11,221);
 print x;*/
 
 string zz;
-do zz times: 
+do 10 times: 
 print l1;
 print "haha"; 
 print 5;
 end
 
-number y;
 foreach y in l1:
 print "numbers are "+y;
 end
 
-string str;
+//number str = 33;
 foreach str in [ "a", "b", "c", "e" ]:
 	print str;
 end
+//print str;
 
 /*string a;
 foreach str in a:
