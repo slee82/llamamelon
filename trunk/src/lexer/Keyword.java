@@ -29,7 +29,11 @@ public class Keyword extends Token {
         returns = new Keyword(Tag.RETURNS, "returns"),
         where = new Keyword(Tag.WHERE, "where"),
         self = new Keyword(Tag.SELF, "self"),
-	ifKwd = new Keyword(Tag.IF, "if"),
-	then = new Keyword(Tag.THEN, "then"),
-	elseKwd = new Keyword(Tag.ELSE, "else");
+    	mydo = new Keyword(Tag.DO, "do"),
+    	times = new Keyword(Tag.TIMES, "times"),
+    	in = new Keyword(Tag.IN, "in"),
+    	ifKwd = new Keyword(Tag.IF, "if"),
+    	then = new Keyword(Tag.THEN, "then"),
+    	elseKwd = new Keyword(Tag.ELSE, "else"),
+    	foreach = new Keyword(Tag.FOREACH, "foreach");
 }
