@@ -85,7 +85,7 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ","     { return Parser.COMMA; }
 
-"and"		{ return Parser.AND; }
+"and"	{ return Parser.AND; }
 
 "or" 	{ return Parser.OR; }
 
@@ -93,19 +93,19 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 "="	{ return Parser.EQL; }
 
-"+" { return Parser.PLUS; }
+"+" 	{ return Parser.PLUS; }
 
-"-" { return Parser.MIN; }
+"-" 	{ return Parser.MIN; }
 
-"*" { return Parser.MULT; }
+"*" 	{ return Parser.MULT; }
 
-"/" { return Parser.DIV; }
+"/" 	{ return Parser.DIV; }
 
-"%" { return Parser.MOD; }
+"%" 	{ return Parser.MOD; }
 
-"++" { return Parser.PPLUS; }
+"++" 	{ return Parser.PPLUS; }
 
-"--" { return Parser.MMIN; }
+"--" 	{ return Parser.MMIN; }
 
 "is"	{ return Parser.IS; }
 	
@@ -133,9 +133,9 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 
 ")"	{ return Parser.CPAREN; }
 
-"[" { return Parser.OSQUARE; }
+"[" 	{ return Parser.OSQUARE; }
 
-"]" { return Parser.CSQUARE; }
+"]" 	{ return Parser.CSQUARE; }
 
 "is"	{ return Parser.IS; }
 
@@ -146,6 +146,12 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 			return Parser.APOSTROPHEESS; 
 			
 		}
+
+ifKwd		{ return Parser.IF; }
+
+then		{ return Parser.THEN; }
+
+elseKwd		{ return Parser.ELSE; }
 
 any             { return Parser.ANY; }
 
@@ -245,3 +251,4 @@ self            {
 
 {Comment} 		{ System.err.println("lexer: found comment"); }
 {WhiteSpace}	{ /* ignore */ }
+
