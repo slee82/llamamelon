@@ -81,11 +81,11 @@ public class IterationStmt extends Stmt {
     	}
     	
     	if (element != null && collection != null)
-    	{
+    	{/*
     		String loopCode = "Iterator<" + element +"> elementIter = "+ element +".iterator();\n"
     		String loopCode +="while (elementIter.hasNext()) { \n";
     		String loopCode +=
-    	}
+    	*/}
     	// dummy for now
     	String loopCode = "";
     	return table.indent() + loopCode;

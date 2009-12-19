@@ -67,7 +67,7 @@ CommentContent          = ( [^*] | \*+ [^/*] )*
 
 /* Constants */
 StringConst	        = \"([^\"\\]|\\.)*\"
-NumericConst		= 0 | [0-9]*[.]?[0-9]+
+NumericConst		= 0 | [-]?[0-9]*[.]?[0-9]+
 
 /* Types */
 Primitive			= number|string|team|player|stat|nothing
