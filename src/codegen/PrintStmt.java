@@ -7,6 +7,7 @@
 package codegen;
 
 import compiler.SymbolTable;
+import lexer.Type;
 
 public class PrintStmt extends Stmt {
 
@@ -15,9 +16,22 @@ public class PrintStmt extends Stmt {
     }
     
     public String stmtCode(SymbolTable table) {
-        String begin = table.indent() + "System.out.println(";
-        begin += toprint.code(table);
-        begin += (");");
+        Type thisType = toprint.getType(table);
+        String begin;
+        // if expr is of type number float fix it 
+        if (thisType.equals(Type.number)){
+        	begin = table.indent() + "System.out.println(Tools.fixFloat(";
+        	begin += toprint.code(table);
+        	begin += "));";
+        }
+        // else continue normally
+        else { 
+        	begin = table.indent() + "System.out.println("; 
+        	begin += toprint.code(table);
+            begin += (");");
+        }
+    	
+               
         
         return begin;
     }
