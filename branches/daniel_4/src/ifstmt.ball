@@ -1,6 +1,8 @@
 if(1>2)then:
-	print "hi";
+	list of number l = [1, 2, 3, 4, 5];
+	print any l;
 else:
-	print "bye";
+	list of number l = [6, 7, 8, 9, 10];
+	print (any l)+1;
 end
 
