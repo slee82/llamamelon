@@ -35,7 +35,7 @@ public class FilterExpr extends Expr {
         public Type getType(SymbolTable table) {
             if (table.hasEntry(inTyp))
                 return (Type)table.getEntry(inTyp);
-            throw new RuntimeException("self: keyword placed not on a 'where' search");
+            throw new RuntimeException("item: keyword placed not on a 'where' search");
         }
 
         /**
@@ -44,7 +44,7 @@ public class FilterExpr extends Expr {
         public String code(SymbolTable table) {
             if (table.hasEntry(inRef))
                 return ((Identifier)table.getEntry(inRef)).getID();
-            throw new RuntimeException("self: keyword placed not on a 'where' search");
+            throw new RuntimeException("item: keyword placed not on a 'where' search");
         }
     }
 
@@ -100,8 +100,8 @@ public class FilterExpr extends Expr {
         return newlist.getID();
     }
         
-    private static final Identifier inRef = new Identifier("self");
-    private static final Identifier inTyp = new Identifier(".self_type");
+    private static final Identifier inRef = new Identifier("item");
+    private static final Identifier inTyp = new Identifier(".item_type");
     
     private Expr list, filter;
 

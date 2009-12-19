@@ -35,5 +35,6 @@ public class Keyword extends Token {
     	ifKwd = new Keyword(Tag.IF, "if"),
     	then = new Keyword(Tag.THEN, "then"),
     	elseKwd = new Keyword(Tag.ELSE, "else"),
+    	stopdo = new Keyword(Tag.STOPDO, "stopdo"),
     	foreach = new Keyword(Tag.FOREACH, "foreach");
 }

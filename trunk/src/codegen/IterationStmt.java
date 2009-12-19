@@ -1,6 +1,3 @@
-/**
- * 
- */
 package codegen;
 
 import lexer.Identifier;
@@ -9,8 +6,12 @@ import compiler.SymbolTable;
 import java.util.LinkedList;
 import java.util.Iterator;
 
+/*
+ * Iteration Statements extends Stmt
+ */
+
 /**
- * @author 
+ * @sam
  * 
  */
 public class IterationStmt extends Stmt {
@@ -25,7 +26,7 @@ public class IterationStmt extends Stmt {
     
     }
     
-    public IterationStmt(Identifier ident1, Identifier ident2, LinkedList<Stmt> bodylist){
+    public IterationStmt(Identifier ident1, Expr ident2, LinkedList<Stmt> bodylist){
     	this.element = ident1;
     	this.collection = ident2;
     	this.bodylist = bodylist;
@@ -34,8 +35,9 @@ public class IterationStmt extends Stmt {
     
     @Override
     public String stmtCode(SymbolTable table) {
-  
-    	if (expr == null) {
+    	
+    	// Infinite do loop
+    	if (expr == null && element == null && collection == null) {
     		String loopCode = "while (true) { \n";
     		
     		SymbolTable inTable = new SymbolTable(true, table);
@@ -48,20 +50,13 @@ public class IterationStmt extends Stmt {
     		loopCode += table.indent() + "}";
     		return table.indent() + loopCode;
     	}
-    	String strExpr = expr.code(table);
-    	Type thisType = expr.getType(table);
-    	System.out.println(thisType);
+    	
+    	// do x times loop
     	if (expr != null) {
-    		//System.out.println(strExpr);
-    		//System.out.println(isNumber(strExpr));
-    		/*if ( !isNumber(strExpr)) {
-    			
-    			throw new RuntimeException ("Incorrect expression type "+strExpr+" needs to be number");
-    		}*/
-    		
-    		/*if(! ltype.equals(rtype)) {
-        		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
-    		*/
+   		
+    		if(! expr.getType(table).equals(Type.number)) {
+        		throw new RuntimeException("Incorrect expression type '"+expr.code(table)+"' needs to be a number");
+    		}
         	String loopCode = "float x = (float) 0; \n";
     		loopCode += table.indent() + "while ( x < ";
     		loopCode += expr.code(table); 
@@ -80,29 +75,39 @@ public class IterationStmt extends Stmt {
     		return table.indent() + loopCode;
     	}
     	
+    	// for each loop
     	if (element != null && collection != null)
-    	{/*
-    		String loopCode = "Iterator<" + element +"> elementIter = "+ element +".iterator();\n"
-    		String loopCode +="while (elementIter.hasNext()) { \n";
-    		String loopCode +=
-    	*/}
-    	// dummy for now
+    	{
+ 
+    		Type collectionType = collection.getType(table);
+    		
+    		if (!(collectionType instanceof ListType)) {
+    			throw new RuntimeException("not iterating over a list");
+    		}
+    		ListType cType = (ListType) collectionType;
+    		
+    		
+    		String loopCode = "for ( " + cType.contents.getType() + " "+ element.getID()+" : "+collection.code(table)+" ) {\n";
+    		
+    		
+    		SymbolTable inTable = new SymbolTable(true, table);
+    		Iterator<Stmt> bodyIter = bodylist.iterator();
+    		while (bodyIter.hasNext()) {
+    			Stmt cur = bodyIter.next();
+    			loopCode += cur.code(inTable) + "\n"; // code for each statement    
+    		}
+    		    loopCode +="}\n";
+    		    return table.indent() + loopCode;
+    	}
+    	// return nothing, if it can't match to a loop type
     	String loopCode = "";
     	return table.indent() + loopCode;
     	
     }
     
-    public boolean isNumber(String num){
-        try{
-            Float.parseFloat(num);
-        } catch(NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-    
+
    
-    Expr expr;
-    Identifier element, collection;
+    Expr expr, collection;
+    Identifier element;
     LinkedList<Stmt> bodylist;
 }
