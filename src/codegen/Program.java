@@ -19,7 +19,7 @@ public class Program extends ParseTreeNode {
     }
 
     public String code(SymbolTable table) {
-        throw new RuntimeException(
+        throw throwErr(
                 "Programs shouldn't be collected as strings.");
     }
 

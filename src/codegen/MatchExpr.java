@@ -27,7 +27,7 @@ public class MatchExpr extends Expr {
     public Type getType(SymbolTable table) {
         Type listType = list.getType(table);
         if (!(listType instanceof ListType))
-            throw new RuntimeException("match: right hand must be a list");
+            throwErr("match: right hand must be a list", list.code(table));
         return ((ListType)listType).contents;
     }
 
@@ -48,7 +48,7 @@ public class MatchExpr extends Expr {
         
         Type listType = list.getType(table);
         if (!(listType instanceof ListType))
-            throw new RuntimeException("match: right hand must be a list");
+            throwErr("match: right hand must be a list", list.code(table));
         Type contents = ((ListType)listType).contents;
         
         String listcode = list.code(table);

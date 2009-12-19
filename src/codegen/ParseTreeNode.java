@@ -15,4 +15,25 @@ public abstract class ParseTreeNode {
     }
     
     public abstract String code(SymbolTable table);
+
+    public void setLine(int line){
+	lineNo = line;
+    }
+
+    public RuntimeException throwErr(String err, String tok){
+	String prepare = "\n==================ERROR==================\n*" + this.getClass().getName()
+		+ "*" + " - " + err + "\nAT LINE: " + lineNo
+		+ ", NEAR: '" + tok + "'." + "\n==================ERROR==================";
+	RuntimeException rtx = new RuntimeException(prepare);
+	throw rtx;
+    }
+
+    public RuntimeException throwErr(String err){
+	String prepare = "\n==================ERROR==================\n*" + this.getClass().getName()
+		+ "*" + " - " + err + "\nAT LINE: " + lineNo;
+	RuntimeException rtx = new RuntimeException(prepare);
+	throw rtx;
+    }
+
+    protected int lineNo = 0;
 }

@@ -49,10 +49,10 @@ public class LogicalExpr extends Expr {
     		return "!(" + valueL.code(table) + ")";
         
     	if(! valueL.getType(table).equals(valueR.getType(table))) {
-    		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
+    		throwErr("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table), valueL.code(table) + getOpCode() + valueR.code(table));
     	}
     	if(! valueL.getType(table).equals(Type.bool)) {
-    		throw new RuntimeException("expr: type is not bool: " + valueL.getType(table) + " and " + valueR.getType(table));
+    		throwErr("expr: type is not bool: " + valueL.getType(table) + " and " + valueR.getType(table), valueL.code(table) + getOpCode() + valueR.code(table));
     	}
         
     	String lcode = valueL.code(table);
@@ -86,7 +86,7 @@ public class LogicalExpr extends Expr {
     
     private Identifier getRes() {
         if (resVar == null) 
-            throw new RuntimeException("expression not generated yet.");
+            throwErr("expression not generated yet.");
         return resVar;
     }
 
