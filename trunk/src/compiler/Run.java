@@ -93,6 +93,9 @@ public class Run {
             if (cur.equals("-k")) keep = true;
         }
         
+        if (keep)
+        	System.err.println("BALL: keeping java files");
+        
         /* 1. Create the output java file */
         
         File javaFile = null;
@@ -114,8 +117,6 @@ public class Run {
             System.err.println("ball: error: " + e.getLocalizedMessage());
             System.exit(2);
         }
-        
-        if (!keep) javaFile.deleteOnExit();
         
         String filename = javaFile.getName();
         String classname = filename.substring(0, filename.length()-5);
@@ -169,9 +170,8 @@ public class Run {
         switch (status) {
         case 0:  // OK
             // Make the class file temporary as well
-            File runfile = new File(javaFile.getParent(), classname + ".class");
-            if (!keep) runfile.deleteOnExit();
-
+            //File runfile = new File(javaFile.getParent(), classname + ".class");
+            
             try {
                 // Try to access the class and run its main method
                 Class<?> run = Class.forName(classname);
@@ -208,7 +208,7 @@ public class Run {
         for (String fname : children) {
             if (fname.startsWith(classname)) {
                 File todel = new File(fname);
-                todel.deleteOnExit();
+                if (!keep) todel.deleteOnExit();
             }
         }
 

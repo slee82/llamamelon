@@ -36,6 +36,7 @@ print "x = " + x;	//100
 print "y = " + y;	//1
 print "z = " + z;	//0
 print "y + z = " + (y + z);
+print "neg " + (-3 * 7);
 
 (x is y);
 x isnot y;
