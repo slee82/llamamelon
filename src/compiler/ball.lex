@@ -153,6 +153,8 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 			return Parser.APOSTROPHEESS;			
 	}
 
+"playball" 	{ return Parser.PLAYBALL; }
+
 any             { return Parser.ANY; }
 
 list            { return Parser.LIST; }
@@ -268,4 +270,3 @@ self            {
 
 {Comment} 		{ System.err.println("lexer: found comment"); }
 {WhiteSpace}	{ /* ignore */ }
-

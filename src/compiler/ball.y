@@ -49,6 +49,7 @@ import codegen.*;
 %token FROM, ANY
 %token APOSTROPHEESS
 %token IF, THEN, ELSE
+%token PLAYBALL
 
 %%
 
@@ -160,6 +161,7 @@ body_statement :
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
     | activate_statement { $$ = $1; }
+    | playball { $$ = $1; }
     
 ;
 
@@ -730,6 +732,12 @@ list_initializer :
         $$ = new ParserVal(linit);
     }
     ;
+
+playball : 
+    PLAYBALL {
+	/* What's this? Nothing, move along. */
+	$$ = new ParserVal(new PlayBall());
+    }
 
 %%
 
