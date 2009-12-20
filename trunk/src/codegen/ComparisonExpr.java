@@ -14,10 +14,6 @@ import lexer.Type;
  */
 public class ComparisonExpr extends Expr {
 
-    public enum Op {
-        IS, ISNOT, GT, LT, GTE, LTE
-    }
-    
     /**
      * Constructor - Takes an operator, left expression and right expression
      * If Right expression is null, the NOT op was used (!)
@@ -29,6 +25,10 @@ public class ComparisonExpr extends Expr {
         this.operator = op;
         this.valueL = exprL;
         this.valueR = exprR;
+    }
+
+    public enum Op {
+        IS, ISNOT, GT, LT, GTE, LTE
     }
     
     @Override

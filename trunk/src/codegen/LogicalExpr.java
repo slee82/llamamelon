@@ -15,9 +15,6 @@ import lexer.Type;
  */
 public class LogicalExpr extends Expr {
 
-    public enum Op {
-        AND, OR, NOT
-    }
     /**
      * Constructor - Takes an operator, left expression and right expression
      * If Right expression is null, the NOT op was used (!)
@@ -29,6 +26,10 @@ public class LogicalExpr extends Expr {
         this.operator = op;
         this.valueL = exprL;
         this.valueR = exprR;
+    }
+
+    public enum Op {
+        AND, OR, NOT
     }
     
     /**

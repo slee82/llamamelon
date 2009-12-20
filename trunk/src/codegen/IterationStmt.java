@@ -85,8 +85,7 @@ public class IterationStmt extends Stmt {
     	}
     	
     	// for each loop
-    	if (element != null && collection != null)
-    	{
+    	if (element != null && collection != null) {
     		// get list type
     		Type collectionType = collection.getType(table);
     		
