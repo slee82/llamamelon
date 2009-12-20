@@ -19,6 +19,8 @@ team bluejays = load("blue jays.team");
 team astros = load("astros.team");
 team nationals = load("nationals.team");
 
+player aroid = "Alex Rodriguez" from yankees's BATTERS;
+
 /*** FOR PITCHERS ***/
 stat pWalk = BB / BF;
 stat pDouble = H * .174 / BF;
@@ -52,9 +54,9 @@ end
  */
 function bestHitters(list of team team1, number top) returns list of player:
 	
-	player nully = any yankees's BATTERS; //because we love the yankees!
+	//player nully = any yankees's BATTERS; //because we love the yankees!
 	
-	list of player allPlayers = [nully];
+	list of player allPlayers = player[];
 	
 	foreach i in team1:
 		allPlayers = allPlayers + i's BATTERS;
@@ -100,7 +102,7 @@ simfunction pitcherSim is:
 	if (team1Points > team2Points) then:
 		return team1;
 	else:
-		if (team1Points < team2Points) then:
+		if (team1Points < team2Points and (team1Points isnot team2Points)) then:
 			return team2;
 		else:
 			print "TIE so we chose: ";
@@ -152,10 +154,54 @@ simfunction anotherSim is:
 	foreach p in team2's BATTERS:
 		team2B -= p's IP + p's H + p's ER + p's HR + p's BB + p's K + p's BF;
 	
-	do:
-		
+
+	list of player bestBatters = topBatters([team1,team2],5);	
 	
+	foreach p in bestBatters:
+		foreach q in team1's BATTERS:
+			if (p is q) then:
+				team1B /= 2;
+			end	
+		end
+	end
+	
+	foreach p in bestBatters:
+		foreach q in team2's BATTERS:
+			if (p is q) then:
+				team2B /= 2;
+			end	
+		end
+	end 
+	
+	number useless = 0;
+	do:
+		useless++;
+		if (useless >= 10 or (useless % 9 is 8)) then:
+			stopdo;
+	 	end
+	end
+	 
+	if ((team1B + team1P) < (team2B + team2P) ) then:
+		return team1;
+	else:
+		return team2;
+	end
+	
+	return team1;
 	
 end
 
+activate anotherSim;
 
+t1 = 0;
+t2 = 0;
+do 100 times:
+	team winner = sim(Team1, Team2, 1);
+	if (winner is Team1) then:
+		t1++;
+	else:
+		t2++;
+	end
+end
+print "N: " + t1;
+print "Y: " + t2;
