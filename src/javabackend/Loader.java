@@ -224,6 +224,7 @@ public class Loader {
 		double IP = 0;
 		int H = 0;
 		int ER = 0;		//initializing everything.
+		int HR = 0;
 		int BB = 0;
 		int K = 0;
 		int BF = 0;
@@ -238,6 +239,7 @@ public class Loader {
 				IP = 0;
 				H = 0;
 				ER = 0;
+				HR = 0;
 				BB = 0;
 				K = 0;
 				BF = 0;
@@ -248,6 +250,7 @@ public class Loader {
 				IP = Double.parseDouble(strtok.nextToken().trim());
 				H = Integer.parseInt(strtok.nextToken().trim());
 				ER = Integer.parseInt(strtok.nextToken().trim());
+				HR = Integer.parseInt(strtok.nextToken().trim());
 				BB = Integer.parseInt(strtok.nextToken().trim());
 				K = Integer.parseInt(strtok.nextToken().trim());
 				BF = Integer.parseInt(strtok.nextToken().trim());
@@ -260,7 +263,7 @@ public class Loader {
 			}
 			
 			//Add this new player
-			pitchers.add(new PlayerObj(pitcherName, PlayerObj.PITCHER, IP, H, ER, BB, K, BF));
+			pitchers.add(new PlayerObj(pitcherName, PlayerObj.PITCHER, IP, H, ER, HR, BB, K, BF));
 			line = percolateThrough(in);
 		}
 		return pitchers;
