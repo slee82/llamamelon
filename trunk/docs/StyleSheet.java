@@ -1,5 +1,5 @@
 /*
- * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * COMS W4115 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
  * Team llamamelon - BALL language
  * StyleSheet.java - style sheet for Java classes
  */
@@ -44,7 +44,7 @@ import javabackend.TeamObj;
  */
 
 /**
- * Comments before a class uses Javadoc style. It is REQUIRED, even if just one
+ * Comments before a class are highly recommended, even if just one
  * sentence. Give a brief description of what role it has in the compiler. 
  * 
  * Class names are capitalized on each word. 
