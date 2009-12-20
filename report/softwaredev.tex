@@ -1,0 +1,42 @@
+\chapter{Development Environment}\label{DevelEnv}
+
+\section{Software Development Environment}
+
+The software development environment that was chosen to create the
+BALL compiler was Eclipse, running on Ubuntu distribution of Linux
+OS. Ubuntu was chosen as the OS because it is open source and was
+easily available to all team members. Eclipse was chosen specifically
+because of its seamless integration with both Java and Subversion
+revision control system. Most of the other tools used were selected
+because the majority of the team members were already familiar with
+them. Google Code was specially helpful in bringing everything
+together since it made available to us features that were invaluable
+at every stage of our compiler design. For the majority of the early
+stages of our project, the record of our brainstorming sessions were
+kept in a wiki stored on Google Code. This was a very helpful resource
+that made it easy to trace the language and feature set
+evolution. Likewise, without the ability to store our version
+controlled code on Google Code, the development cycle would have been
+extremely difficult to coordinate. In summary the most important tools
+used are listed in the section below.
+
+Ubuntu Linux
+Eclipse
+Java
+Google Code
+Subversion
+JFlex
+BYACC/J
+
+\section{Implementation Languages and Tools}
+
+Java was used to develop and build our BALL compiler to leverage the
+considerable expertise that our team members possessed. It was also
+specially helpful that Java is highly portable and enabled our BALL
+compiler to work wherever Java runs. Only Java standard libraries were
+used in the creation of our compiler, to simplify and further increase
+the portability of BALL. Jflex \& BYACC/J the Java flavor version of
+Lex and Yacc were used to build our lexer and parser. Finally Ant was
+used to write buildfiles to automate the compilation process of our
+package, and a bash shell script is used to compile and run BALL
+source files.  
