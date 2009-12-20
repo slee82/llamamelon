@@ -176,7 +176,7 @@ type :
     | LIST OF type { 
         $$ = new ParserVal(new ListType((Type)$3.obj));
     }
-
+;
 /*
  * In BALL, function definitions can only happen in the top level. Naturally,
  * the only variables they'll get access to is global variables, parameters,
