@@ -1,3 +1,9 @@
+/*
+ * COMS W4115 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
+ * BuiltinFuncDef.java - Represents Func Def in the symbol table
+ */
 package codegen;
 
 import java.util.LinkedHashMap;

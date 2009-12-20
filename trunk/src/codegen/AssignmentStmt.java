@@ -1,5 +1,8 @@
-/**
- * 
+/*
+ * COMS W4115 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
+ * AssignmentStmt.java - Code Generator for Assignment statements
  */
 package codegen;
 
