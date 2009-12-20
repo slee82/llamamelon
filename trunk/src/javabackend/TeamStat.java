@@ -1,3 +1,9 @@
+/*
+ * COMS W4115 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
+ * TeamStat.java - this is a template of what a team teamlist looks like.
+ */
 package javabackend;
 
 /**
