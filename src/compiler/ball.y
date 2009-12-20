@@ -47,7 +47,7 @@ import codegen.*;
 %token WHERE, SELF
 %token LIST, OF
 %token FROM, ANY
-%token APOSTROPHEESS
+%token APOSTROPHEESS, PLAYBALL
 %token IF, THEN, ELSE
 %token DO, TIMES, FOREACH, IN, STOPDO
 
@@ -83,7 +83,7 @@ import codegen.*;
  */
 program : 
     statement_list { 
-        System.err.println("adding node for _program_");
+        //System.err.println("adding node for _program_");
         LinkedList<Stmt> stlist = (LinkedList<Stmt>)$1.obj;
         Program top = new Program(stlist, outname);
         top.gen(table); // moves to intermediate code generation stage
@@ -181,7 +181,7 @@ type :
  */
 function_definition :
     FUNCTION IDENTIFIER OPAREN parameter_list0 CPAREN RETURNS type COLON END {
-        System.err.println("parser: function definition");
+        //System.err.println("parser: function definition");
     
         Identifier name = (Identifier)$2.obj;
     
@@ -198,7 +198,7 @@ function_definition :
     	$$ = new ParserVal(newfun);
     }
     | FUNCTION IDENTIFIER OPAREN parameter_list0 CPAREN RETURNS type COLON body_statement_list END {
-        System.err.println("parser: function definition");
+        //System.err.println("parser: function definition");
         
         Identifier name = (Identifier)$2.obj;
         
@@ -234,7 +234,7 @@ parameter_list0 :
  */
 sim_function_definition :
     SIMFUNCTION IDENTIFIER IS COLON body_statement_list END {
-        System.err.println("parser: simfunction definition");
+        //System.err.println("parser: simfunction definition");
         
         Identifier name = (Identifier)$2.obj;
         LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$5.obj;
@@ -626,7 +626,7 @@ argument_list :
 /* ATOM_EXPRESSION */
 atom_expression : 
     STRING { 
-        System.err.println("got string " + $1.obj); 
+        //System.err.println("got string " + $1.obj); 
         $$ = new ParserVal(new AtomicExpr((StringConst)($1.obj)));
     }
     | IDENTIFIER {
