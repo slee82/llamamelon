@@ -10,12 +10,19 @@ import lexer.Identifier;
 
 import compiler.SymbolTable;
 
+/**
+ * Activation statement replaces (doesn't keep around the old) the simfunction
+ * used for the builtin sim(). It doesn't need to check the type because a
+ * simfunction is already a special kind of function.  
+ */
 public class ActivateStmt extends Stmt {
 
+	// just need to know the name.
     public ActivateStmt(Identifier theName) {
         this.name = theName;
     }
     
+    // generate code to swap simfunction
     public String stmtCode(SymbolTable table) {
         Object def = table.getEntry(name);
         if (!(def instanceof SimFuncDef)) {
