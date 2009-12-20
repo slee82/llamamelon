@@ -21,7 +21,7 @@ echo "tools.jar not found"
 fi
 
 else
-echo "please switch to the $dir directory to run BALL"
+echo "please run this script from the $dir directory"
 fi
 
 
