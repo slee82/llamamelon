@@ -1,3 +1,8 @@
+/*
+ * Simple Load
+ * And Print
+ * It works
+ */
 team Dodgers = load("dodgers.team"), Astros = load("astros.team");
 print "THE DODGERS:";
 print Dodgers;
