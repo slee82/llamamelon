@@ -42,7 +42,7 @@ function randomizeProbabilities() returns nothing:
 end
 /*BASIC SIMULATION FUNCTION*/ 
 simfunction basicSimulation is:    number team1Score = 0; 
-    number team2Score = 0;	/*Note: team1 and team2 are global 
+    number team2Score = 0;    /*Note: team1 and team2 are global 
     variables that represent the teams that the 
     sim function is currently working with. 
     The sim function sets them automatically.*/
