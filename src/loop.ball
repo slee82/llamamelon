@@ -35,7 +35,7 @@ end*/
 
 number a = 0;
 do:
-print "you suck";
+print "loooooops";
 a++;
 if (a > 10) then:
 stopdo;
