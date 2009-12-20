@@ -1,3 +1,9 @@
+/*
+ * COMS W4115 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
+ * ListType.java - Extends Type to add list functionality
+ */
 package codegen;
 import lexer.Type;
 
