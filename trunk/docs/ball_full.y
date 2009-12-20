@@ -1,237 +1,294 @@
 /*
  * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
  * Team llamamelon - BALL language
- * ball_full.y - prototype full grammar
+ * ball_full.y - summary of the full grammar
  */
 
-%token identifier
-%token string
-%token number
+%token STRING IDENTIFIER NUMBER
+%token SEMICOLON COLON COMMA
+%token AND OR NOT
+%token EQL PLUSEQL MINEQL MULTEQL DIVEQL MODEQL
+%token PLUS MIN MULT DIV MOD
+%token PPLUS MMIN
+%token IS ISNOT GT LT GTE LTE
+%token OPAREN CPAREN OSQUARE CSQUARE
+%token PRINT ACTIVATE
+%token FUNCTION SIMFUNCTION STAT RETURN RETURNS
+%token PRIMITIVE
+%token END
+%token WHERE SELF
+%token LIST OF
+%token FROM ANY
+%token APOSTROPHEESS
+%token IF THEN ELSE
+%token DO TIMES FOREACH IN STOPDO
 
 
 %%
-/***PROGRAM***/
-program : statement_list
-        ;
 
-statement_list : statement
-               | statement_list statement
-               ;
+/*** PROGRAM ***/
+program : 
+    statement_list
+;
 
-statement : function_definition
-          | sim_function_definition
-          | body_statement
-          ;
+statement_list : 
+    statement
+    | statement_list statement 
+;
 
-body_statement_list : body_statement
-                    | body_statement_list body_statement
-                    ;
-
-/*Body Statements are all statements except function declarations*/
-body_statement : if_statement
-               | iteration_statement
-               | jump_statement
-               | declaration
-               | stat_declaration
-               | expression_statement
-               | activate_statement
-               | print_statement
-               | assignment_statement
-               ;
-
-/**FUNCTION_DEFINITION**/
-function_definition : "function" identifier "(" parameter_list0 ")" "returns" type ":" body_statement_list "end"
-                    ;
-
-parameter_list0 :
-                | parameter_list
-                ;
-
-parameter_list : parameter
-               | parameter_list "," parameter
-               ;
-
-parameter : type identifier
-          ;
-
-/**SIM_FUNCTION_DEFINITION**/
-sim_function_definition : "simfunction" identifier "is:" body_statement_list "end"
-                        ;
-
-/**ACTIVATE_STATEMENT**/
-activate_statement : "activate" identifier ";"
-                   ;
-
-/**PRINT_STATEMENT**/
-print_statement : "print" expression ";"
-                ;
-
-/**IF_STATEMENT**/
-if_statement : "if" "(" expression ")" "then:" body_statement_list "end"
-             | "if" "(" expression ")" "then:" body_statement_list else_statement "end"
-             ;
-
-else_statement : "else:" body_statement_list
-               ;
-
-/**ITERATION_STATEMENT**/
-iteration_statement : "do:" body_statement_list "end"
-                    | "do" expression "times:" body_statement_list "end"
-                    | "foreach" identifier "in" identifier ":" body_statement_list "end"
-                    ;
-
-/**JUMP_STATEMENT**/
-jump_statement : "stopdo" ";"
-               | "return" expression ";"
-               | "return" ";"
-               ;
-              
-/**ASSIGNMENT_STATEMENT**/ 
-assignment_statement : identifier assignment_operator expression ";"
-                     ;
-
-assignment_operator : "=" | "+=" | "-=" | "*=" | "/=" | "%=" ;
-
-/**DECLARATION**/
-declaration : type variable_declarators ";"
-            ;
-
-variable_declarators : variable_declarator
-                     | variable_declarators "," variable_declarator
-                     ;
-
-variable_declarator : identifier
-                    | identifier "=" expression
-                    ;
+statement : 
+    body_statement
+    | function_definition
+    | sim_function_definition
+;
 
 /*
- * This is necessary because the compilation rules for stat declarations are
- * different to variable declarations. In variable declarations, the expression
- * is evaluated, but in stat declarations the expression is encapsulated into
- * a function.
+ * Similar to statement_list, but specifically for body statements, that is
+ * function bodies, if blocks, et cetera.
  */
-stat_declaration : "stat" identifier "=" stat_expression ";"
-                 ;
+body_statement_list : 
+    body_statement
+    | body_statement_list body_statement
+;
 
-stat_expression : stat_mult_expr
-                | stat_expression "+" stat_mult_expr
-                | stat_expression "-" stat_mult_expr
-                ;
+/*
+ * Body Statements are all statements except function declarations. Having
+ * function declarations not on the top level (corresponding to the 'class'
+ * level of the java output) is not supported by the BALL language. 
+ */
+body_statement : 
+    declaration
+    | stat_declaration 
+    | expression_statement 
+    | if_statement 
+    | print_statement 
+    | jump_statement 
+    | assignment_statement  
+    | activate_statement 
+    | iteration_statement 
+;
 
-stat_mult_expr : stat_atom_expr
-               | stat_mult_expr "*" stat_atom_expr
-               | stat_mult_expr "/" stat_atom_expr
-               | stat_mult_expr "%" stat_atom_expr
+/** FUNCTION DEFINITION **/
+
+type :
+    PRIMITIVE
+    | LIST OF type
+;
+
+/*
+ * In BALL, function definitions can only happen in the top level. Naturally,
+ * the only variables they'll get access to is global variables, parameters,
+ * and variables declared in the body itself. 
+ */
+function_definition :
+    FUNCTION IDENTIFIER OPAREN parameter_list0 CPAREN RETURNS type COLON END
+    | FUNCTION IDENTIFIER OPAREN parameter_list0 CPAREN RETURNS type COLON body_statement_list END
+;
+
+parameter_list0 :
+    // empty string
+    | parameter_list 
+;
+
+/** SIM_FUNCTION_DEFINITION **/
+
+sim_function_definition :
+    SIMFUNCTION IDENTIFIER IS COLON body_statement_list END
+;
+
+parameter_list : 
+    parameter
+    | parameter_list COMMA parameter
+;
+
+parameter : 
+    type IDENTIFIER
+;
+
+/**PRINT_STATEMENT**/
+print_statement : 
+    PRINT expression SEMICOLON
+;
+
+/**IF_STATEMENT**/
+if_statement : IF OPAREN expression CPAREN THEN COLON body_statement_list END
+             | IF OPAREN expression CPAREN THEN COLON body_statement_list else_statement END
+             ;
+
+else_statement : ELSE COLON body_statement_list
                ;
 
-stat_atom_expr : identifier
-               | number
-               | "(" stat_expression ")"
-               ;
 
-/*TYPE*/
-type : "number"
-     | "string"
-     | "list"
-     | "team"
-     | "player"
-     //| "stat"
-     | "nothing"
-     | list_type
-     ;
+/**DECLARATION**/
+declaration : 
+    type variable_declarators SEMICOLON
+;
 
-list_type : "list" "of" type
-          ;
+variable_declarators : 
+    variable_declarator
+    | variable_declarators COMMA variable_declarator
+;
+
+variable_declarator : 
+    IDENTIFIER
+    | IDENTIFIER EQL expression
+;
+
+/* STAT DECLARATION */
+stat_declaration : 
+    STAT IDENTIFIER EQL stat_expression SEMICOLON
+;
+
+/* stats don't have access to the full expression grammar, just a part of it */
+stat_expression : 
+    stat_mult_expr
+    | stat_expression PLUS stat_mult_expr
+    | stat_expression MIN stat_mult_expr
+    ;
+
+stat_mult_expr : 
+    stat_atom_expr
+    | stat_mult_expr MULT stat_atom_expr
+    | stat_mult_expr DIV stat_atom_expr
+    | stat_mult_expr MOD stat_atom_expr
+    ;
+
+stat_atom_expr : 
+    IDENTIFIER
+    | NUMBER
+    | OPAREN stat_expression CPAREN
+    ;
+
+jump_statement : 
+    RETURN expression SEMICOLON
+    | STOPDO SEMICOLON
+;
+
+/**ASSIGNMENT_STATEMENT**/ 
+assignment_statement :
+    IDENTIFIER assignment_operator expression SEMICOLON
+;
+
+/**ITERATION_STATEMENT**/
+iteration_statement :
+	DO COLON body_statement_list END
+	| DO expression TIMES COLON body_statement_list END 
+	| FOREACH IDENTIFIER IN expression COLON body_statement_list END 
+;
+
+/* operators of assignment */
+assignment_operator : 
+    EQL
+    | PLUSEQL
+    | MINEQL 
+    | MULTEQL
+    | DIVEQL 
+    | MODEQL 
+;
+
+/**ACTIVATE_STATEMENT**/ 
+activate_statement :
+    ACTIVATE IDENTIFIER SEMICOLON
+;
 
 
 /**EXPRESSION_STATEMENT**/
-expression_statement : ";"
-                     | expression ";"
-                     ;
+expression_statement : 
+    SEMICOLON
+    | expression SEMICOLON
+;
 
-/*EXPRESSION*/
-expression : logical_or_expression
-           ;
 
-/*LOGICAL*/
-logical_or_expression : logical_and_expression
-                      | logical_or_expression "or" logical_and_expression
-                      ;
+/* EXPRESSION */
+expression : logical_or_expression 
+;
+/* LOGICAL */
+logical_or_expression :
+	logical_and_expression
+    | logical_or_expression OR logical_and_expression
+;
 
-logical_and_expression : logical_not_expression
-                       | logical_and_expression "and" logical_not_expression
-                       ;
+logical_and_expression :
+	logical_not_expression
+    | logical_and_expression AND logical_not_expression
+;
 
-logical_not_expression : comparison_expression
-                       | "not" logical_not_expression
-                       ;
+logical_not_expression : 
+    comparison_expression
+    | NOT logical_not_expression
+;
 
-/*COMPARISON*/
+
+/* COMPARISON */
 comparison_expression : addition_expression
-                      | comparison_expression "is"   addition_expression
-                      | comparison_expression "isnot" addition_expression
-                      | comparison_expression ">"    addition_expression
-                      | comparison_expression "<"    addition_expression
-                      | comparison_expression ">="   addition_expression
-                      | comparison_expression "<="   addition_expression
-                      ;
+                      | comparison_expression IS   addition_expression
+                      | comparison_expression ISNOT addition_expression 
+                      | comparison_expression GT    addition_expression
+                      | comparison_expression LT    addition_expression
+                      | comparison_expression GTE   addition_expression
+                      | comparison_expression LTE   addition_expression
+;
 
-/*ARITHMETIC*/
+/* ARITHMETIC */
 addition_expression : multiplication_expression
-                    | addition_expression "+" multiplication_expression
-                    | addition_expression "-" multiplication_expression
-                    ;
+                    | addition_expression PLUS multiplication_expression
+                    | addition_expression MIN multiplication_expression
+;
 
 multiplication_expression : unary_expression
-                          | multiplication_expression "*" unary_expression
-                          | multiplication_expression "/" unary_expression
-                          | multiplication_expression "%" unary_expression
-                          ;
+			  | multiplication_expression MULT unary_expression
+              | multiplication_expression DIV unary_expression
+              | multiplication_expression MOD unary_expression
+;
 
-/*UNARY*/
-unary_expression : postfix_expression
-                 | "++" unary_expression
-                 | "--" unary_expression
-                 | primary_expression "from" unary_expression
-                 | "any" unary_expression
-                 ;
+/* UNARY */
+unary_expression : 
+    postfix_expression
+    | PPLUS unary_expression
+    | MMIN unary_expression
+    | primary_expression FROM unary_expression
+    | ANY unary_expression
+;
 
-/*POSTFIX*/
-postfix_expression : primary_expression
-                   | postfix_expression "'s" identifier // attribute/stats call
-                   | postfix_expression "where" "(" expression ")"
-                   | postfix_expression "++"
-                   | postfix_expression "--"
-                   ;
+/* POSTFIX */
+postfix_expression : 
+    primary_expression
+    | postfix_expression APOSTROPHEESS IDENTIFIER 
+    | postfix_expression WHERE OPAREN expression CPAREN
+    | postfix_expression PPLUS
+    | postfix_expression MMIN 
+;
 
-/*PRIMARY*/
-primary_expression : atom_expression
-                   | function_call
-                   ;
+/* PRIMARY */
+primary_expression : 
+    atom_expression
+	| function_call
+;
 
-/*FUNCTION_CALL*/
-function_call : identifier "(" ")"
-              | identifier "(" argument_list ")"
-              ;
+/* FUNCTION_CALL */
+function_call : IDENTIFIER OPAREN CPAREN
+              | IDENTIFIER OPAREN argument_list CPAREN
+;
 
-argument_list : expression
-              | argument_list "," expression
-              ;
+argument_list : 
+    expression
+    | argument_list COMMA expression
+;
 
-/*ATOM_EXPRESSION*/
-atom_expression : identifier
-                | number
-                | string
-                | list_initializer
-                | "nothing"
-                | "(" expression ")" // completes the cycle
-                ;
 
-list_initializer : "[" variable_list "]"
-                 | "[" "]"
-                 ;
+/* ATOM_EXPRESSION */
+atom_expression : 
+    STRING
+    | IDENTIFIER
+    | NUMBER
+    | OPAREN expression CPAREN
+    | list_initializer
+    | SELF
+;
 
-variable_list : expression
-              | variable_list "," expression
-              ;
+list_initializer : 
+    OSQUARE argument_list CSQUARE 
+    | type OSQUARE CSQUARE
+    ;
+
 %%

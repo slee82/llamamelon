@@ -26,11 +26,11 @@ import codegen.*;
 %token NUMBER
 %token SEMICOLON
 %token COLON
-%token AND, OR, NOT
-%token EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
-%token PLUS, MIN, MULT, DIV, MOD
-%token PPLUS, MMIN
-%token IS, ISNOT, GT, LT, GTE, LTE
+%token AND OR NOT
+%token EQL PLUSEQL MINEQL MULTEQL DIVEQL MODEQL
+%token PLUS MIN MULT DIV MOD
+%token PPLUS MMIN
+%token IS ISNOT GT LT GTE LTE
 %token COMMA
 %token OPAREN
 %token CPAREN
@@ -45,12 +45,12 @@ import codegen.*;
 %token RETURNS
 %token PRIMITIVE
 %token END
-%token WHERE, SELF
-%token LIST, OF
-%token FROM, ANY
-%token APOSTROPHEESS, PLAYBALL
-%token IF, THEN, ELSE
-%token DO, TIMES, FOREACH, IN, STOPDO
+%token WHERE SELF
+%token LIST OF
+%token FROM ANY
+%token APOSTROPHEESS PLAYBALL
+%token IF THEN ELSE
+%token DO TIMES FOREACH IN STOPDO
 
 %%
 
@@ -175,6 +175,7 @@ type :
     | LIST OF type {
         $$ = new ParserVal(new ListType((Type)$3.obj));
     }
+;
 
 /*
  * In BALL, function definitions can only happen in the top level. Naturally,
@@ -295,7 +296,7 @@ parameter :
         param[1] = (Object)$2.obj;
         $$ = new ParserVal(param);
     }
-    ;
+;
 
 /**PRINT_STATEMENT**/
 print_statement : 
@@ -320,7 +321,7 @@ if_statement : IF OPAREN expression CPAREN THEN COLON body_statement_list END {
 			ifstatement.setLine(currLine());
 			$$ = new ParserVal(ifstatement);
 	     }
-             ;
+;
 
 else_statement : ELSE COLON body_statement_list { $$ = $3; }
                ;
@@ -444,9 +445,6 @@ stat_atom_expr :
  * function bodies themselves are multi-layered structures, the "return"
  * statement might be buried deep somewhere inside a loop within a conditional
  * inside another loop, for example.
- * 
- * TODO: implement multi-layered return checking. In particular, examine return
- *       types of statements that contain statements.
  */
 jump_statement : 
     RETURN expression SEMICOLON {
@@ -502,6 +500,7 @@ iteration_statement :
 		stmt.setLine(currLine());
 		$$ = new ParserVal(stmt);
 	}
+;
 
 /* operators of assignment */
 assignment_operator : 
@@ -547,29 +546,32 @@ expression : logical_or_expression { $$ = $1; }
 ;
 
 /* LOGICAL */
-logical_or_expression : logical_and_expression
-                      | logical_or_expression OR logical_and_expression { 
+logical_or_expression :
+	logical_and_expression { $$ = $1; }
+    | logical_or_expression OR logical_and_expression { 
 			LogicalExpr logicalex = new LogicalExpr(LogicalExpr.Op.OR,(Expr)$1.obj, (Expr)$3.obj);
 			logicalex.setLine(currLine());
-                    	$$ = new ParserVal(logicalex);
-		      }
-                      ;
+           	$$ = new ParserVal(logicalex);
+	}
+;
 
-logical_and_expression : logical_not_expression
-                       | logical_and_expression AND logical_not_expression {  
+logical_and_expression :
+	logical_not_expression { $$ = $1; }
+    | logical_and_expression AND logical_not_expression {  
 			LogicalExpr logicalex = new LogicalExpr(LogicalExpr.Op.AND,(Expr)$1.obj, (Expr)$3.obj);
 			logicalex.setLine(currLine());
-                    	$$ = new ParserVal(logicalex);
-		       }
-                       ;
+            $$ = new ParserVal(logicalex);
+	}
+;
 
-logical_not_expression : comparison_expression
-                       | NOT logical_not_expression { 
+logical_not_expression : 
+    comparison_expression { $$ = $1; }
+    | NOT logical_not_expression { 
 			LogicalExpr logicalex = new LogicalExpr(LogicalExpr.Op.NOT,(Expr)$2.obj, null);
 			logicalex.setLine(currLine());
-                    	$$ = new ParserVal(logicalex);
-		       }
-                       ;
+           	$$ = new ParserVal(logicalex);
+	}
+;
 
 
 /* COMPARISON */
@@ -617,11 +619,11 @@ multiplication_expression : unary_expression
 					ArithmeticExpr arex = new ArithmeticExpr(ArithmeticExpr.Op.MULT,(Expr)$1.obj, (Expr)$3.obj);
 					arex.setLine(currLine());
                     			$$ = new ParserVal(arex);}
-                    	  | multiplication_expression DIV unary_expression {  
+              | multiplication_expression DIV unary_expression {  
 					ArithmeticExpr arex = new ArithmeticExpr(ArithmeticExpr.Op.DIV,(Expr)$1.obj, (Expr)$3.obj);
 					arex.setLine(currLine());
                     			$$ = new ParserVal(arex);}
-                    	  | multiplication_expression MOD unary_expression {  
+              | multiplication_expression MOD unary_expression {  
 					ArithmeticExpr arex = new ArithmeticExpr(ArithmeticExpr.Op.MOD,(Expr)$1.obj, (Expr)$3.obj);
 					arex.setLine(currLine());
                     			$$ = new ParserVal(arex);}
