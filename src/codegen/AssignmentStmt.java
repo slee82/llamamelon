@@ -16,14 +16,14 @@ import compiler.SymbolTable;
  */
 public class AssignmentStmt extends Stmt {
 
-    public enum Op {
-        EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
-    }
-
     public AssignmentStmt(Identifier identifier, Op op, Expr expr) {
         this.name = identifier;
         this.operator = op;
         this.value = expr;
+    }
+
+    public enum Op {
+        EQL, PLUSEQL, MINEQL, MULTEQL, DIVEQL, MODEQL
     }
 
     /*

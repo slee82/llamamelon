@@ -15,13 +15,6 @@ import lexer.Type;
  */
 public class UnaryExpr extends Expr {
 
-    public enum Op {
-        PPLUS, MMIN
-    }
-    
-    public enum Fix {
-        PRE, POST
-    }
     /**
      * Constructor - Takes an operator, left expression and right expression
      * @param op
@@ -32,6 +25,14 @@ public class UnaryExpr extends Expr {
         this.operator = op;
         this.value = expr;
         this.fix = f;
+    }
+
+    public enum Op {
+        PPLUS, MMIN
+    }
+    
+    public enum Fix {
+        PRE, POST
     }
     
     @Override
@@ -52,7 +53,8 @@ public class UnaryExpr extends Expr {
         		insert.insert(table.indent() + "float " + tempID.getID() + " = " + code + getOpCode() + ";\n");
         		return tempID.getID();
         	}
-        } else {
+        } 
+        else {
             throw throwErr("expr: type " + type + " unsuitable for unary operation " + getOpCode(), getOpCode());
         }
     }
@@ -63,7 +65,8 @@ public class UnaryExpr extends Expr {
         
         if (type.equals(Type.number)) {
             return Type.number;
-        } else {
+        } 
+        else {
             throw throwErr("expr: type " + value.getType(table) + " unsuitable for unary operation " + getOpCode(), getOpCode());
         }
     }
