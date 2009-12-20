@@ -1,4 +1,19 @@
+/*
+ *
+/* TEST FOR ASSIGNMENTS
+ *
+ * OUTPUT:
+ * -------
+ * hello
+ * 32
+ * bawah
+ * 10
+ * hello
+ * 5
+ */
+
 string hello = "hello";
+//number num *= 3;	//should break
 number num = 3;
 //myfun2(33); // this fails now
 
@@ -10,7 +25,7 @@ number num = 3;
  * - return value
  */
 function myfun ( number p, number q, string k ) returns number :
-	print p;
+	print p;	
 	number inside = 100;
 	string inside2 = "inside";
 	k = "bawah";
@@ -33,19 +48,18 @@ end
 // function call with multiple arguments
 
 print hello;
-print myfun(num, num, hello);
-print hello;
+
+/*
+ *	Prints 32 and Bawah
+ */
+print myfun(num, num, hello);	
+print hello; //prints "hello"
 
 print 5;
 
-/*
- * OUTPUT:
- * -------
- * hello
- * 32.0
- * bawah
- * 3.0
- * 10.0
- * hello
- * 5
- */
+/*	SHOULD BREAK	*/
+//stat mystat = hello;
+//stat = nothing;
+//list of player caca;
+//caca = inside;
+
