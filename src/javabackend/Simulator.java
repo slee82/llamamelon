@@ -10,7 +10,7 @@ package javabackend;
 public class Simulator {
 	
     /** Main function just for testing. (TODO: Delete)*/
-    public static void main(String args[]){
+    public static void main(String args[]) {
         theSimFunction = new SimFunction() {
             public TeamObj doSim(TeamObj team1, TeamObj team2){
                 return team1;
@@ -22,7 +22,7 @@ public class Simulator {
 
     /* sim() function
      * Takes two teams and a number, returns the winner.*/
-    public static TeamObj sim(TeamObj team1, TeamObj team2, float number){
+    public static TeamObj sim(TeamObj team1, TeamObj team2, float number) {
 	//Keep track of how many times each team won
 	int team1Wins=0;
 	int team2Wins=0;

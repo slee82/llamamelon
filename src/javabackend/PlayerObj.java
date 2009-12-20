@@ -162,12 +162,13 @@ public class PlayerObj implements BallDataType {
         return Name;
     }
 
-    public String toString(){
+    public String toString() {
         String toReturn = "";
 
         if(type == BATTER){	//Create concatenation depending on player type
             toReturn = Name+","+ab+","+r+","+h+","+dbl+","+tpl+","+hr+","+bb;
-        }else {
+        }
+        else {
             toReturn += Name+","+ip+","+h+","+er+","+bb+","+k;
         }
 
