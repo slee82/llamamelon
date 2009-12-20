@@ -51,7 +51,7 @@ public class ListInit extends AtomicExpr {
                  * Therefore, a list variable is confined to always point
                  * to lists of the same content type.
                  */
-                throwErr("listinit: element type mismatch, expected " 
+                throw new RuntimeException("listinit: type mismatch, expected " 
                         + t + ", got " + e);
             }
         }

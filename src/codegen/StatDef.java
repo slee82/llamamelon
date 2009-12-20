@@ -14,7 +14,7 @@ public class StatDef extends Declaration {
     
     public Type getType() {
         if (ownType == null) {
-            throwErr("trying to get type before initialization", name.getID());
+            throw new RuntimeException("trying to get type before init");
         }
         return this.ownType;
     }
@@ -23,11 +23,11 @@ public class StatDef extends Declaration {
         // stats can be overloaded (I suppose so, since variables can, and
         // stats are on the same level as variables, because of body_statement
         if (!table.available(this.name)) {
-            throwErr("statdef: error: name " + this.name + " in use for " + 
-                    table.getEntry(this.name), this.name.getID());
+            throw new RuntimeException("statdef: error: name " + this.name + " in use for " + 
+                    table.getEntry(this.name));
         }
         if (isInside(table))
-            throwErr("statdef: error: already in a stat def", name.getID());
+            throw new RuntimeException("statdef: error: already in a stat def");
         
         /*
          * markTable is a symbol table that has .in_stat_decl stored in it. What
@@ -54,11 +54,11 @@ public class StatDef extends Declaration {
          * possible time, probably in the Program() node.
          */
         if (!markTable.hasEntry(type)) {
-            throwErr("statdef: error: stat type cannot be "
-                    + "resolved using builtins.", name.getID());
+            throw new RuntimeException("statdef: error: stat type cannot be "
+                    + "resolved using builtins.");
         } else if (!markTable.hasEntry(argname)) {
-            throwErr("statdef: error: stat argname cannot be "
-                    + "resolved.", name.getID());
+            throw new RuntimeException("statdef: error: stat argname cannot be "
+                    + "resolved.");
         }
         
         // PlayerStat or TeamStat
@@ -68,7 +68,7 @@ public class StatDef extends Declaration {
         Type argType = null;
         if (statType.equals(Type.playerStat)) argType = Type.player;
         else if (statType.equals(Type.teamStat)) argType = Type.team;
-        else throwErr("statdef: unexpected statType " + statType, name.getID());
+        else throw new RuntimeException("statdef: unexpected statType " + statType);
         
         // what name to call the object that will be passed to the expression
         Identifier argName = (Identifier)markTable.getEntry(argname);

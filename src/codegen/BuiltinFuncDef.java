@@ -20,15 +20,15 @@ public class BuiltinFuncDef extends FuncDef {
     }
 
     public String stmtCode(SymbolTable table) {
-        throw throwErr("error: trying to fetch definition of builtin " + name, name.getID());
+        throw new RuntimeException("error: trying to fetch definition of builtin " + name);
     }
     
     public String globalCode() {
-        throw throwErr("error: trying to fetch definition of builtin " + name, name.getID());
+        throw new RuntimeException("error: trying to fetch definition of builtin " + name);
     }
     
     protected String makeGlobalCode(SymbolTable table) {
-        throw throwErr("error: trying to fetch definition of builtin " + name, name.getID());
+        throw new RuntimeException("error: trying to fetch definition of builtin " + name);
     }
 
     // Set the correct name for built-in functions

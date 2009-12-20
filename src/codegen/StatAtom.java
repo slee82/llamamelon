@@ -38,10 +38,10 @@ public class StatAtom extends ParseTreeNode {
                 mydef = (StatDef) table.getEntry(this.id);
                 arg = (Identifier) StatDef.getArgName(table);
             } catch (Exception e) {
-                throwErr("statAtom: cannot fetch entries of stat and arg from symbol table");
+                throw new RuntimeException("statAtom: cannot fetch entries of stat and arg from symbol table");
             } finally {
                 if (mydef == null || arg == null)
-                    throwErr("statAtom: data extraction failure");
+                    throw new RuntimeException("statAtom: data extraction failure");
             }
             
             StatDef.consistentType(table, mydef);

@@ -58,7 +58,7 @@ public class SimFuncDef extends FuncDef {
     @Override
     public String stmtCode(SymbolTable table) {
         if (table.hasEntry(this.simName)) {
-            throwErr("simdef: simfunction name " + simName + " in use.", simName.getID());
+            throw new RuntimeException("simdef: simfunction name " + simName + " in use.");
         }
 
         table.putEntry(this.simName, this);

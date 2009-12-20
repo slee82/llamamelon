@@ -51,10 +51,10 @@ public class AtomicExpr extends Expr {
         if (this.type.val.equals("identifier")) {
             Object val = table.getEntry(this.ident);
             if (val == null) {
-                throwErr("expr: unknown identifier " + ident.getID(), ident.getID());
+                throw new RuntimeException("expr: unknown identifier " + ident);
             } else if (val instanceof FuncDef) {
-                throwErr("expr: identifier " + ident.getID() 
-                        + " is a function.", ident.getID());
+                throw new RuntimeException("expr: identifier " + ident 
+                        + " is a function.");
             } else if (val instanceof Declaration)
                 return ((Declaration)val).type();
         }
