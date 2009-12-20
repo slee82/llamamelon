@@ -13,7 +13,8 @@ import compiler.SymbolTable;
  */
 public class ListInit extends AtomicExpr {
 
-    public ListInit() {
+    public ListInit(Type type) {
+	this.t = type;
         this.args = new ArrayList<Expr>();
     }
 
@@ -38,7 +39,6 @@ public class ListInit extends AtomicExpr {
     }
     
     public Type getType(SymbolTable table) {
-        Type t = null;
         Type e = null;
         for (Expr expr : args) {
             e = expr.getType(table);
@@ -59,6 +59,7 @@ public class ListInit extends AtomicExpr {
         return new ListType(t);
     }
     
+    private Type t = null;
     private ArrayList<Expr> args;
 
 }

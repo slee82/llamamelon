@@ -171,7 +171,7 @@ type :
     PRIMITIVE { 
         $$ = $1; 
     }
-    | LIST OF type { 
+    | LIST OF type {
         $$ = new ParserVal(new ListType((Type)$3.obj));
     }
 
@@ -717,7 +717,7 @@ argument_list :
 /* ATOM_EXPRESSION */
 atom_expression : 
     STRING { 
-        System.err.println("got string " + $1.obj);
+        //System.err.println("got string " + $1.obj);
 	AtomicExpr atex = new AtomicExpr((StringConst)($1.obj));
 	atex.setLine(currLine());
         $$ = new ParserVal(atex);
@@ -751,9 +751,9 @@ list_initializer :
 	ListInit linit = new ListInit(args);
 	linit.setLine(currLine());
         $$ = new ParserVal(linit);
-    }
-    | OSQUARE CSQUARE {
-	ListInit linit = new ListInit();
+    }//list of type number x = number[];
+    | type OSQUARE CSQUARE {
+	ListInit linit = new ListInit((Type)$1.obj);
 	linit.setLine(currLine());
         $$ = new ParserVal(linit);
     }

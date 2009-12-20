@@ -19,4 +19,5 @@ print 0.0;
 print .99;
 print 1.1;
 print .1;
-//playball;
+playball;
+list of number a = number[];
