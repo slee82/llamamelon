@@ -1,13 +1,17 @@
 #!/bin/bash
 
+dir=build/classes
 whereJava=`which java`
 #echo $whereJava
-whatDir=`readlink -f $whereJava | awk -F"jre" '{ print $1 }'`
+whatDir=`readlink -f $whereJava | awk -F "jre" '{ print $1 }'`
 #echo $where
 tools2=`find $whatDir -name tools.jar`
 #echo $tools2
 #tools1=`find /usr/lib/ -name tools.jar`
 #tools=/usr/lib/jvm/java-6-sun/lib/tools.jar
+pwd=`pwd | awk -F "/" 'this=NF-1{ print $this"/"$NF }'`
+
+if [ $pwd == $dir ]; then
 
 if [ -f $tools2 ]; then
 java -cp .:$tools2 compiler.Run $1
@@ -15,5 +19,10 @@ else
 
 echo "tools.jar not found"
 fi
+
+else
+echo "please switch to the $dir directory to run BALL"
+fi
+
 
 
