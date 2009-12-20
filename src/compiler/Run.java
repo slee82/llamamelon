@@ -42,16 +42,14 @@ public class Run {
         }
         
         /** Closes both, chained and tee, streams. */
-        public void close() throws IOException
-        {
+        public void close() throws IOException {
              flush();
              main.close();
              if (branch != null) branch.close();
         }
         
         /** Flush both */
-        public void flush() throws IOException
-        {
+        public void flush() throws IOException {
              main.flush();
              if (branch != null) branch.flush();
         }
@@ -114,7 +112,8 @@ public class Run {
                 }
                 javaFile.renameTo(new File(javaFile.getParent() + name1));
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             System.err.println("ball: error: " + e.getLocalizedMessage());
             System.exit(2);
         }
@@ -132,7 +131,8 @@ public class Run {
                 out = new Tee(new FileOutputStream(javaFile), System.out);
             else
                 out = new Tee(new FileOutputStream(javaFile), null);
-        } catch (FileNotFoundException e) {
+        } 
+        catch (FileNotFoundException e) {
             System.err.println("ball: error: " + e.getLocalizedMessage());
             System.exit(3);
         }
@@ -144,7 +144,8 @@ public class Run {
         try {
             yyparser = new Parser(new FileReader(args[args.length-1]), 
                     new SymbolTable(true), classname);
-        } catch (FileNotFoundException e) {
+        } 
+        catch (FileNotFoundException e) {
             System.err.println("ball: error: " + e.getLocalizedMessage());
             System.exit(3);
         }
@@ -152,7 +153,8 @@ public class Run {
         
         try {
             out.flush();
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             System.err.println("ball: error: " + e.getLocalizedMessage());
             System.exit(3);
         }
@@ -179,11 +181,13 @@ public class Run {
                 Method main = run.getMethod("main", new Class[] { String[].class });
                 main.invoke(null, new Object[] { new String[0] });
 
-            } catch (InvocationTargetException ex) {
+            } 
+            catch (InvocationTargetException ex) {
                 // Exception in the main method we just tried to run
                 System.err.println("Exception in main: " + ex.getTargetException());
                 ex.getTargetException().printStackTrace();
-            } catch (Exception ex) {    
+            } 
+            catch (Exception ex) {    
                 System.err.println(ex.toString());
             }
             break;
@@ -197,7 +201,8 @@ public class Run {
         
         try {
             out.close();
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             System.err.println(e.getLocalizedMessage());
             System.exit(5);
         }
