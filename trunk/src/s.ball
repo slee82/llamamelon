@@ -2,6 +2,8 @@ team ast = load("astros.team");
 print "astros's wins and losses:";
 print ast's W;
 print ast's L;
+//print ast's NOTHANKS;	//BREAKS
+//print ast'no NOPE;		//BREAKS
 
 list of player astbat = ast's BATTERS;
 player lance = "Lance Berkman" from astbat;
