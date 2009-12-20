@@ -57,8 +57,11 @@ public class IterationStmt extends Stmt {
     		if(! expr.getType(table).equals(Type.number)) {
         		throw new RuntimeException("Incorrect expression type '"+expr.code(table)+"' needs to be a number");
     		}
-        	String loopCode = "float x = (float) 0; \n";
-    		loopCode += table.indent() + "while ( x < ";
+    		
+    		Identifier nid = table.newID();
+    		
+        	String loopCode = "float " + nid.getID() + " = (float) 0; \n";
+    		loopCode += table.indent() + "while ( " + nid.getID() + " < ";
     		loopCode += expr.code(table); 
     		loopCode += ") { \n";  
     		
@@ -69,7 +72,7 @@ public class IterationStmt extends Stmt {
     			loopCode += cur.code(inTable) + "\n"; // code for each statement    
     		}
         
-    		loopCode += table.indent() + "x++; \n";
+    		loopCode += table.indent() + nid.getID() + "++; \n";
     		loopCode += table.indent() + "}";
         
     		return table.indent() + loopCode;

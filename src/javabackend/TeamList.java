@@ -18,6 +18,6 @@ public interface TeamList {
      * @param team the team whose stats need to be extracted
      * @return the value of the stat. Always a number.
      */
-    public BallList get(TeamObj team);
+    public BallList<PlayerObj> get(TeamObj team);
     
 }

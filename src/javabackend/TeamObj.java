@@ -116,19 +116,19 @@ public class TeamObj implements BallDataType {
 	/* TEAM LISTS */
 	
 	public static final TeamList PLAYERS = new TeamList() {
-		public BallList get(TeamObj team) {
+		public BallList<PlayerObj> get(TeamObj team) {
 			return team.getPlayers();
 		}
 	};
 	
 	public static final TeamList PITCHERS = new TeamList() {
-		public BallList get(TeamObj team) {
+		public BallList<PlayerObj> get(TeamObj team) {
 			return team.getPitchers();
 		}
 	};
 	
 	public static final TeamList BATTERS = new TeamList() {
-		public BallList get(TeamObj team) {
+		public BallList<PlayerObj> get(TeamObj team) {
 			return team.getBatters();
 		}
 	};
