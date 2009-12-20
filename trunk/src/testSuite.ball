@@ -117,45 +117,33 @@ simfunction pitcherSim is:
 	end
 end
 
-activate pitcherSim;
-
-team Team1 = load("dodgers.team");
-team Team2 = yankees;
-
-number t1 = 0;
-number t2 = 0;
-do 100 times:
-	team winner = sim(Team1, Team2, 1);
-	if (winner is Team1) then:
-		t1++;
-	else:
-		t2++;
-	end
-end
-print "N: " + t1;
-print "Y: " + t2;
 
 simfunction anotherSim is:
+	
 	number team1P = 0;
 	number team2P = 0;
 	
 	number team1B = 0;
 	number team2B = 0;
 	
+	foreach p in team1's BATTERS:
+		team1P = p's AB + p's R + p's H + p's 2B + p's 3B + p's HR + p's BB;
+	end
+
+	foreach p in team2's BATTERS:
+		team2P -= p's AB + p's R + p's H + p's 2B + p's 3B + p's HR + p's BB;
+	end
+		
 	foreach p in team1's PITCHERS:
-		team1P -= p's IP + p's H + p's ER + p's HR + p's BB + p's K + p's BF;
+		team1B -= p's IP + p's H + p's ER + p's HR + p's BB + p's K + p's BF;
+	end
 		
 	foreach p in team2's PITCHERS:
-		team2P -= p's AB + p's R + p's H + p's 2B + p's 3B + p's HR + p's BB;
-		
-	foreach p in team1's BATTERS:
-		team1B -= p's IP + p's H + p's ER + p's HR + p's BB + p's K + p's BF;
-		
-	foreach p in team2's BATTERS:
 		team2B -= p's IP + p's H + p's ER + p's HR + p's BB + p's K + p's BF;
+	end
 	
 
-	list of player bestBatters = topBatters([team1,team2],5);	
+	list of player bestBatters = bestHitters([team1,team2],5);	
 	
 	foreach p in bestBatters:
 		foreach q in team1's BATTERS:
@@ -186,10 +174,25 @@ simfunction anotherSim is:
 	else:
 		return team2;
 	end
-	
-	return team1;
-	
 end
+
+activate pitcherSim;
+
+team Team1 = load("dodgers.team");
+team Team2 = yankees;
+
+number t1 = 0;
+number t2 = 0;
+do 100 times:
+	team winner = sim(Team1, Team2, 1);
+	if (winner is Team1) then:
+		t1++;
+	else:
+		t2++;
+	end
+end
+print "Dodgers: " + t1;
+print "Yankees: " + t2;
 
 activate anotherSim;
 
@@ -203,5 +206,5 @@ do 100 times:
 		t2++;
 	end
 end
-print "N: " + t1;
-print "Y: " + t2;
+print "Dodgers: " + t1;
+print "Yankees: " + t2;
