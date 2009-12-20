@@ -29,8 +29,8 @@ public class Funcall extends Expr {
          */
         Object def = table.getEntry(name);
         if (!(def instanceof FuncDef)) {
-            throwErr("funcall: identifier " + name
-                    + " invalid, either nonexistent or not a function", name.getID());
+            throwErr("funcall: identifier '" + name.getID()
+                    + "' invalid, either nonexistent or not a function", name.getID());
         }
         FuncDef define = (FuncDef) def;
         return define.retType;
@@ -49,8 +49,8 @@ public class Funcall extends Expr {
         
         Object def = table.getEntry(name);
         if (!(def instanceof FuncDef)) {
-            throwErr("funcall: identifier " + name
-                    + " invalid, either nonexistent or not a function", name.getID());
+            throwErr("funcall: identifier '" + name.getID()
+                    + "' invalid, either nonexistent or not a function", name.getID());
         }
         FuncDef define = (FuncDef) def;        
         Type retType = define.retType;

@@ -21,19 +21,21 @@ public abstract class ParseTreeNode {
     }
 
     public RuntimeException throwErr(String err, String tok){
-	String prepare = "\n==================ERROR==================\n*" + this.getClass().getName()
+	String prepare = errStr + "\n*" + this.getClass().getName()
 		+ "*" + " - " + err + "\nAT LINE: " + lineNo
-		+ ", NEAR: '" + tok + "'." + "\n==================ERROR==================";
+		+ ", NEAR: '" + tok + "'." + errStr;
 	RuntimeException rtx = new RuntimeException(prepare);
 	throw rtx;
     }
 
     public RuntimeException throwErr(String err){
-	String prepare = "\n==================ERROR==================\n*" + this.getClass().getName()
-		+ "*" + " - " + err + "\nAT LINE: " + lineNo;
+	String prepare = errStr + "\n*" + this.getClass().getName()
+		+ "*" + " - " + err + "\nAT LINE: " + lineNo + errStr;
 	RuntimeException rtx = new RuntimeException(prepare);
 	throw rtx;
     }
+
+    private String errStr = "\n=======================ERROR=======================";
 
     protected int lineNo = 0;
 }
