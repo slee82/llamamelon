@@ -1,7 +1,12 @@
+/*
+ * COMS W4115 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
+ * PlayerStat.java - this is a template of what a team stat looks like
+ */
 package javabackend;
 
 /**
- * this is a template of what a team stat looks like.
  * 
  * In this BALL implementation, stats are not added as fields inside a TeamObj
  * or PlayerObj. Instead, they are small objects that evaluate stats given
