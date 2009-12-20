@@ -1,3 +1,9 @@
+/*
+ * COMS W4115 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
+ * ArithmeticExpr.java - Code Generator for Arithmetic Expressions
+ */
 package codegen;
 
 import compiler.SymbolTable;
@@ -8,11 +14,7 @@ import lexer.Type;
  */
 public class ArithmeticExpr extends Expr {
 
-    public enum Op {
-        PLUS, MIN, MULT, DIV, MOD
-    }
-    
-    /**
+	 /**
      * Constructor - Takes an operator, left expression and right expression
      * @param op
      * @param exprL
@@ -23,6 +25,12 @@ public class ArithmeticExpr extends Expr {
         this.valueL = exprL;
         this.valueR = exprR;
     }
+	
+	public enum Op {
+        PLUS, MIN, MULT, DIV, MOD
+    }
+    
+   
     
     @Override
     public String code(SymbolTable table) {
