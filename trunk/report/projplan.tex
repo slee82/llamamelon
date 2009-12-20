@@ -1,0 +1,252 @@
+\chapter{Project Plan}
+
+\section{Development Process}\label{Process}
+
+In developing the BALL language, we followed the suggestion presented
+by Prof. Aho during class: make a working prototype, and incrementally
+add enhancements. During the early parts of the development, more
+attention is focused on adding new features than testing, however each
+team member must create his own test case with the changes he made.
+
+Whenever a part of the language is finished, it is tested and reviewed
+by the team. Feedback is then relayed to the team member responsible
+for the subsystem (usually the one who merged the latest version to
+trunk, as many modules are jointly developed by the team). There is
+less of a focus on the traditional team roles, rather each team member
+focuses on developing the compiler while also doing their job in team
+administration.
+
+\pagebreak
+\section{Style Sheet}\label{Style}
+
+\begin{singlespacing}
+\begin{verbatim}
+/*
+ * COMS W4119 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * StyleSheet.java - style sheet for Java classes
+ */
+
+package style;
+
+// package declaration comes after header, separated by one line
+/*
+ * header contains course name, team name, language name, file name, and a short
+ * description of what the file is.
+ */
+
+// imports come right after, separated by at least 1 empty line
+import java.util.Arrays;
+
+import java.io.*;
+// imports can have empty lines separating them, especially when importing
+// different trees
+
+import javabackend.SimFunction;
+import javabackend.TeamObj;
+
+// single line comments can use // or /* (for more important comments)
+// two-line comments written like this are also permitted. For 3 or more, use /*
+
+/*
+ * Very important single-line comments are made like this
+ */
+
+/*
+ * Multi-line comments also use this format. The maximum width for each line in
+ * a multi-line comment is 80 characters from the start of the line (not the
+ * start of the comment, which is after the space after a '*'.
+ * 
+ * 1.  this is how to write lists with numbers.
+ * 2.  When a list goes over a line, the next line starts under the start of the
+ *     first line of the list.
+ *     ...
+ * 10. If the numbering goes over 10, entries 1 to 9 need to have 1 more space.
+ *     This way all list text starts at the same place. Having a list of more 
+ *     than 10 members is discouraged.
+ */
+
+/**
+ * Comments before a class uses Javadoc style. It is REQUIRED, even if just one
+ * sentence. Give a brief description of what role it has in the compiler. 
+ * 
+ * Class names are capitalized on each word. 
+ * - playerObj - WRONG 
+ * - PlayerObj - RIGHT
+ */
+public class StyleSheet extends StyleSuper implements StyleInterface {
+
+    // comments follow the indentation of the non-commented statements
+    
+    // public constructor comes first.
+    /**
+     * Sets use to default value. 
+     */
+    public StyleSheet() {
+        this.use = 1001;
+    }
+
+    /*
+     * Comments describing a method (highly recommended for public methods, even
+     * for just one line). Some details:
+     *
+     * 1. comments for private methods are recommended.
+     * 2. Javadoc style is optional. Can both be /* or /** or even //
+     * 3. comments for methods that override a superclass method / implement an
+     *    interface method are highly recommended it's not already documented in
+     *    the superclass / interface. Otherwise, it's optional.
+     * 5. Methods that override builtin classes' methods like toString() or
+     *    hashCode() don't need to be commented.
+     * 
+     * Method names
+     * 1. first letter of name NOT capitalized. However, words after that are
+     *    captialized.
+     * 2. Order of methods:
+     *    a. public
+     *    b. protected
+     *    c. <no scope>
+     *    d. private
+     *    e. public static
+     *    ...
+     *    h. private static
+     *    the names themselves can go in any order.
+     * 
+     * 1. Annotations like @Override are OPTIONAL. They go after the comment.
+     * 2. Public methods cannot have underscores.
+     */
+    public int sampleFun(int arg1, int arg2, Object arg3) {
+        // no space here ^ between function name and opening parentheses.
+        // single space between arguments, and btwn close paren and open brace
+
+        int p = 0, q; // space after each variable name
+        q = 10;
+        
+        // note the spaces on for loops
+        for (int i = 0; i < 10, i++) {
+            // inside of for loops are also indented
+            p++;
+            q += 3;
+            if (q >= 20) // single-line ifs like this are permitted
+                System.out.println("bleh");
+        }
+        
+        /*
+         * Inner variables don't have to be capitalized properly.
+         * 
+         * Anonymous classes have a space after parentheses and opening curly
+         * brace. The inside is indented.
+         */
+        SimFunction mysim = new SimFunction() {
+            public TeamObj doSim(TeamObj team1, TeamObj team2) {
+                return team1;
+            }
+        };
+
+        return 1037; // parentheses for return exprs aren't necessary
+    }
+    
+    /**
+     * Since toString() is already in object, this is technically unnecessary
+     */
+    @Override
+    public String toString() {
+        return "style sheet";
+    }
+    
+    /*
+     * Order of fields is just like order of methods. "final" goes after
+     * non-final but inside the same bracket above. So, "protected final" goes
+     * after "public final" or "protected" but before "private".
+     * 
+     * protected x
+     * public static final y
+     */
+    public int use;
+    
+    public final String bleh = "bleh";
+    
+    private float[] arrayExample;
+    // variables/fields are named like methods
+
+}
+\end{verbatim}
+\end{singlespacing}
+
+\pagebreak
+
+\section{Timeline \& Logs}\label{TimelineLogs}
+\subsection{Timeline of BALL Development}
+
+\begin{center}
+\begin{longtable}{|c|p{10cm}|}
+\hline
+Time & Event\\
+\hline
+9/18/09, 11:31a & Team Llamamelon Born.\\
+9/21/09, 5:15p & First Team Llamamelon Meeting; Team Llamamelon
+named. Sam pioneers the language purpose: the simulation of baseball
+games.\\
+9/21/09, 8:02p & Team Llamamelon announced to PLT Teaching Staff.\\
+10/2/09, 4:42p & Alfred V. Aho tentatively approves BALL programming
+language.\\
+10/5/09, 1:04a & Buzzwords for initial Whitepaper finalized.\\
+10/7/07, 3:17p & Final Whitepaper completed.\\
+10/23/09, 2:52p & Sample programs designed, BALL envisioned to be a
+scripting language à la AWK.\\
+10/27/09, 4:14p & Google Code Group Created. Jordan initializes
+Subversion repository and trains team for first 'commit.'\\
+10/27/09, 5:30p & First major Team Llamamelon Meeting; language
+roadmap created.\\
+10/29/09, 10:30a & First meeting with Sinan; BALL changes from
+scripted language to compiled language, based on Java.\\
+10/30/09, 1:27p & Nathan creates first example program; the new
+language roadmap is born.\\
+10/31/09, 10:42p & Cipta begins creating the grammar, laying the
+groundwork for BALL.\\
+11/3/09, 1:05p & Language Reference Manual and Tutorial begun.\\
+11/3/09, 4:43p & Language Grammar completed, Daniel creates and
+finalizes complex simulation to show off the powerful grammar.\\
+11/4/09, 10:26a & Final Language Reference Manual and Tutorial
+completed.\\
+11/15/09, 3:00p & First semi-weekly meeting. Full grammar implemented
+using JFlex/BYACC-J. Lexer created a DFA!\\
+11/18/09, 8:00p & Second semi-weekly meeting. Play.ball designed,
+intermediate code generation begins.\\
+11/19/09, 11:00a & Second meeting with Sinan; Language Reference
+Manual and Tutorial approved; BALL is in full motion!\\
+11/27/09, 12:43a & Play.Ball compiles and runs: ``Play Ball!'' [Hello
+  world equivalent.]\\
+12/3/09, 3:45p & Team Loader created; teams can now load into the
+PlayerObj and TeamObj constructs.\\
+12/5/09, 11:46a & Major all-day meeting; BALL presentation created and
+beautified.\\
+12/7/09, 4:30p & BALL presented to PLT. There was much rejoicing.\\
+12/10/09, 4:37a & SymbolTable embraced as major component of BALL.\\
+12/10/09, 3:02a & Simfunc.ball compiles and runs: simfunctions and
+activate work.\\
+12/12/09, 10:00a & Major all-day meeting; Much of language completed
+during this time.\\
+12/12/09, 10:48a & TeamStat and PlayerStat methods added: stats work
+throughout BALL.\\
+12/12/09, 7:59p & Lists become typed, major change in the language.\\
+12/12/09, 8:55p & Logical, Boolean, Comparison expressions completed.\\
+12/15/09, 12:56a & \texttt{where}, \texttt{from}, and \texttt{any} keywords working.\\
+12/16/09, 2:02a & \texttt{'s} keyword works for all attributes, stats, and
+lists inherent in team and player objects.\\
+12/16/09, 6:08p & Unary operators completed.\\
+12/17/09, 6:27p & Realized the class number is W4115, not
+W4119. [Seriously.]\\
+12/20/09, 10:30a & Final Major all-day meeting: everything completed.\\
+12/20/09, 8:04p & Everything in the language works. Final presentation
+compilation begun.\\
+Now & Final presentation completed.\\
+
+\hline
+\caption{Token Example}
+\label{token example}
+\end{longtable}
+\end{center}
+
+\subsection{Project Log}
+
+\input{projlog.tex}
