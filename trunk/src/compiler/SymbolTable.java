@@ -116,7 +116,9 @@ public class SymbolTable {
         this.latest = ip;
     }
     
-    public InsertionPoint getIP() { return latest; }
+    public InsertionPoint getIP() { 
+    	return latest; 
+    }
 
     /**
      * Creates a new identifier that is unique throughout the symbol table.
