@@ -42,7 +42,7 @@ function randomizeProbabilities() returns nothing:
 end
 /*BASIC SIMULATION FUNCTION*/ 
 simfunction basicSimulation is:    number team1Score = 0; 
-    number team2Score = 0;    /*Note: team1 and team2 are global 
+    number team2Score = 0;	/*Note: team1 and team2 are global 
     variables that represent the teams that the 
     sim function is currently working with. 
     The sim function sets them automatically.*/
@@ -62,7 +62,23 @@ simfunction basicSimulation is:    number team1Score = 0;
     	    + probDouble*(2/4) + probTriple*(3/4) + probHR;	end	if (team1Score > team2Score) then:    	print team1's teamname + " defeat " + team2's teamname + "!!";    	return team1;	else:    	print team2's teamname + " defeat "  + team1's teamname + "!!";    	return team2;   	endend/*END SIMULATION FUNCTION*/activate basicSimulation;
 
 team Astros = load("astros.team");
-team Dodgers = load("dodgers.team");team winner = sim(Astros, Dodgers, 7);print winner's teamname + " have won the World Series!!\n";
+team Dodgers = load("dodgers.team");
+
+number ast = 0;
+number dod = 0;
+do 10000 times:
+	team winner = sim(Astros, Dodgers, 1);
+	if (winner is Astros) then:
+		ast++;
+	else:
+		dod++;
+	end
+end
+print "Dodgers: " + dod;
+print "Astros:  " + ast;
+//team winner = sim(Astros, Dodgers, 100);//print winner's teamname + " have won the World Series!!\n";
 //print winner's name + " has the players:";
+/*
 foreach p in winner's PLAYERS:
     print p's name;end
+*/
