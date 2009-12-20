@@ -1141,11 +1141,13 @@ Example:
 sim(Rockies,Giants,5); 
 \end{verbatim}
 
+\pagebreak
 \section{CSV Specifications}\label{csv} 
 The following is an example of a CSV used as a team file. This file
 would be called Astros.team and contains information on the whole
 team, batters, and pitchers, and their stats.
-
+\small
+\begin{singlespace}
 \begin{verbatim}
 Team Name:Houston Astros
 Header:W,L
@@ -1177,242 +1179,12 @@ Brian Moehler,154.2,187,94,21,51,91,694
 Mike Hampton,112.0,128,66,13,46,74,494
 Russ Ortiz,85.2,95,53,8,48,65,387
 Bud Norris,55.2,59,28,9,25,54,249
-
 \end{verbatim}
+\end{singlespace}
+\normalsize
+
 
 \section{Complete Grammar}\label{grammar}
 
-\begin{singlespacing}
-\begin{verbatim}
-%token identifier
-%token string
-%token number
+\codelisting{FullGrammar}{Full Grammar}{../docs/ball_full.y}
 
-%%
-/***PROGRAM***/
-program : statement_list
-        ;
-
-statement_list : statement
-               | statement_list statement
-               ;
-
-statement : function_definition
-          | sim_function_definition
-          | body_statement
-          ;
-
-body_statement_list : body_statement
-                    | body_statement_list body_statement
-                    ;
-
-/*Body Statements are all statements except function declarations*/
-body_statement : if_statement
-               | iteration_statement
-               | jump_statement
-               | declaration
-               | stat_declaration
-               | expression_statement
-               | activate_statement
-               | print_statement
-               | assignment_statement
-               ;
-
-function_definition : "function" identifier "(" parameter_list0 ")"
-        "returns" type ":" body_statement_list "end"
-                    ;
-
-parameter_list0 :
-                | parameter_list
-                ;
-
-parameter_list : parameter
-               | parameter_list "," parameter
-               ;
-
-parameter : type identifier
-          ;
-
-sim_function_definition : "simfunction" identifier "is:"
-        body_statement_list "end" 
-                        ;
-
-activate_statement : "activate" identifier ";"
-                   ;
-
-print_statement : "print" expression ";"
-                ;
-
-if_statement : 
-        "if" "(" expression ")" "then:" body_statement_list "end"
-        | "if" "(" expression ")" "then:" body_statement_list
-                else_statement "end"
-        ;
-
-else_statement : "else:" body_statement_list
-               ;
-
-/**ITERATION_STATEMENT**/
-iteration_statement : 
-        "do:" body_statement_list "end"
-        | "do" expression "times:" body_statement_list "end"
-        | "foreach" identifier "in" identifier ":" body_statement_list
-                "end"
-        ;
-
-/**JUMP_STATEMENT**/
-jump_statement : "stopdo" ";"
-               | "return" expression ";"
-               | "return" ";"
-               ;
-              
-/**ASSIGNMENT_STATEMENT**/ 
-assignment_statement : identifier assignment_operator expression ";"
-                     ;
-
-assignment_operator : "=" | "+=" | "-=" | "*=" | "/=" | "%=" ;
-
-/**DECLARATION**/
-declaration : type variable_declarators ";"
-            ;
-
-variable_declarators : variable_declarator
-                     | variable_declarators "," variable_declarator
-                     ;
-
-variable_declarator : identifier
-                    | identifier "=" expression
-                    ;
-
-stat_declaration : "stat" identifier "=" stat_expression ";"
-                 ;
-
-stat_expression : stat_mult_expr
-                | stat_expression "+" stat_mult_expr
-                | stat_expression "-" stat_mult_expr
-                ;
-
-stat_mult_expr : stat_atom_expr
-               | stat_mult_expr "*" stat_atom_expr
-               | stat_mult_expr "/" stat_atom_expr
-               | stat_mult_expr "%" stat_atom_expr
-               ;
-
-stat_atom_expr : identifier
-               | number
-               | "(" stat_expression ")"
-               ;
-
-/*TYPE*/
-type : "number"
-     | "string"
-     | "list"
-     | "team"
-     | "player"
-     | "nothing"
-     | list_type
-     ;
-
-list_type : "list" "of" type
-          ;
-
-
-/**EXPRESSION_STATEMENT**/
-expression_statement : ";"
-                     | expression ";"
-                     ;
-
-/*EXPRESSION*/
-expression : logical_or_expression
-           ;
-
-/*LOGICAL*/
-logical_or_expression : 
-        logical_and_expression
-        | logical_or_expression "or" logical_and_expression
-        ;
-
-logical_and_expression : 
-        logical_not_expression
-        | logical_and_expression "and" logical_not_expression
-        ;
-
-logical_not_expression : 
-        comparison_expression
-        | "not" logical_not_expression
-        ;
-
-/*COMPARISON*/
-comparison_expression : 
-        addition_expression
-        | comparison_expression "is"   addition_expression
-        | comparison_expression "isnot" addition_expression
-        | comparison_expression ">"    addition_expression
-        | comparison_expression "<"    addition_expression
-        | comparison_expression ">="   addition_expression
-        | comparison_expression "<="   addition_expression
-        ;
-
-/*ARITHMETIC*/
-addition_expression : 
-        multiplication_expression
-        | addition_expression "+" multiplication_expression
-        | addition_expression "-" multiplication_expression
-        ;
-
-multiplication_expression : 
-        unary_expression
-        | multiplication_expression "*" unary_expression
-                        | multiplication_expression "/" unary_expression
-                          | multiplication_expression "%" unary_expression
-                          ;
-
-/*UNARY*/
-unary_expression : postfix_expression
-                 | "++" unary_expression
-                 | "--" unary_expression
-                 | primary_expression "from" unary_expression
-                 | "any" unary_expression
-                 ;
-
-/*POSTFIX*/
-postfix_expression : primary_expression
-                   | postfix_expression "'s" identifier // attribute/stats call
-                   | postfix_expression "where" "(" expression ")"
-                   | postfix_expression "++"
-                   | postfix_expression "--"
-                   ;
-
-/*PRIMARY*/
-primary_expression : atom_expression
-                   | function_call
-                   ;
-
-/*FUNCTION_CALL*/
-function_call : identifier "(" ")"
-              | identifier "(" argument_list ")"
-              ;
-
-argument_list : expression
-              | argument_list "," expression
-              ;
-
-/*ATOM_EXPRESSION*/
-atom_expression : identifier
-                | number
-                | string
-                | list_initializer
-                | "nothing"
-                | "(" expression ")" // completes the cycle
-                ;
-
-list_initializer : "[" variable_list "]"
-                 | "[" "]"
-                 ;
-
-variable_list : expression
-              | variable_list "," expression
-              ;
-%%
-\end{verbatim}
-\end{singlespacing}

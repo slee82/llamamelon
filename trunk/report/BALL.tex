@@ -28,7 +28,7 @@
          extendedchars=true,         %
          breaklines=true,            % Zeilen werden Umgebrochen
          keywordstyle=\color{red},
-                frame=b,         
+         frame=b,         
  %        keywordstyle=[1]\textbf,    % Stil der Keywords
  %        keywordstyle=[2]\textbf,    %
  %        keywordstyle=[3]\textbf,    %
@@ -149,6 +149,14 @@
 \cleardoublepage %The first chapter should start on an odd page.
 
 \pagestyle{fancy} %Now display headings: headings / fancy / ...
+
+% label, caption, filename
+\newcommand{\codelisting}[3]
+{
+  \begin{singlespace}
+  \lstinputlisting[label=#1,caption=#2]{#3}
+  \end{singlespace}
+}
 
 
 
