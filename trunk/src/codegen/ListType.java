@@ -5,6 +5,8 @@ public class ListType extends Type {
 
     public ListType(Type contents) {
         super(null);
+	if(contents == null)
+		System.err.println("WHAT");
         this.contents = contents;
     }
     
