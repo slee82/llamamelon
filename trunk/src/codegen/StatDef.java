@@ -93,7 +93,7 @@ public class StatDef extends Declaration {
     @Override
     public String code(SymbolTable table) {
         String init = initCode(table);
-        return  "final " + getType() + " " + init;
+        return  "final " + getType().getType() + " " + init;
     }
     
     /**
