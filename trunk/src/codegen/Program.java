@@ -73,6 +73,8 @@ public class Program extends ParseTreeNode {
         /* INPUT BUILTIN STRING ATTRIBUTES */
         table.putEntry(new Identifier("name"),
         		new BuiltinAttributeDef(new Identifier("PlayerObj.name"), Type.string));
+        table.putEntry(new Identifier("teamname"),
+        		new BuiltinAttributeDef(new Identifier("TeamObj.name"), Type.string));
         
         /* INPUT BUILTIN FUNCTIONS */
         table.putEntry(new Identifier("load"),
