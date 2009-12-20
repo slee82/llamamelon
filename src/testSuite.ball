@@ -182,7 +182,7 @@ activate pitcherSim;
 team Team1 = load("dodgers.team");
 team Team2 = yankees;
 
-print "pitcherSim series: "
+print "pitcherSim series: ";
 
 number t1 = 0;
 number t2 = 0;
@@ -199,7 +199,7 @@ print "Yankees: " + t2;
 
 activate anotherSim;
 
-print "anotherSim series: "
+print "anotherSim series: ";
 
 t1 = 0;
 t2 = 0;
