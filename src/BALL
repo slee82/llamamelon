@@ -1,28 +1,28 @@
 #!/bin/bash
 
+#build directory
 dir=build/classes
+
+#locate java
 whereJava=`which java`
-#echo $whereJava
 whatDir=`readlink -f $whereJava | awk -F "jre" '{ print $1 }'`
-#echo $where
+
+#make sure tools.jar exists
 tools2=`find $whatDir -name tools.jar`
-#echo $tools2
-#tools1=`find /usr/lib/ -name tools.jar`
-#tools=/usr/lib/jvm/java-6-sun/lib/tools.jar
+
+#get current directory
 pwd=`pwd | awk -F "/" 'this=NF-1{ print $this"/"$NF }'`
 
+#make sure it's in the right directory
 if [ $pwd == $dir ]; then
 
-if [ -f $tools2 ]; then
-java -cp .:$tools2 compiler.Run $1
-else
+	if [ -f $tools2 ]; then
+		java -cp .:$tools2 compiler.Run $1
+	else
+		echo "tools.jar not found"
+	fi
 
-echo "tools.jar not found"
+	else
+		echo "please run this script from the $dir directory"
 fi
-
-else
-echo "please run this script from the $dir directory"
-fi
-
-
 
