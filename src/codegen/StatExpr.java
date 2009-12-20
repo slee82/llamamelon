@@ -1,3 +1,9 @@
+/*
+ * COMS W4115 PROGRAMMING LANGUAGES AND TRANSLATORS FALL 2009
+ * Team llamamelon - BALL language
+ * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
+ * StatExpr.java - Generates code for stat exprs
+ */
 package codegen;
 
 import compiler.SymbolTable;
