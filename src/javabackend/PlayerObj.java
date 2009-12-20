@@ -44,9 +44,9 @@ public class PlayerObj implements BallDataType {
         else {
             this.ip = (float)Math.floor(ipp);
             if (temp == .1f)
-                this.ip += (1/3);
+                this.ip += (1f/3f);
             else if (temp == .2f)
-                this.ip += (2/3);
+                this.ip += (2f/3f);
             else {
                 System.err.println("Incorrect Innings Pitched Value " + ip);
                 return;

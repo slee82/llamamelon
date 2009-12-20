@@ -91,7 +91,7 @@ public class TeamObj implements BallDataType {
 			toReturn += batters.get(i) + "\n";
 		}
 		
-		toReturn += "\nType:Pitcher\nHeader:Name,IP,H,ER,BB,K\n";
+		toReturn += "\nType:Pitcher\nHeader:Name,IP,H,ER,HR,BB,K,BF\n";
 		for(i=0; i<pitchers.size(); i++){
 			toReturn += pitchers.get(i) + "\n";
 		}

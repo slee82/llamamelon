@@ -48,8 +48,8 @@ simfunction basicSimulation is:    number team1Score = 0;
     The sim function sets them automatically.*/
     	/*team1 is batting and team2 is pitching! (5 times)*/ 
 	do 5 times:		/*Select random players from the best 9 of each team*/ 
-	    list of player bestBatters = topPlayers(9, team1's BATTERS, AVG); 
-    	player batter = any bestBatters;    	list of player bestPitchers = bottomPlayers(4, team2's PITCHERS, ERA); 
+	    list of player bestBatters = topPlayers(6, team1's BATTERS, AVG); 
+    	player batter = any bestBatters;    	list of player bestPitchers = bottomPlayers(3, team2's PITCHERS, ERA); 
     	player pitcher = any bestPitchers;
     		/*Set the global probabilities of this inning*/ 
 		combineProb(batter, pitcher);
@@ -57,25 +57,25 @@ simfunction basicSimulation is:    number team1Score = 0;
 		/*Add a little randomness*/
     	randomizeProbabilities();    	team1Score += probWalk*(1/4) + probSingle*(1/4) 
         	+ probDouble*(2/4) + probTriple*(3/4) + probHR;
-	end	/*team2 is batting and team1 is pitching! (5 times)*/	do 5 times:    	list of player bestBatters = topPlayers(9, team2's BATTERS, AVG);	    player batter = any bestBatters;    	list of player bestPitchers = bottomPlayers(4, team1's PITCHERS, ERA);    	player pitcher = any bestPitchers;
+	end	/*team2 is batting and team1 is pitching! (5 times)*/	do 5 times:    	list of player bestBatters = topPlayers(6, team2's BATTERS, AVG);	    player batter = any bestBatters;    	list of player bestPitchers = bottomPlayers(3, team1's PITCHERS, ERA);    	player pitcher = any bestPitchers;
  	    combineProb(batter, pitcher);    	randomizeProbabilities();	    team2Score += probWalk*(1/4) + probSingle*(1/4) 
     	    + probDouble*(2/4) + probTriple*(3/4) + probHR;	end	if (team1Score > team2Score) then:    	print team1's teamname + " defeat " + team2's teamname + "!!";    	return team1;	else:    	print team2's teamname + " defeat "  + team1's teamname + "!!";    	return team2;   	endend/*END SIMULATION FUNCTION*/activate basicSimulation;
 
-team Astros = load("astros.team");
-team Dodgers = load("dodgers.team");
+team Team1 = load("dodgers.team");
+team Team2 = load("astros.team");
 
-number ast = 0;
-number dod = 0;
+number t1 = 0;
+number t2 = 0;
 do 10000 times:
-	team winner = sim(Astros, Dodgers, 1);
-	if (winner is Astros) then:
-		ast++;
+	team winner = sim(Team1, Team2, 1);
+	if (winner is Team1) then:
+		t1++;
 	else:
-		dod++;
+		t2++;
 	end
 end
-print "Dodgers: " + dod;
-print "Astros:  " + ast;
+print "D: " + t1;
+print "A: " + t2;
 //team winner = sim(Astros, Dodgers, 100);//print winner's teamname + " have won the World Series!!\n";
 //print winner's name + " has the players:";
 /*

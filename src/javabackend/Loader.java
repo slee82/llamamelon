@@ -116,7 +116,7 @@ public class Loader {
 			}
 		}
 		catch (FileNotFoundException e) {
-			System.err.println("Failed to read file.");
+			System.err.println("Failed to read file: " + fileName);
 		}
 		
 		//Create team to be returned
