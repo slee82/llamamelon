@@ -21,6 +21,10 @@ team nationals = load("nationals.team");
 
 player aroid = "Alex Rodriguez" from yankees's BATTERS;
 
+if (not isValid("and" from string[])) then:
+	print "NECTAR";
+end
+
 /*** FOR PITCHERS ***/
 stat pWalk = BB / BF;
 stat pDouble = H * .174 / BF;
