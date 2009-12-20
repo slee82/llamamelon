@@ -1,6 +1,7 @@
 function f (number p) returns number:
 	return p++;
 end
+playball;
 
 if(2<f(0))then:
 	list of number l = [1, 2, 3, 4, 5];
