@@ -15,8 +15,8 @@ Clayton Kershaw,48,2,5,0,0,0,3
 Hiroki Kuroda,28,1,4,0,0,0,2
 
 Type:Pitcher 
-Header:Name,IP,H,ER,BB,K,BF
-Randy Wolf,214.1,178,77,58,160,862
-Chad Billingsley,196.1,173,88,86,179,823
-Clayton Kershaw,171.0,119,53,91,185,701
-Hiroki Kuroda,117.1,110,49,24,87,485
+Header:Name,IP,H,ER,HR,BB,K,BF
+Randy Wolf,214.1,178,77,24,58,160,862
+Chad Billingsley,196.1,173,88,17,86,179,823
+Clayton Kershaw,171.0,119,53,7,91,185,701
+Hiroki Kuroda,117.1,110,49,12,24,87,485
