@@ -48,7 +48,7 @@ public class ArithmeticExpr extends Expr {
         }
         
     	if(! ltype.equals(rtype)) {
-    		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
+    		throwErr("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table), valueL.code(table) + getOpCode() + valueR.code(table));
     	}
     	if (ltype.equals(Type.number)) {
             /* Number addition */
@@ -62,7 +62,7 @@ public class ArithmeticExpr extends Expr {
             result += rcode;
             return result + ")";
         } else {
-            throw new RuntimeException("expr: type " + ltype + " unsuitable for addition.");
+            throw throwErr("expr: type " + ltype + " unsuitable for addition.", valueL.code(table) + getOpCode() + valueR.code(table));
         }
     }
     
@@ -76,7 +76,7 @@ public class ArithmeticExpr extends Expr {
         }
         
         if(! ltype.equals(rtype)) {
-            throw new RuntimeException("expr: type mismatch " + ltype + " and " + valueR.getType(table));
+            throwErr("expr: type mismatch " + ltype + " and " + valueR.getType(table), valueL.code(table) + getOpCode() + valueR.code(table));
         }
         
         if (ltype.equals(Type.number) || 
@@ -84,7 +84,7 @@ public class ArithmeticExpr extends Expr {
                 ltype.equals(Type.string)) {
             return ltype;
         } else {
-            throw new RuntimeException("expr: type " + valueL.getType(table) + " unsuitable for addition.");
+            throw throwErr("expr: type " + valueL.getType(table) + " unsuitable for addition.", valueL.code(table) + getOpCode() + valueR.code(table));
         }
     }
     

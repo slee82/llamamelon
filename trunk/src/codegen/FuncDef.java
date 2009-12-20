@@ -26,8 +26,8 @@ public class FuncDef extends Stmt {
     public String stmtCode(SymbolTable table) {
         // check if name is still available
         if (table.hasEntry(this.name)) {
-            throw new RuntimeException("funcdef: the name " + name + 
-                    " in use for " + table.getEntry(this.name));
+            throwErr("funcdef: the name " + name + 
+                    " in use for " + table.getEntry(this.name), name.getID());
         }
         
         table.putEntry(this.name, this);

@@ -35,7 +35,7 @@ public class Declaration extends Stmt {
     public void initDeclType(Type exprType) {
         
         if (!(exprType.equals(this.type))) {
-            throw new RuntimeException("declaration: expression type " + 
+            throwErr("declaration: expression type " + 
                     exprType + " does not match type; expected " 
                     + this.type);
         }
@@ -52,7 +52,7 @@ public class Declaration extends Stmt {
             Object[] ar = idexpPairs.get(i);
             Identifier id = (Identifier) ar[0];
             if (!table.available(id)) {
-                throw new RuntimeException("declaration: init: identifier " + id + " in use.");
+                throwErr("declaration: init: identifier " + id + " in use.", id.getID());
             }
 
             if (i > 0) // dont put a comma at the beginning
@@ -96,7 +96,7 @@ public class Declaration extends Stmt {
             Identifier id = (Identifier) ar[0];
             
             if (!table.available(id)) {
-                throw new RuntimeException("declaration: global_main: identifier " + id + " in use.");
+                throwErr("declaration: global_main: identifier " + id + " in use.", id.getID());
             }
 
             // check is the last identifier has an = sign for assignment
@@ -133,7 +133,7 @@ public class Declaration extends Stmt {
             
             // check if all identifiers are entered correctly in the table
             if (!((table.getEntry(id)) == this)) {
-                throw new RuntimeException("declaration: init: redefining identifier " + id + ".");
+                throwErr("declaration: init: redefining identifier " + id + ".", id.getID());
             }
 
             if (i > 0) // dont put a comma at the beginning

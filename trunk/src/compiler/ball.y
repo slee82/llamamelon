@@ -50,6 +50,7 @@ import codegen.*;
 %token APOSTROPHEESS
 %token IF, THEN, ELSE
 %token DO, TIMES, FOREACH, IN, STOPDO
+%token PLAYBALL
 
 %%
 
@@ -86,6 +87,7 @@ program :
         System.err.println("adding node for _program_");
         LinkedList<Stmt> stlist = (LinkedList<Stmt>)$1.obj;
         Program top = new Program(stlist, outname);
+	top.setLine(currLine());
         top.gen(table); // moves to intermediate code generation stage
     }
 ;
@@ -159,8 +161,10 @@ body_statement :
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
     | assignment_statement { $$ = $1; }
-	| activate_statement { $$ = $1; }
-	| iteration_statement { $$ = $1; }
+    | activate_statement { $$ = $1; }
+    | iteration_statement { $$ = $1; }
+    | playball { $$ = $1; }
+    
 ;
 
 /** FUNCTION_DEFINITION **/
@@ -193,6 +197,7 @@ function_definition :
         bodylist.add(new ExprStmt());
     
         FuncDef newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
+	newfun.setLine(currLine());
     
     	$$ = new ParserVal(newfun);
     }
@@ -215,6 +220,7 @@ function_definition :
         LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$9.obj;
         
         FuncDef newfun = new FuncDef((Identifier)$2.obj, retType, paramlist, bodylist);
+	newfun.setLine(currLine());
         
         $$ = new ParserVal(newfun);
     }
@@ -233,12 +239,13 @@ parameter_list0 :
  */
 sim_function_definition :
     SIMFUNCTION IDENTIFIER IS COLON body_statement_list END {
-        System.err.println("parser: simfunction definition");
+        System.err.println("parser: simfunction definition"); 
         
         Identifier name = (Identifier)$2.obj;
         LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$5.obj;
         
         SimFuncDef newfun = new SimFuncDef((Identifier)$2.obj, bodylist);
+	newfun.setLine(currLine());
         
         $$ = new ParserVal(newfun);
     }
@@ -294,19 +301,25 @@ parameter :
 /**PRINT_STATEMENT**/
 print_statement : 
     PRINT expression SEMICOLON {
-        $$ = new ParserVal(new PrintStmt((Expr)$2.obj));
+	PrintStmt printst = new PrintStmt((Expr)$2.obj);
+	printst.setLine(currLine());
+        $$ = new ParserVal(printst);
     }
 ;
 
 /**IF_STATEMENT**/
 if_statement : IF OPAREN expression CPAREN THEN COLON body_statement_list END {
 			LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$7.obj;
-			$$ = new ParserVal(new IfStmt((Expr)$3.obj, bodylist));
+			IfStmt ifstatement = new IfStmt((Expr)$3.obj, bodylist);
+			ifstatement.setLine(currLine());
+			$$ = new ParserVal(ifstatement);
 	     }
              | IF OPAREN expression CPAREN THEN COLON body_statement_list else_statement END{
 			LinkedList<Stmt> bodylist = (LinkedList<Stmt>)$7.obj;
 			LinkedList<Stmt> elselist = (LinkedList<Stmt>)$8.obj;
-			$$ = new ParserVal(new IfStmt((Expr)$3.obj, bodylist, elselist));
+			IfStmt ifstatement = new IfStmt((Expr)$3.obj, bodylist, elselist);
+			ifstatement.setLine(currLine());
+			$$ = new ParserVal(ifstatement);
 	     }
              ;
 
@@ -317,7 +330,9 @@ else_statement : ELSE COLON body_statement_list { $$ = $3; }
 /**DECLARATION**/
 declaration : 
     type variable_declarators SEMICOLON {
-		$$ = new ParserVal(new Declaration((Type)$1.obj, (ArrayList<Object[]>)$2.obj));
+		Declaration dec = new Declaration((Type)$1.obj, (ArrayList<Object[]>)$2.obj);
+		dec.setLine(currLine());
+		$$ = new ParserVal(dec);
 	}
 ;
 
@@ -336,10 +351,10 @@ variable_declarators :
 
 variable_declarator : 
     IDENTIFIER {
-	    Object[] a = new Object[2];
-	    a[0] = $1.obj;
+	Object[] a = new Object[2];
+	a[0] = $1.obj;
         a[1] = null;
-	    $$ = new ParserVal (a);
+	$$ = new ParserVal (a);
     }
     | IDENTIFIER EQL expression {
         Object[] a = new Object[2];
@@ -358,6 +373,7 @@ variable_declarator :
 stat_declaration : 
     STAT IDENTIFIER EQL stat_expression SEMICOLON {
         StatDef decl = new StatDef((Identifier)$2.obj, (StatExpr)$4.obj);
+	decl.setLine(currLine());
         $$ = new ParserVal(decl);
     }
 ;
@@ -365,40 +381,60 @@ stat_declaration :
 /* stats don't have access to the full expression grammar, just a part of it */
 stat_expression : 
     stat_mult_expr { 
-        $$ = new ParserVal(new StatExpr((StatMult)$1.obj)); 
+	StatExpr statxpr = new StatExpr((StatMult)$1.obj);
+	statxpr.setLine(currLine());
+        $$ = new ParserVal(); 
     }
     | stat_expression PLUS stat_mult_expr {
-        $$ = new ParserVal(new StatExpr((StatExpr)$1.obj, (StatMult)$3.obj, StatExpr.Op.PLUS));
+	StatExpr statxpr = new StatExpr((StatExpr)$1.obj, (StatMult)$3.obj, StatExpr.Op.PLUS);
+	statxpr.setLine(currLine());
+        $$ = new ParserVal(statxpr);
     }
     | stat_expression MIN stat_mult_expr {
-        $$ = new ParserVal(new StatExpr((StatExpr)$1.obj, (StatMult)$3.obj, StatExpr.Op.MIN));
+	StatExpr statxpr = new StatExpr((StatExpr)$1.obj, (StatMult)$3.obj, StatExpr.Op.MIN);
+	statxpr.setLine(currLine());
+        $$ = new ParserVal(statxpr);
     }
     ;
 
 stat_mult_expr : 
     stat_atom_expr { 
-        $$ = new ParserVal(new StatMult((StatAtom)$1.obj)); 
+	StatMult statmult = new StatMult((StatAtom)$1.obj);
+	statmult.setLine(currLine());
+        $$ = new ParserVal(statmult); 
     }
-    | stat_mult_expr MULT stat_atom_expr {
-        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.MULT));
+    | stat_mult_expr MULT stat_atom_expr { 
+	StatMult statmult = new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.MULT);
+	statmult.setLine(currLine());
+        $$ = new ParserVal(statmult);
     }
-    | stat_mult_expr DIV stat_atom_expr {
-        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.DIV));
+    | stat_mult_expr DIV stat_atom_expr { 
+	StatMult statmult = new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.DIV);
+	statmult.setLine(currLine());
+        $$ = new ParserVal(statmult);
     }
-    | stat_mult_expr MOD stat_atom_expr {
-        $$ = new ParserVal(new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.MOD));
+    | stat_mult_expr MOD stat_atom_expr { 
+	StatMult statmult = new StatMult((StatMult)$1.obj, (StatAtom)$3.obj, StatMult.Op.MOD);
+	statmult.setLine(currLine());
+        $$ = new ParserVal(statmult);
     }
     ;
 
 stat_atom_expr : 
     IDENTIFIER {
-        $$ = new ParserVal(new StatAtom((Identifier)$1.obj));
+	StatAtom statatom = new StatAtom((Identifier)$1.obj);
+	statatom.setLine(currLine());
+        $$ = new ParserVal(statatom);
     }
     | NUMBER {
-        $$ = new ParserVal(new StatAtom((NumericConst)$1.obj));
+	StatAtom statatom = new StatAtom((NumericConst)$1.obj);
+	statatom.setLine(currLine());
+        $$ = new ParserVal(statatom);
     }
     | OPAREN stat_expression CPAREN {
-        $$ = new ParserVal(new StatAtom((StatExpr)$2.obj));
+	StatAtom statatom = new StatAtom((StatExpr)$2.obj);
+	statatom.setLine(currLine());
+        $$ = new ParserVal(statatom);
     }
     ;
 
@@ -416,6 +452,7 @@ stat_atom_expr :
 jump_statement : 
     RETURN expression SEMICOLON {
         ReturnStmt newret = new ReturnStmt((Expr)$2.obj);
+	newret.setLine(currLine());
         $$ = new ParserVal(newret);
     }
     | STOPDO SEMICOLON {
@@ -440,6 +477,7 @@ assignment_statement :
             new AssignmentStmt((Identifier)$1.obj, 
                     (AssignmentStmt.Op)$2.obj,
                     (Expr)$3.obj);
+	node.setLine(currLine());
         $$ = new ParserVal(node);
     }
 ;
@@ -479,6 +517,7 @@ assignment_operator :
 activate_statement :
     ACTIVATE IDENTIFIER SEMICOLON {
 	ActivateStmt activateNode = new ActivateStmt((Identifier)$2.obj);
+	activateNode.setLine(currLine());
 	$$ = new ParserVal(activateNode);
     }
 ;
@@ -489,10 +528,12 @@ activate_statement :
 expression_statement : 
     SEMICOLON {
         ExprStmt stmt = new ExprStmt();
+	stmt.setLine(currLine());
         $$ = new ParserVal(stmt);
     }
     | expression SEMICOLON {
         ExprStmt stmt = new ExprStmt((Expr)$1.obj);
+	stmt.setLine(currLine());
         $$ = new ParserVal(stmt);
     }
 ;
@@ -505,70 +546,107 @@ expression : logical_or_expression { $$ = $1; }
 /* LOGICAL */
 logical_or_expression : logical_and_expression
                       | logical_or_expression OR logical_and_expression { 
-                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.OR,(Expr)$1.obj, (Expr)$3.obj));}
+			LogicalExpr logicalex = new LogicalExpr(LogicalExpr.Op.OR,(Expr)$1.obj, (Expr)$3.obj);
+			logicalex.setLine(currLine());
+                    	$$ = new ParserVal(logicalex);
+		      }
                       ;
 
 logical_and_expression : logical_not_expression
-                       | logical_and_expression AND logical_not_expression { 
-                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.AND,(Expr)$1.obj, (Expr)$3.obj));}
+                       | logical_and_expression AND logical_not_expression {  
+			LogicalExpr logicalex = new LogicalExpr(LogicalExpr.Op.AND,(Expr)$1.obj, (Expr)$3.obj);
+			logicalex.setLine(currLine());
+                    	$$ = new ParserVal(logicalex);
+		       }
                        ;
 
 logical_not_expression : comparison_expression
                        | NOT logical_not_expression { 
-                    	$$ = new ParserVal(new LogicalExpr(LogicalExpr.Op.NOT,(Expr)$2.obj, null));}
+			LogicalExpr logicalex = new LogicalExpr(LogicalExpr.Op.NOT,(Expr)$2.obj, null);
+			logicalex.setLine(currLine());
+                    	$$ = new ParserVal(logicalex);
+		       }
                        ;
 
 
 /* COMPARISON */
 comparison_expression : addition_expression { $$ = $1; }
-                      | comparison_expression IS   addition_expression { 
-                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.IS,(Expr)$1.obj, (Expr)$3.obj));}
-                      | comparison_expression ISNOT addition_expression { 
-                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.ISNOT,(Expr)$1.obj, (Expr)$3.obj));}
-                      | comparison_expression GT    addition_expression { 
-                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.GT,(Expr)$1.obj, (Expr)$3.obj));}
-                      | comparison_expression LT    addition_expression { 
-                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.LT,(Expr)$1.obj, (Expr)$3.obj));}
-                      | comparison_expression GTE   addition_expression { 
-                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.GTE,(Expr)$1.obj, (Expr)$3.obj));}
-                      | comparison_expression LTE   addition_expression { 
-                    		$$ = new ParserVal(new ComparisonExpr(ComparisonExpr.Op.LTE,(Expr)$1.obj, (Expr)$3.obj));}
+                      | comparison_expression IS   addition_expression {
+				ComparisonExpr compex = new ComparisonExpr(ComparisonExpr.Op.IS,(Expr)$1.obj, (Expr)$3.obj);
+				compex.setLine(currLine());
+                    		$$ = new ParserVal(compex);}
+                      | comparison_expression ISNOT addition_expression {
+				ComparisonExpr compex = new ComparisonExpr(ComparisonExpr.Op.ISNOT,(Expr)$1.obj, (Expr)$3.obj);
+				compex.setLine(currLine()); 
+                    		$$ = new ParserVal(compex);}
+                      | comparison_expression GT    addition_expression {
+				ComparisonExpr compex = new ComparisonExpr(ComparisonExpr.Op.GT,(Expr)$1.obj, (Expr)$3.obj);
+				compex.setLine(currLine()); 
+                    		$$ = new ParserVal(compex);}
+                      | comparison_expression LT    addition_expression {
+				ComparisonExpr compex = new ComparisonExpr(ComparisonExpr.Op.LT,(Expr)$1.obj, (Expr)$3.obj);
+				compex.setLine(currLine()); 
+                    		$$ = new ParserVal(compex);}
+                      | comparison_expression GTE   addition_expression {
+				ComparisonExpr compex = new ComparisonExpr(ComparisonExpr.Op.GTE,(Expr)$1.obj, (Expr)$3.obj);
+				compex.setLine(currLine()); 
+                    		$$ = new ParserVal(compex);}
+                      | comparison_expression LTE   addition_expression {
+				ComparisonExpr compex = new ComparisonExpr(ComparisonExpr.Op.LTE,(Expr)$1.obj, (Expr)$3.obj);
+				compex.setLine(currLine()); 
+                    		$$ = new ParserVal(compex);}
 ;
 
 /* ARITHMETIC */
 addition_expression : multiplication_expression
                     | addition_expression PLUS multiplication_expression { 
-                    	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.PLUS,(Expr)$1.obj, (Expr)$3.obj));}
-                    | addition_expression MIN multiplication_expression {  
-                    	$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MIN,(Expr)$1.obj, (Expr)$3.obj));}
+			ArithmeticExpr arex = new ArithmeticExpr(ArithmeticExpr.Op.PLUS,(Expr)$1.obj, (Expr)$3.obj);
+			arex.setLine(currLine());
+                    	$$ = new ParserVal(arex);}
+                    | addition_expression MIN multiplication_expression { 
+			ArithmeticExpr arex = new ArithmeticExpr(ArithmeticExpr.Op.MIN,(Expr)$1.obj, (Expr)$3.obj);
+			arex.setLine(currLine()); 
+                    	$$ = new ParserVal(arex);}
 ;
 
 multiplication_expression : unary_expression
-						  | multiplication_expression MULT unary_expression { 
-                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MULT,(Expr)$1.obj, (Expr)$3.obj));}
-                    	  | multiplication_expression DIV unary_expression { 
-                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.DIV,(Expr)$1.obj, (Expr)$3.obj));}
-                    	  | multiplication_expression MOD unary_expression { 
-                    			$$ = new ParserVal(new ArithmeticExpr(ArithmeticExpr.Op.MOD,(Expr)$1.obj, (Expr)$3.obj));}
+			  | multiplication_expression MULT unary_expression { 
+					ArithmeticExpr arex = new ArithmeticExpr(ArithmeticExpr.Op.MULT,(Expr)$1.obj, (Expr)$3.obj);
+					arex.setLine(currLine());
+                    			$$ = new ParserVal(arex);}
+                    	  | multiplication_expression DIV unary_expression {  
+					ArithmeticExpr arex = new ArithmeticExpr(ArithmeticExpr.Op.DIV,(Expr)$1.obj, (Expr)$3.obj);
+					arex.setLine(currLine());
+                    			$$ = new ParserVal(arex);}
+                    	  | multiplication_expression MOD unary_expression {  
+					ArithmeticExpr arex = new ArithmeticExpr(ArithmeticExpr.Op.MOD,(Expr)$1.obj, (Expr)$3.obj);
+					arex.setLine(currLine());
+                    			$$ = new ParserVal(arex);}
 ;
 
 /* UNARY */
 unary_expression : 
     postfix_expression { $$ = $1; }
     | PPLUS unary_expression {
-    	$$ = new ParserVal(new UnaryExpr(UnaryExpr.Op.PPLUS, (Expr)$2.obj, UnaryExpr.Fix.PRE));
+	UnaryExpr unex = new UnaryExpr(UnaryExpr.Op.PPLUS, (Expr)$2.obj, UnaryExpr.Fix.PRE);
+	unex.setLine(currLine());
+    	$$ = new ParserVal(unex);
     }
     | MMIN unary_expression {
-    	$$ = new ParserVal(new UnaryExpr(UnaryExpr.Op.MMIN, (Expr)$2.obj, UnaryExpr.Fix.PRE));
+	UnaryExpr unex = new UnaryExpr(UnaryExpr.Op.MMIN, (Expr)$2.obj, UnaryExpr.Fix.PRE);
+	unex.setLine(currLine());
+    	$$ = new ParserVal(unex);
     }
     | primary_expression FROM unary_expression {
         //fetching
         MatchExpr match = new MatchExpr((Expr)$1.obj, (Expr)$3.obj);
+	match.setLine(currLine());
         $$ = new ParserVal(match);
     }
     | ANY unary_expression {
         // random fetching
         MatchExpr match = new MatchExpr((Expr)$2.obj);
+	match.setLine(currLine());
         $$ = new ParserVal(match);
     }
 ;
@@ -580,17 +658,25 @@ postfix_expression :
     }
     | postfix_expression APOSTROPHEESS IDENTIFIER {
     	// attribute/stats call
-    	$$ = new ParserVal(new ApostrExpr((Expr)$1.obj, (Identifier)$3.obj));
+	ApostrExpr apex = new ApostrExpr((Expr)$1.obj, (Identifier)$3.obj);
+	apex.setLine(currLine());
+    	$$ = new ParserVal(apex);
     }
     | postfix_expression WHERE OPAREN expression CPAREN {
         // filtering
-        $$ = new ParserVal(new FilterExpr((Expr)$1.obj, (Expr)$4.obj));
+	FilterExpr filex = new FilterExpr((Expr)$1.obj, (Expr)$4.obj);
+	filex.setLine(currLine());
+        $$ = new ParserVal(filex);
     }
     | postfix_expression PPLUS {
-    	$$ = new ParserVal(new UnaryExpr(UnaryExpr.Op.PPLUS, (Expr)$1.obj, UnaryExpr.Fix.POST));
+	UnaryExpr unex = new UnaryExpr(UnaryExpr.Op.PPLUS, (Expr)$1.obj, UnaryExpr.Fix.POST);
+	unex.setLine(currLine());
+    	$$ = new ParserVal(unex);
     }
     | postfix_expression MMIN {
-    	$$ = new ParserVal(new UnaryExpr(UnaryExpr.Op.MMIN, (Expr)$1.obj, UnaryExpr.Fix.POST));
+	UnaryExpr unex = new UnaryExpr(UnaryExpr.Op.MMIN, (Expr)$1.obj, UnaryExpr.Fix.POST);
+	unex.setLine(currLine());
+    	$$ = new ParserVal(unex);
     }
 ;
 
@@ -601,10 +687,14 @@ primary_expression : atom_expression { $$ = $1; }
 
 /* FUNCTION_CALL */
 function_call : IDENTIFIER OPAREN CPAREN {
-		$$ = new ParserVal(new Funcall((Identifier)$1.obj));
+		Funcall fcall = new Funcall((Identifier)$1.obj);
+		fcall.setLine(currLine());
+		$$ = new ParserVal(fcall);
 	      }	
               | IDENTIFIER OPAREN argument_list CPAREN {
-		$$ = new ParserVal(new Funcall((Identifier)$1.obj, (ArrayList<Expr>)$3.obj));
+		Funcall fcall = new Funcall((Identifier)$1.obj, (ArrayList<Expr>)$3.obj);
+		fcall.setLine(currLine());
+		$$ = new ParserVal(fcall);
 	      }	
 ;
 
@@ -625,17 +715,25 @@ argument_list :
 /* ATOM_EXPRESSION */
 atom_expression : 
     STRING { 
-        System.err.println("got string " + $1.obj); 
-        $$ = new ParserVal(new AtomicExpr((StringConst)($1.obj)));
+        System.err.println("got string " + $1.obj);
+	AtomicExpr atex = new AtomicExpr((StringConst)($1.obj));
+	atex.setLine(currLine());
+        $$ = new ParserVal(atex);
     }
     | IDENTIFIER {
-        $$ = new ParserVal(new AtomicExpr((Identifier)($1.obj)));
+	AtomicExpr atex = new AtomicExpr((Identifier)($1.obj));
+	atex.setLine(currLine());
+        $$ = new ParserVal(atex);
     }
     | NUMBER {
-        $$ = new ParserVal(new AtomicExpr((NumericConst)($1.obj)));
+	AtomicExpr atex = new AtomicExpr((NumericConst)($1.obj));
+	atex.setLine(currLine());
+        $$ = new ParserVal(atex);
     }
     | OPAREN expression CPAREN {
-    	$$ = new ParserVal(new AtomicExpr((Expr)($2.obj)));
+	AtomicExpr atex = new AtomicExpr((Expr)($2.obj));
+	atex.setLine(currLine());
+    	$$ = new ParserVal(atex);
     }
     | list_initializer {
         $$ = $1;
@@ -648,12 +746,22 @@ atom_expression :
 list_initializer : 
     OSQUARE argument_list CSQUARE {
         ArrayList<Expr> args = (ArrayList<Expr>)$2.obj;
-        $$ = new ParserVal(new ListInit(args));
+	ListInit linit = new ListInit(args);
+	linit.setLine(currLine());
+        $$ = new ParserVal(linit);
     }
     | OSQUARE CSQUARE {
-        $$ = new ParserVal(new ListInit());
+	ListInit linit = new ListInit();
+	linit.setLine(currLine());
+        $$ = new ParserVal(linit);
     }
     ;
+
+playball : 
+    PLAYBALL {
+	/* What's this? Nothing, move along. */
+	$$ = new ParserVal(new PlayBall());
+    }
 
 %%
 
@@ -687,9 +795,18 @@ private int yylex () {
 	return yyl_return;
 }
 
+public int currLine(){
+    return lexer.getLine()+1;
+}
+
+public String currTok(){
+    return lexer.yytext();
+}
+
 /* error reporting */
 public void yyerror (String error) {
-	System.err.println ("Error: " + error);
+	System.err.println (outname + ".ball Line " + currLine() + ": "
+		+ error + " before '" + currTok() + "'");
 }
 
 /* lexer is created in the constructor */

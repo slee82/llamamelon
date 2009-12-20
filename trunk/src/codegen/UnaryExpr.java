@@ -47,7 +47,7 @@ public class UnaryExpr extends Expr {
         		return tempID.getID();
         	}
         } else {
-            throw new RuntimeException("expr: type " + type + " unsuitable for unary operation " + getOpCode());
+            throw throwErr("expr: type " + type + " unsuitable for unary operation " + getOpCode(), getOpCode());
         }
     }
     
@@ -58,7 +58,7 @@ public class UnaryExpr extends Expr {
         if (type.equals(Type.number)) {
             return Type.number;
         } else {
-            throw new RuntimeException("expr: type " + value.getType(table) + " unsuitable for unary operation " + getOpCode());
+            throw throwErr("expr: type " + value.getType(table) + " unsuitable for unary operation " + getOpCode(), getOpCode());
         }
     }
     
