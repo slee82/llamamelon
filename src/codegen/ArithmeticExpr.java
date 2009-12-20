@@ -4,6 +4,7 @@
  * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
  * ArithmeticExpr.java - Code Generator for Arithmetic Expressions
  */
+
 package codegen;
 
 import compiler.SymbolTable;
@@ -16,9 +17,6 @@ public class ArithmeticExpr extends Expr {
 
 	 /**
      * Constructor - Takes an operator, left expression and right expression
-     * @param op
-     * @param exprL
-     * @param exprR
      */
     public ArithmeticExpr(Op op, Expr exprL, Expr exprR) {
         this.operator = op;
@@ -30,8 +28,10 @@ public class ArithmeticExpr extends Expr {
         PLUS, MIN, MULT, DIV, MOD
     }
     
-   
-    
+	/*
+	 * Arithmethic operations, especially '+' are overloaded. + can work on
+	 * string + any or any + string, list + list, or number + number.
+	 */
     @Override
     public String code(SymbolTable table) {
         String lcode = valueL.code(table);

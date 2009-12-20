@@ -4,6 +4,7 @@
  * Authors: Cipta Herwana, Daniel Lasry, Sam Lee, Nathan Miller, Jordan Schau 
  * AssignmentStmt.java - Code Generator for Assignment statements
  */
+
 package codegen;
 
 import lexer.Identifier;
@@ -11,8 +12,8 @@ import lexer.Type;
 import compiler.SymbolTable;
 
 /**
- * @author cipta
- * 
+ * Assignment statements. Identifier on the left, expression on the right.
+ * Assignments are not expressions.
  */
 public class AssignmentStmt extends Stmt {
 
