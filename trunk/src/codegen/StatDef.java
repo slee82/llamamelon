@@ -23,7 +23,7 @@ public class StatDef extends Declaration {
         // stats can be overloaded (I suppose so, since variables can, and
         // stats are on the same level as variables, because of body_statement
         if (!table.available(this.name)) {
-            throw new RuntimeException("statdef: error: name in use for " + 
+            throw new RuntimeException("statdef: error: name " + this.name + " in use for " + 
                     table.getEntry(this.name));
         }
         if (isInside(table))
