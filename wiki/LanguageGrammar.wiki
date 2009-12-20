@@ -45,10 +45,17 @@ body_statement : if_statement
                | activate_statement
                | print_statement
                | assignment_statement
+               | playball
                ;
 
 /**FUNCTION_DEFINITION**/
+
+type : type1
+     | "list" "of" type
+     ;
+
 function_definition : "function" identifier "(" parameter_list ")" "returns" type ":" body_statement_list "end"
+                    | "function" identifier "(" parameter_list ")" "returns" type ":" "end"
                     ;
 
 parameter_list : parameter
@@ -134,12 +141,11 @@ stat_atom_expr : identifier
                ;
 
 /*TYPE*/
-type : "number"
+type1 : "number"
      | "string"
      | "list"
      | "team"
      | "player"
-     //| "stat"
      | "nothing"
      ;
 
@@ -234,6 +240,8 @@ list_initializer : "[" variable_list "]"
 variable_list : expression
               | variable_list "," expression
               ;
+
+playball : "playball" ;
 %%
 
 }}}
