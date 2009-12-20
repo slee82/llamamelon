@@ -149,11 +149,11 @@ Identifier              = [:jletterdigit:]*[:jletter:][:jletterdigit:]*
 ":"     { return Parser.COLON; }
 
 "'s"	{ /* got an apostrophe-s, notify parser */
-			System.err.println("lexer: found ''s'");
+			//System.err.println("lexer: found ''s'");
 			return Parser.APOSTROPHEESS;			
-	}
+		}
 
-"playball" 	{ return Parser.PLAYBALL; }
+playball 	{ return Parser.PLAYBALL; }
 
 any             { return Parser.ANY; }
 
@@ -164,7 +164,7 @@ of              { return Parser.OF; }
 from            { return Parser.FROM; }
 
 if		{ /* got an if statement, notify parser */
-		    System.err.println("lexer: found 'if'");
+		    //System.err.println("lexer: found 'if'");
 		    yyparser.yylval = new ParserVal(Keyword.ifKwd);
                     return Parser.IF;
 		}
@@ -175,50 +175,50 @@ then		{
 		}
 
 else		{/* got an else statement, notify parser */
-		    System.err.println("lexer: found 'else'");
+		    //System.err.println("lexer: found 'else'");
 		    yyparser.yylval = new ParserVal(Keyword.elseKwd);
                     return Parser.ELSE;
 		}
 
 do           	{ /* got a do statement, notify parser */
-                    System.err.println("lexer: found 'do'");
+                    //System.err.println("lexer: found 'do'");
                     yyparser.yylval =  new ParserVal(Keyword.mydo);
                     return Parser.DO; // TODO: couple return with table reference
                 } 
             
 					
 times			{ /* got a times statement, notify parser */
-					System.err.println("lexer: found 'times'");
+					//System.err.println("lexer: found 'times'");
 					yyparser.yylval = new ParserVal(Keyword.times);
 					return Parser.TIMES;
 				}
 				
 stopdo			{ /* got a stopdo statement, notify parser */
-					System.err.println("lexer: found 'stopdo'");
+					//System.err.println("lexer: found 'stopdo'");
 					yyparser.yylval = new ParserVal(Keyword.stopdo);
 					return Parser.STOPDO;
 				}
 
 foreach			{ /* got a foreach loop */
-					System.err.println("lexer found a foreach");
+					//System.err.println("lexer found a foreach");
 					yyparser.yylval = new ParserVal(Keyword.foreach);
 					return Parser.FOREACH;
 				}
 				
 in				{ /* got an in statement */
-					System.err.println("lexer found an 'in'");
+					//System.err.println("lexer found an 'in'");
 					yyparser.yylval = new ParserVal(Keyword.in);
 					return Parser.IN;
 				}
 
 print           { /* got a print statement, notify parser */
-                    System.err.println("lexer: found 'print'");
+                    //System.err.println("lexer: found 'print'");
                     yyparser.yylval =  new ParserVal(Keyword.print);
                     return Parser.PRINT; // TODO: couple return with table reference
                 }
 
 activate        { /* got anactivation statement, notify parser */
-                    System.err.println("lexer: found 'activate'");
+                    //System.err.println("lexer: found 'activate'");
                     yyparser.yylval =  new ParserVal(Keyword.activate);
                     return Parser.ACTIVATE;
                 }
@@ -234,7 +234,7 @@ simfunction     {
                 }
 
 stat            {
-                    System.err.println("lexer: found 'stat' keyword.");
+                    //System.err.println("lexer: found 'stat' keyword.");
                     yyparser.yylval = new ParserVal(Keyword.stat);
                     return Parser.STAT;
                 }
@@ -255,7 +255,7 @@ returns         {
                 }
 
 where           {
-                    System.err.println("lexer: 'where' keyword");
+                    //System.err.println("lexer: 'where' keyword");
                     yyparser.yylval = new ParserVal(Keyword.where);
                     return Parser.WHERE;
                 }
@@ -267,7 +267,7 @@ item            {
 
 {StringConst}	{ /* got a string, add to sym. tbl. and notify parser */
                     // TODO: add symbol table addition code here
-		            System.err.println("lexer: found a String Const");
+		            //System.err.println("lexer: found a String Const");
                     StringConst s = new StringConst(yytext());
                     //table.putEntry(s, null);
                     yyparser.yylval = new ParserVal(s);
@@ -278,27 +278,29 @@ item            {
 		            NumericConst n = new NumericConst(yytext());
                     //table.putEntry(n, null);
                     yyparser.yylval = new ParserVal(n);
-                    System.err.println("lexer: found a Numeric Const " + n);
+                    //System.err.println("lexer: found a Numeric Const " + n);
                     return Parser.NUMBER; // TODO: couple return with table reference
                 }
 
 {Primitive}		{   /* got a type, notify parser */
 		            Type t = new Type(yytext());
 		            yyparser.yylval = new ParserVal(t);
-		            System.err.println("lexer: found type " + t);
+		            //System.err.println("lexer: found type " + t);
 		            return Parser.PRIMITIVE;
 		        }
 
 {Identifier}	{   /* got an identifier, notify parser */
 		    Identifier i = new Identifier(yytext());
 		    yyparser.yylval = new ParserVal(i);
-		    System.err.println("lexer: found identifier \"" + i.getID() + "\"");
+		    //System.err.println("lexer: found identifier \"" + i.getID() + "\"");
             
             // add the identifier to the symbol table in case we need it later
             //table.putEntry(i, null);
 		    return Parser.IDENTIFIER;
 		}
 
-{Comment} 		{ System.err.println("lexer: found comment"); }
+{Comment} 		{ //System.err.println("lexer: found comment")
+					; 
+				}
 {WhiteSpace}	{ /* ignore */ }
 
