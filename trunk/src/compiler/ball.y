@@ -158,9 +158,10 @@ body_statement :
     | if_statement { $$ = $1; }
     | print_statement { $$ = $1; }
     | jump_statement { $$ = $1; }
-    | assignment_statement { $$ = $1; }
-	| activate_statement { $$ = $1; }
-	| iteration_statement { $$ = $1; }
+    | assignment_statement { $$ = $1; } 
+    | activate_statement { $$ = $1; }
+    | iteration_statement { $$ = $1; }
+    | playball { $$ = $1; }
 ;
 
 /** FUNCTION_DEFINITION **/
@@ -655,6 +656,12 @@ list_initializer :
     }
     ;
 
+playball : 
+    PLAYBALL SEMICOLON{
+	/* What's this? Nothing, move along. */
+	$$ = new ParserVal(new PlayBall());
+    }
+;
 %%
 
 /* 
@@ -687,9 +694,18 @@ private int yylex () {
 	return yyl_return;
 }
 
+public int currLine(){
+    return lexer.getLine()+1;
+}
+
+public String currTok(){
+    return lexer.yytext();
+}
+
 /* error reporting */
 public void yyerror (String error) {
-	System.err.println ("Error: " + error);
+	System.err.println (outname + ".ball Line " + currLine() + ": "
+		+ error + " before '" + currTok() + "'");
 }
 
 /* lexer is created in the constructor */
