@@ -24,6 +24,7 @@ public class Type extends Token {
     public boolean equals(Object other) {
         if (!(other instanceof Type)) return false;
         Type o = (Type)other;
+	if (val.equals("null") || o.val.equals("null")) return true;
         return this.val.equals(o.val);
     }
     
@@ -37,6 +38,8 @@ public class Type extends Token {
     public String getType() {
     	if (val.equals("bool"))
             return "boolean";
+	if (val.equals("null"))
+            return "null";
     	if (val.equals("number"))
             return "float";
         if (val.equals("string"))
@@ -62,5 +65,6 @@ public class Type extends Token {
     public final static Type playerStat = new Type("PlayerStat");
     public final static Type teamStat = new Type("TeamStat");
     public static final Type nothing = new Type("nothing");
+    public static final Type nulltype = new Type("null");
 
 }
