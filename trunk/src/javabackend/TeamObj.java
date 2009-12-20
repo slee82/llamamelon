@@ -82,7 +82,7 @@ public class TeamObj implements BallDataType {
 	
 	public String toString(){
 		String toReturn = "";
-		toReturn += "Team Name: " + name + "\n" + "Header:W,L\n";
+		toReturn += "Team Name: " + Name + "\n" + "Header:W,L\n";
 		toReturn += Integer.toString(w) + "," + Integer.toString(l) + "\n\n";
 		
 		toReturn += "Type:Batter\nHeader:Name,AB,R,H,2B,3B,HR,BB\n";
