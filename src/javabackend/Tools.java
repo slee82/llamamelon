@@ -68,6 +68,10 @@ public class Tools {
     	return (BallList<TeamObj>) new BallList<TeamObj>(copy.subList(0, (int)num));
     }
 
+    public static boolean isValid(Object obj) { return obj != null; }
+
+    public static boolean isValid(float num) { return num != Float.NaN; }
+
     // topTeams(number x, list of player y, playerStat z)
     public static BallList<PlayerObj> topPlayers(float num, BallList<PlayerObj> list, PlayerStat stat) {
     	BallList<PlayerObj> copy = new BallList<PlayerObj>();

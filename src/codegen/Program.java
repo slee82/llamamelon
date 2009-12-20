@@ -33,7 +33,7 @@ public class Program extends ParseTreeNode {
         
         // collect variable declarations here
         LinkedList<Declaration> varDeclarations = new LinkedList<Declaration>();
-        
+
         /* INPUT BUILTIN STATS */
         table.putEntry(new Identifier("W"), 
                 new BuiltinStatDef(new Identifier("TeamObj.W"), Type.teamStat));
@@ -89,6 +89,9 @@ public class Program extends ParseTreeNode {
         table.putEntry(new Identifier("isPitcher"),
                 new BuiltinFuncDef(new Identifier("PlayerObj.isPitcher"), Type.bool,
                         new Type[] { Type.player }));
+	table.putEntry(new Identifier("isValid"),
+		new BuiltinFuncDef(new Identifier("Tools.isValid"), Type.bool,
+			new Type[] { Type.nulltype })); // match anything
         
         table.putEntry(new Identifier("topPlayers"),
                 new BuiltinFuncDef(new Identifier("Tools.topPlayers"), new ListType(Type.player),

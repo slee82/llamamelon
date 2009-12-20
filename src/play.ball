@@ -19,5 +19,10 @@ print 0.0;
 print .99;
 print 1.1;
 print .1;
-playball;
-list of number a = number[];
+//playball;
+if (not isValid("a" from string[])) then:
+	print "hi";
+else:
+	print "bleh";
+end
+

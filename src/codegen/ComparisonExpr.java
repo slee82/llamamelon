@@ -37,7 +37,7 @@ public class ComparisonExpr extends Expr {
     		result = valueL.code(table);
     		result += ".equals(";
     		result += valueR.code(table);
-    		result += " );";
+    		result += " )";
     	}
     	else {
     	    	
