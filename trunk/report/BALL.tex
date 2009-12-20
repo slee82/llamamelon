@@ -229,53 +229,6 @@ sport, BALL is a team-created language.
 
 \input{softwaredev.tex}
 
-\chapter{TestPlan}\label{TestPlan}
-
-As a group we all felt a test driven development was crucial to bug
-free code.  Test Driven Development in our case started with one line
-simple grammars and simple programs.  We then would introduce small
-additions to the grammar and write small programs to act as unit tests
-for said additions to the grammar.  The following is a code snippet
-from the unit testing program for arithmetic expressions:
-
-\begin{singlespacing}
-\begin{verbatim}
-
-/*
- * Arithmetic Expr Test File
- */
-
-number x, y, z;
-
-x = 0;//x = 0
-y = x + 1;//y=1
-z = x / 10;//z=0
-
-x = (z + 1) * 100; //x=100
-
-y = z % 5 + 1;//y=1
-
-1+2;//should get commented out in javacode
-x+y;
-
-function f1 () returns number:
-    x = 13;
-    return 15;
-end
-
-function f2() returns number:
-    y = x * 5 % 6;
-    return 2 + 4;
-end
-
-print f1() + 3;// 18
-print ``f2() = `` + f2();//6
-print ``x = `` + x;//13 BECAUSE ITS GLOBAL (WORLDLY)
-print ``y = `` + y;//5
-
-\end{verbatim}
-\end{singlespacing}
-
 \input{testplan.tex}
 
 \input{conclusion.tex}
@@ -283,7 +236,9 @@ print ``y = `` + y;//5
 %% <== End of hints
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+\clearpage
+\chapter{Source Code}
+\input{source.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% BIBLIOGRAPHY AND OTHER LISTS
@@ -308,10 +263,6 @@ print ``y = `` + y;//5
 \clearpage
 \addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
-
-\clearpage
-\chapter{Source Code}
-\input{source.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
