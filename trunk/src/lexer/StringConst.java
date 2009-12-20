@@ -9,8 +9,7 @@ package lexer;
 
 public class StringConst extends Token {
     
-    public String val;
-
+	// gets what the lexer inputs. This includes quotes too.
     public StringConst(String s) {
         super(Tag.STRINGCONST);
         this.val = s;
@@ -19,5 +18,7 @@ public class StringConst extends Token {
     public String toString() {
         return ("(" + super.toString() + " " + val + ")");
     }
+
+    public String val;
 
 }
