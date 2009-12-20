@@ -1,14 +1,1 @@
-#summary Dump future ideas here
-= Introduction =
-
-If you have ideas you'd like in the language, put them here.
-
-
-= Details =
-
-I/O that allows a user to specify additional details that can affect simulations, like what team is playing at home, or current weather conditions 
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Make {{{player1 == "Manny Ramirez";}}} work
