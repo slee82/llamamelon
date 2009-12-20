@@ -30,7 +30,7 @@ public class PlayerObj implements BallDataType {
 
     // This is the pitcher constructor
     public PlayerObj (String Name, int type, double ipp, int h,
-            int er, int bb, int k, int bf) {
+            int er, int hr, int bb, int k, int bf) {
         if (type != PITCHER) {
             System.err.println("Incorrect Player Type Found");
             return;
@@ -54,6 +54,7 @@ public class PlayerObj implements BallDataType {
         }
         this.h = h;
         this.er = er;
+        this.hr = hr;
         this.bb = bb;
         this.k = k;
         this.bf = bf;
@@ -113,10 +114,6 @@ public class PlayerObj implements BallDataType {
     }
 
     public int getHr() {
-        if (type != BATTER) {
-            System.err.println("Incorrect Statistic: HR is only applicable to batters");
-            return -1;
-        }
         return hr;
     }
 
