@@ -1,0 +1,182 @@
+
+\section{Declarations}\label{Declarations}
+Declarations specify how BALL will set aside a new variable within the
+scope of the declaration. Declarations have the form:
+
+\begin{verbatim}
+declaration : type variable_declarators ";"
+            ;
+variable_declarators : variable_declarator
+                     | variable_declarators "," variable_declarator
+                     ;
+variable_declarator : identifier
+                    | identifier "=" expression
+                    ;
+\end{verbatim}
+
+\texttt{variable\_declarators} is a comma-separated parentheses
+delimited list of declarators. Each declarator contains a name and
+optionally an expression that initializes the variable's value. The
+expression's type must match the type of the declaration statement.
+
+\subsection{Type Specifiers}
+
+The type specifiers in BALL are: 
+
+\begin{verbatim}
+type : "number" | "string"
+     | "list"   | "team"
+     | "player" | "nothing"
+     | list_type
+     ;
+
+list_type : "list" "of" type
+          ;
+\end{verbatim}
+
+List types are declared with the type of their contents.  The type
+\texttt{nothing} is only used when specifying return values for
+functions. For example:
+
+\begin{verbatim}
+function printHello (string helloString) returns nothing:
+   print helloString;
+end
+\end{verbatim}
+
+\subsection{Meaning of Declarations}
+
+Declarations map an identifier to an expression. Since an expression
+can produce any \texttt{atom\_expression} , this allows for
+declarations such as \texttt{number someNumber=9;} and \texttt{string
+  someString="Hello!";}. But expressions may produce other
+combinations, and their return value will be mapped to the
+identifier. In this example, \texttt{aTeam} will be mapped to the
+return value of the load function: \texttt{team aTeam =
+  load(myTeam.team);} Furthermore, identifiers could be mapped to the
+return values of arithmetic expressions or list manipulations.
+
+\subsection{Declaring a List}\label{ListDecl}
+
+\begin{verbatim}
+list_initializer : "[" variable_list "]"
+                 | type "[" "]"
+                 ;
+variable_list : expression
+              | variable_list "," expression
+              ;
+\end{verbatim}
+
+Lists are declared as a list of expressions (separated by commas)
+between square brackets. Each expression must evaluate to the same
+type as the list's expected content type.
+
+BALL lists determine their type by looking at the arguments. If the
+new list is an empty list, no arguments means lists cannot know what
+type it contains. Therefore, the type of object the list is going to
+hold needs to be specified for empty lists.
+
+\subsection{Declaring Players and Teams}
+
+Players and teams cannot be created inside a program. They must be
+loaded from a team file formatted in CSV.
+
+\subsection{Declaring a Stat}
+
+Stats are small, portable functions that encapsulate just a single
+expression that acts on a \texttt{player} or \texttt{team}
+object. Whether the stat acts on a player or a team depends what stat
+it calls to derive its value. Both \texttt{player} and \texttt{team}
+objects have predefined stats. User-defined stats act on players if
+the stats they call all act on players. The same goes for team
+stats. However, if both player and team stats are called by a
+user-defined stat, the compiler should fail to generate the
+code. Similarly, if there are no stats called by a user-defined stat,
+it should also fail because the use of the stat cannot be derived.
+
+\begin{table}[htdp]
+\begin{center}
+\begin{tabular}{|c|c|p{5cm}|}
+\hline
+Name & Type & Meaning\\
+\hline
+\texttt{IP} & Pitcher & Innings Pitched\\
+\texttt{K} & Pitcher & Strikeouts\\
+\texttt{H} & Pitcher & Hits Allowed\\
+\texttt{BB} & Pitcher & Walks Allowed\\
+\texttt{ER} & Pitcher & Earned Runs\\
+\texttt{AB} & Batter & At Bats\\
+\texttt{R} & Batter & Runs\\
+\texttt{H} & Batter & Hits\\
+\texttt{2B} & Batter & Doubles\\
+\texttt{3B} & Batter & Triples\\
+\texttt{HR} & Batter & Home Runs\\
+\texttt{BB} & Batter & Walks\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Primitive Stats for \texttt{player} objects}\label{playerstats}
+\end{table}%
+
+\begin{table}[htdp]
+\begin{center}
+\begin{tabular}{|c|p{5cm}|}
+\hline
+Name & Meaning\\
+\hline
+\texttt{W} & Games Won\\
+\texttt{L} & Games Lost\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Primitive Stats for \texttt{team} objects}\label{teamstats}
+\end{table}%
+
+
+\begin{table}[htdp]
+\begin{center}
+\begin{tabular}{|c|c|c|p{5cm}|}
+\hline
+Object Type & Name & Return Type & Meaning\\
+\hline
+\texttt{player} & \texttt{name} & \texttt{string} & Name loaded from CSV \\
+\texttt{team} & \texttt{teamname} & \texttt{string} & Team name from
+CSV \\
+\texttt{team} & \texttt{BATTERS} & \texttt{list of player} & Players
+marked as batters \\
+\texttt{team} & \texttt{PITCHERS} & \texttt{list of player} & Players
+marked as pitchers \\
+\texttt{team} & \texttt{PLAYERS} & \texttt{list of player} & All
+players \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Builtin Attributes}\label{teamstats}
+\end{table}%
+
+When defining a new stat, the user will need to build upon primitive
+stats so BALL can derive what object the stat is for. For example:
+
+\begin{verbatim}
+stat ERA = ER/IP*9;
+\end{verbatim}
+
+This line of code defines a new stat for pitchers: the Earned Run
+Average. A user may now access this 
+stat from any pitcher just like he would access a primitive stat:
+\texttt{player1's ERA}.
+
+Stats return numbers. The user should be able to collect a stat as
+a number at any time with code such as: 
+
+\begin{verbatim}
+number player1ERA = player1's ERA;
+\end{verbatim}
+
+\subsection{Scope}
+All declarations made outside of functions, loops, or if-statements
+are global. Functions themselves must also be global. However, the
+scope of all declarations made inside of functions, loops, or if
+statements ends at the end of the \texttt{body\_statement\_list}. The
+end keyword marks the end of the deepest
+\texttt{body\_statement\_list}.
