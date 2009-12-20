@@ -51,7 +51,8 @@ public class Loader {
 					//Read TEAM STATS
 					if (line!=null && line.lastIndexOf("Header:") > -1) {
 						line = percolateThrough(in);
-					}else {
+					}
+					else {
 						System.err.println("Warning: No Headers for Team Stats: check CSV file structure.");
 					}
 					
@@ -77,15 +78,16 @@ public class Loader {
 					if (line!=null && line.lastIndexOf("Type:") > -1) {
 						
 						//This if/else statement handles CSV files with batters first or pitchers first
-						if (line.lastIndexOf("Batter") > -1){	//batters first
+						if (line.lastIndexOf("Batter") > -1) {	//batters first
 							line = percolateThrough(in);
 							batters = readBatters(in, line);
-						}else{									//pitchers first
+						}
+						else {									//pitchers first
 							line = percolateThrough(in);
 							pitchers = readPitchers(in, line);
 						}
 					}
-					else if(line!=null){
+					else if(line!=null) {
 						batters = readBatters(in, line);		//Not specified, do default
 						System.err.println("Warning: Type of first set of players not specified: assuming batters.");
 					}
@@ -98,17 +100,19 @@ public class Loader {
 						if (line.lastIndexOf("Batter") > -1){
 							line = percolateThrough(in);
 							batters = readBatters(in, line);
-						}else{
+						}
+						else {
 							line = percolateThrough(in);
 							pitchers = readPitchers(in, line);
 						}
 					}
-					else if(line!=null){
+					else if(line!=null) {
 						pitchers = readPitchers(in, line);		//Type not specified, do default
 						System.out.println("Warning: Type of second set of players not specified: assuming pitchers.");
 					}
 					
-				}else {
+				}
+				else {
 					System.err.println(fileName + " is empty, please check.");
 				}
 			}
@@ -133,7 +137,7 @@ public class Loader {
 	//=======================================================
 	public static String percolateThrough(BufferedReader in) throws IOException {
 		String line;
-		while((line=in.readLine()) != null){
+		while((line=in.readLine()) != null) {
 			if(line.length() > 0){	//return the first line of length > 0
 				return line;
 			}
@@ -164,7 +168,7 @@ public class Loader {
 		int HR = 0;
 		int BB = 0;
 		
-		while(line != null){	//for every new line...
+		while(line != null) {	//for every new line...
 								//break if you find a header or a type definition:
 			if (line.lastIndexOf("Type:") > -1 || line.lastIndexOf("Header:") > -1) {
 				in.reset();
@@ -229,7 +233,7 @@ public class Loader {
 		int BB = 0;
 		int K = 0;
 		int BF = 0;
-		while(line != null){
+		while(line != null) {
 			if (line.lastIndexOf("Type:") > -1 || line.lastIndexOf("Header:") > -1) {
 				in.reset();
 				break;

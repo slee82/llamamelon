@@ -41,12 +41,12 @@ public class Tools {
     }
     
     // max(number x, number y)
-    public static float max(float low, float high){
+    public static float max(float low, float high) {
     	return Math.max(low,high);
     }
     
     // min(number x, number y)
-    public static float min(float low, float high){
+    public static float min(float low, float high) {
     	return Math.min(low,high);
     }
     
