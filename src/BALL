@@ -1,0 +1,19 @@
+#!/bin/bash
+
+whereJava=`which java`
+#echo $whereJava
+whatDir=`readlink -f $whereJava | awk -F"jre" '{ print $1 }'`
+#echo $where
+tools2=`find $whatDir -name tools.jar`
+#echo $tools2
+#tools1=`find /usr/lib/ -name tools.jar`
+#tools=/usr/lib/jvm/java-6-sun/lib/tools.jar
+
+if [ -f $tools2 ]; then
+java -cp .:$tools2 compiler.Run $1
+else
+
+echo "tools.jar not found"
+fi
+
+
