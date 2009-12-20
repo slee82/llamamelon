@@ -56,7 +56,7 @@ public class ApostrExpr extends Expr {
     		}
     		/* The requested attribute is a string */
     		if (atttype.equals(Type.string)) {
-    			if (attcode.equals("name")) {
+    			if (attcode.equals("name") || attcode.equals("teamname")) {
     				return attFromTable.getName().getID() + ".get(" + objcode + ")";	//PlayerObj.attribute.get(playername);
     			}
     			else
@@ -113,48 +113,6 @@ public class ApostrExpr extends Expr {
     		throw new RuntimeException("Identifier: attribute "+ attribute.getID() + " not a StatDef instance");
     }
     
-    /*
-    @Override
-    public String code(SymbolTable table) {
-        String lcode = valueL.code(table);
-        String rcode = valueR.code(table);
-        Type ltype = valueL.getType(table);
-        Type rtype = valueR.getType(table);
-        
-        /* STRING CONCATENATION 
-        if (ltype.equals(Type.string)) {
-            // convert r to string
-            if (rtype.equals(Type.number))
-                return lcode + ".concat(Float.toString(" + rcode + "))";
-            return lcode + ".concat((" + rcode + ").toString())";
-        }
-        if (rtype.equals(Type.string)) {
-            // convert r to string
-            if (ltype.equals(Type.number))
-                return "Float.toString(" + lcode + ").concat(" + rcode + ")";
-            return lcode + ".toString().concat(" + rcode + ")";
-        }
-        
-    	if(! ltype.equals(rtype)) {
-    		throw new RuntimeException("objexpr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
-    	}
-    	if (ltype.equals(Type.number)) {
-            /* Number addition 
-            String result = lcode;
-    		result += " " + getOpCode() + " ";
-    		result += rcode;
-    		return result;
-        } else if (ltype instanceof ListType) {
-            /* List append 
-            String result = "(" + lcode + ").append(";
-            result += rcode;
-            return result + ")";
-        } else {
-            throw new RuntimeException("objexpr: type " + ltype + " unsuitable for addition.");
-        }
-    }
-    
-    */
     Expr objexpr;
     Identifier attribute;
 }
