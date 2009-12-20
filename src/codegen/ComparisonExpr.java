@@ -30,10 +30,10 @@ public class ComparisonExpr extends Expr {
     	if (valueR == null)
     		return "! " + valueL.code(table);
     	if(! valueL.getType(table).equals(valueR.getType(table))) {
-    		throw new RuntimeException("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table));
+    		throwErr("expr: type mismatch " + valueL.getType(table) + " and " + valueR.getType(table), valueL.code(table) + getOpCode() + valueR.code(table));
     	}
     	if(!valueL.getType(table).equals(Type.number)) {
-    		throw new RuntimeException("expr: type is not number: " + valueL.getType(table) + " and " + valueR.getType(table));
+    		throwErr("expr: type is not number: " + valueL.getType(table) + " and " + valueR.getType(table), valueL.code(table) + getOpCode() + valueR.code(table));
     	}
     	
     	String result = valueL.code(table);
