@@ -55,7 +55,7 @@ public class IterationStmt extends Stmt {
     	if (expr != null) {
    		
     		if(! expr.getType(table).equals(Type.number)) {
-        		throw new RuntimeException("Incorrect expression type '"+expr.code(table)+"' needs to be a number");
+        		throwErr("Incorrect expression type '"+expr.code(table)+"' needs to be a number");
     		}
     		
     		Identifier nid = table.newID();
@@ -85,12 +85,12 @@ public class IterationStmt extends Stmt {
     		Type collectionType = collection.getType(table);
     		
     		if (!(collectionType instanceof ListType)) {
-    			throw new RuntimeException("not iterating over a list");
+    			throwErr("not iterating over a list");
     		}
     		ListType cType = (ListType) collectionType;
     		
     		if (!table.available(element))
-    			throw new RuntimeException("duplicate variable " + element);
+    			throwErr("duplicate variable " + element);
 
     		SymbolTable inTable = new SymbolTable(false, table);
     		inTable.putEntry(element, new Declaration(cType.contents, element, null));
