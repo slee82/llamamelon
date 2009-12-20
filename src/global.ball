@@ -11,8 +11,9 @@ end
 // This is the third comment */
 
 number global1;
-number global2 = 3, global3 = 4;
+number global2 = 2, global3 = 3;
 string bleh = "playball!";
+//playball;	//not sure if this works...
 
 print myfun(33);
 
