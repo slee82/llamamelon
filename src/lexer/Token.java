@@ -13,6 +13,14 @@ package lexer;
  */
 public class Token {
 
+    /**
+     * Constructor sets the type of the token
+     * @param tag
+     */
+    public Token(Tag t) {
+        this.tag = t;
+    }
+
     public enum Tag {
         PRINT, 
         IDENT, 
@@ -32,14 +40,6 @@ public class Token {
     }
 
     public final Tag tag;
-
-    /**
-     * Constructor sets the type of the token
-     * @param tag
-     */
-    public Token(Tag t) {
-        this.tag = t;
-    }
 
     public String toString() {
         return ("<tag " + tag.name() + ">");

@@ -9,8 +9,6 @@ package lexer;
 
 public class Type extends Token {
 
-    public String val;
-
     /**
      * Creates a new type token.
      * 
@@ -22,6 +20,7 @@ public class Type extends Token {
         this.val = s;
     }
     
+    /* if nulltype, always matches. Else, check the string. */
     public boolean equals(Object other) {
         if (!(other instanceof Type)) return false;
         Type o = (Type)other;
@@ -56,7 +55,9 @@ public class Type extends Token {
 
         return val;
     }
-    
+
+    public String val;
+
     public final static Type bool = new Type("bool");
     public final static Type number = new Type("number");
     public final static Type string = new Type("string");

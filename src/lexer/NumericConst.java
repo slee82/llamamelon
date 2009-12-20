@@ -9,8 +9,7 @@ package lexer;
 
 public class NumericConst extends Token {
     
-    public String val;
-
+	// even though it's a numeric constant, still needs to print string to java 
     public NumericConst(String s) {
         super(Tag.NUMERICCONST);
         this.val = "((float) " + s + " )";
@@ -19,5 +18,7 @@ public class NumericConst extends Token {
     public String toString() {
         return ("(" + super.toString() + " " + val + ")");
     }
+
+    public String val;
 
 }

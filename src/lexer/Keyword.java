@@ -9,13 +9,14 @@ package lexer;
 
 public class Keyword extends Token {
     
-    public final String lexeme;
-
+	// register the keyword
     public Keyword(Tag t, String lex) {
         super(t);
         this.lexeme = lex;
     }
-    
+
+    public final String lexeme;
+
     /*
      * Premade keywords
      */

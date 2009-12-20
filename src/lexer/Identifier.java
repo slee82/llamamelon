@@ -9,7 +9,11 @@ package lexer;
 
 public class Identifier extends Token {
 
-    private String val;
+	// the word passed becomes the ID
+    public Identifier(String s) {
+        super(Tag.IDENT);
+        this.val = s;
+    }
 
     /**
      * Overrides equals method. Two identifiers are equal if the words they
@@ -33,12 +37,11 @@ public class Identifier extends Token {
         return "<ident " + val + ">";
     }
 
-    public Identifier(String s) {
-        super(Tag.IDENT);
-        this.val = s;
-    }
-
+    // just return what it should output in Java.
     public String getID() {
         return val;
     }
+
+    private String val;
+
 }
