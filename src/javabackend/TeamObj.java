@@ -14,8 +14,8 @@ public class TeamObj implements BallDataType {
     /**
      * Name, wins, losses. Used by loader.
      */
-    public TeamObj(String name,int w, int l) {
-        this.name = name;
+    public TeamObj(String Name,int w, int l) {
+        this.Name = Name;
         this.w = w;
         this.l = l;
     }
@@ -67,7 +67,7 @@ public class TeamObj implements BallDataType {
 	
     /** Accessor for name of the team */
 	public String getName() {
-		return name;
+		return Name;
 	}
     
     /* METHODS IN THIS REGION ARE THE BASES FOR STATS IN THE BALL PROGRAM */
@@ -132,8 +132,15 @@ public class TeamObj implements BallDataType {
 			return team.getBatters();
 		}
 	};
+	
+	/* TEAM ATTRIBUTES */
+    public static final TeamAttribute name = new TeamAttribute() {
+    	public String get(TeamObj team) {
+    		return team.getName();
+    	}
+    };
 
-	private String name;
+	private String Name;
 	private int w;
 	private int l;
 	private BallList<PlayerObj> batters;
