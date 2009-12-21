@@ -225,9 +225,19 @@ The \texttt{is} keyword is integral to the \texttt{simfunction} declaration (see
 The \texttt{end} keyword is required at the end of every loop, if-statement, function, and \texttt{simfunction} declaration. See \ref{foreach}, \ref{do}, \ref{if}, \ref{simfunction}, \ref{function} above.
 
 \subsection{Constants}
-Much like Java, BALL constants consist of two major categories, numeric constants and string constants. These are both touched upon briefly in section \ref{types} "Types."
+Much like Java, BALL constants consist of two major categories,
+numeric constants and string constants. These are both touched upon
+briefly in section \ref{ref_data} "Data."
+
 \subsubsection{Numeric Constants}
-Numeric constants, because they apply to the \texttt{number} type, are treated as only one type. Specifically, they can contain integer or float values. [Integer values, such as a number of hits; float values such as a batting average.] The unary minus operation is also supported, so a numeric constant can be negative or positive. Numeric constants are members of the language defined by the following regular expression. 
+Numeric constants, because they apply to the \texttt{number} type, are
+treated as only one type. However, they can be represented as both a
+whole number or a floating point value. [Integer values, such as a
+  number of hits; float values such as a batting average.] The unary
+minus operation to specify negative numbers must also be
+supported. Numeric constants are members of the language defined by
+the following regular expression.
+
 \begin{verbatim}
     0 | [-]?[0-9]*[.]?[0-9]+
 \end{verbatim}
@@ -326,17 +336,7 @@ Table \ref{incremtable} shows the incrementor operators. These can be prefix or 
 \end{table}%
 
 \subsubsection{Accessor}
-Table \ref{accessortable} shows the one accessor operator. It acts like a period in Java, returning the value of an attribute of an object. Thus, \texttt{p's name} in BALL is the same as \texttt{p.name} in Java.
-\begin{table}[htdp]
-\begin{center}
-\begin{tabular}{|c|}
-\hline
-\texttt{'s}\\
-\hline
-\end{tabular}
-\caption{BALL's Incrementor Operators}\label{accessortable}
-\end{center}
-\end{table}%
+{\tt 's} (apostrophe `s') is BALL's only accessor operator.
 
 \subsection{Separators}
 The following are the separators in BALL: whitespace, comma, semicolon, colon, the keyword \texttt{end}, parentheses, and square brackets. Some of these are delimiters. Whitespace is always ignored, except in strings. Square brackets are used for defining lists.
