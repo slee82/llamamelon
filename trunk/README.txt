@@ -35,10 +35,6 @@ build the project.
 
 http://en.wikipedia.org/wiki/Apache_Ant
 
-An Ant build file is basically a makefile in XML. At the top you have the
-project name and the default target. Then you have "properties", basically 
-makefile variables like CFLAGS or LDLIBS from Advanced Programming.
-
 To compile the program, just type "ant compile" in the terminal. There should be
 an ant program wherever you have Java, I know cunix and clic has it. All the
 class files are made in a new directory called "build".
