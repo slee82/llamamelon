@@ -17,8 +17,7 @@ atom_expression :
     | "(" expression ")"
     | list_initializer
     | "item"
-;
-
+    ;
 list_initializer : "[" variable_list "]"
                  | type "[" "]"
                  ;
@@ -34,11 +33,12 @@ to that identifier, the compiler should display an error.
 
 Anonymous lists are specified as a sequence of expressions (separated
 by commas) inside square brackets. Each expression must evaluate to
-the same type, and the type of the newly created list will be set to
-that common type. The compiler should report an error if it cannot
-derive a common type. If the new list is an empty list, having no
-expressions means the new object cannot derive its type. Therefore,
-the type needs to be explicitly written by the user.
+the same type, and the type of the newly created list will be set to a
+list that contains instances of that common type. The compiler should
+report an error if it cannot derive a common type. If the new list is
+an empty list, having no expressions means the new object cannot
+derive its type. Therefore, the type needs to be explicitly written by
+the user.
 
 {\tt item} is a special keyword used by a {\tt where} expression. It
 acts as a variable holding the element of the list being filtered that
