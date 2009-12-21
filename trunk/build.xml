@@ -16,21 +16,18 @@
 	<property name="yacc.file" value="ball.y" />
 	<property name="yacc.parser" value="Parser.java" />
 	<property name="yacc.parserval" value="ParserVal.java" />
-
+	
+	<target name="cleangen">
+			<delete file="${lex.outdir}/${lex.output}" />
+			<delete file="${yacc.outdir}/${yacc.parser}" />
+			<delete file="${yacc.outdir}/${yacc.parserval}" />
+	</target>
+	
 	<target name="clean">
-		<delete file="${lex.outdir}/${lex.output}" />
-		<delete file="${yacc.outdir}/${yacc.parser}" />
-		<delete file="${yacc.outdir}/${yacc.parserval}" />
 		<delete dir="${build.dir}" />
 	</target>
-
-	<target name="compile">
-		<!-- make the output path -->
-		<mkdir dir="${classes.dir}" />
-		<copy todir="${build.dir}/teams">
-    			<fileset dir="teams"/>
-  		</copy>
-
+	
+	<target name="gen">
 		<!-- generate the lexer -->
 		<exec executable="jflex">
 			<arg value="-nobak" />
@@ -47,6 +44,18 @@
 		</exec>
 		<move file="${yacc.parser}" todir="${yacc.outdir}" />
 		<move file="${yacc.parserval}" todir="${yacc.outdir}" />
+	</target>
+
+	<target name="compile">
+		<!-- make the output path -->
+		<mkdir dir="${classes.dir}" />
+		<copy todir="${build.dir}/teams">
+    			<fileset dir="teams"/>
+  		</copy>
+		<exec executable="cp">
+			<arg value="${src.dir}/BALL" />
+			<arg value="${classes.dir}" />
+		</exec>
 
 		<javac destdir="${classes.dir}">
 			<src path="${src.dir}/compiler"/>
