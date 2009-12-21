@@ -20,45 +20,28 @@ encapsulates many low-level tasks that are present in more general
 programming languages.
 
 \subsection{BALL Compilation Process}\label{ref_compile}
-BALL is a compiled language. Source code is stored in files ending
-with the \texttt{.ball} extension (for example: \texttt{hello.ball}),
-and is provided to the BALL compiler. Valid BALL source files must end
-with a newline. The compiler will then automatically generate the
-low-level code that is syntactically equivalent to the original source
-and execute it. Our reference implementation of a BALL compiler uses
-Java as a target language.
+BALL is a compiled language. Each BALL program comes from a single
+source file. Source code is stored in files ending with the
+\texttt{.ball} extension (for example: \texttt{hello.ball}), and is
+provided to the BALL compiler. Valid BALL source files must end with a
+newline. The compiler will then automatically generate the low-level
+code that is syntactically equivalent to the original source and
+execute it. Our reference implementation of a BALL compiler uses Java
+as a target language.
 
 BALL is an imperative programming language. It is similar in structure
 to Java, though numerous changes and innovations have been made to
-help the user quickly learn and create BALL programs.
+help the user quickly learn and create BALL programs. This reference
+manual will explain each feature of BALL from the simplest, atomic
+components upwards while specifying the requirements a BALL compiler
+must fulfill with respect to each language construct.
 
-\subsection{Abstract Features}
-\subsubsection{Types}\label{types}
-BALL is a typed language, specifically with five types,
-\texttt{number}, \texttt{string}, \texttt{list}, \texttt{team}, and
-\texttt{player}. The \texttt{number} and \texttt{string} types are
-simple constants. This is further explained in the section
-\ref{keywords} below. The type \texttt{list} is a collection of
-objects, which are instances of types. \texttt{list} is therefore
-typed itself (see \ref{of}). Thus it is possible to have a
-\texttt{list} of \texttt{team} objects, \texttt{player} objects,
-\texttt{string}s, \texttt{number}s, or other \texttt{list}
-objects. \texttt{list} objects are homogenous, meaning they cannot
-contain objects of multiple types. The \texttt{player} type is an
-object that has attributes of \texttt{string} and \texttt{number}
-types. These attributes include the name of the player, whether the
-player is a pitcher or not, and the statistics of that player. The
-\texttt{team} type is an object that has attributes of
-\texttt{string}, \texttt{number}, and \texttt{list} types. These
-attributes include the name of the team, the team's wins and losses,
-and the list of every player on the team.
+\input{refman/data.tex}
 
-
+\pagebreak
 \input{refman/lexical.tex}
 
 \input{refman/expr.tex}
-
-\input{refman/decl.tex}
 
 \input{refman/stmt.tex}
 
