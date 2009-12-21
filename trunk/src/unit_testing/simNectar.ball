@@ -59,7 +59,7 @@ simfunction basicSimulation is:    number team1Score = 0;
         	+ probDouble*(2/4) + probTriple*(3/4) + probHR;
 	end	/*team2 is batting and team1 is pitching! (5 times)*/	do 5 times:    	list of player bestBatters = topPlayers(6, team2's BATTERS, AVG);	    player batter = any bestBatters;    	list of player bestPitchers = bottomPlayers(3, team1's PITCHERS, ERA);    	player pitcher = any bestPitchers;
  	    combineProb(batter, pitcher);    	randomizeProbabilities();	    team2Score += probWalk*(1/4) + probSingle*(1/4) 
-    	    + probDouble*(2/4) + probTriple*(3/4) + probHR;	end	if (team1Score > team2Score) then:    	print team1's teamname + " defeat " + team2's teamname + "!!";    	return team1;	else:    	print team2's teamname + " defeat "  + team1's teamname + "!!";    	return team2;   	endend/*END SIMULATION FUNCTION*/activate basicSimulation;
+    	    + probDouble*(2/4) + probTriple*(3/4) + probHR;	end	if (team1Score > team2Score) then://    	print team1's teamname + " defeat " + team2's teamname + "!!";    	return team1;	else://    	print team2's teamname + " defeat "  + team1's teamname + "!!";    	return team2;   	endend/*END SIMULATION FUNCTION*/activate basicSimulation;
 
 team Team1 = load("dodgers.team");
 team Team2 = load("astros.team");
@@ -74,8 +74,9 @@ do 10000 times:
 		t2++;
 	end
 end
-print "D: " + t1;
-print "A: " + t2;
+print "After simulating 10,000 games, the results are as follows:";
+print "Dodgers win " + t1 + " times.";
+print "Astros win " + t2 + " times.";
 //team winner = sim(Astros, Dodgers, 100);//print winner's teamname + " have won the World Series!!\n";
 //print winner's name + " has the players:";
 /*
