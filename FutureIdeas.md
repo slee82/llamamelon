@@ -1,0 +1,1 @@
+Make `player1 == "Manny Ramirez";` work
